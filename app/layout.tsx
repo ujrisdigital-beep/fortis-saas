@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Navigation from "../components/Navigation";
 import { AskUjrisFab } from "../components/ask-ujris-fab";
 import { ServiceWorkerRegister } from "../components/sw-register";
 import "../styles/design-tokens.css";
@@ -25,6 +26,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="FORTIS OS" />
       </head>
       <body>
+        <Navigation />
         {children}
         <AskUjrisFab />
         <ServiceWorkerRegister />
