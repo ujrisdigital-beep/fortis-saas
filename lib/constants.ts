@@ -1,0 +1,20 @@
+export const FORTIS = {
+  name: "Fortis Invicta Ltd",
+  reg: "SR. 831/2025 MD",
+  ceo: "Cadjatu Djalo",
+  boardReg: "Samba Bajie",
+  address: "Kerr Serign, Kombo North District, West Coast Region, Gambia",
+  shareCapital: 500000,
+  currency: "GMD",
+  bank: "Ecobank Gambia",
+  verticals: [
+    "energy",
+    "agriculture",
+    "housing",
+    "health",
+    "fintech",
+    "saas",
+    "waste",
+    "tourism",
+  ],
+} as const;

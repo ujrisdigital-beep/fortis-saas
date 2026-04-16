@@ -1,0 +1,163 @@
+{
+  "name": "Fortis — Lead Nurturing Auto-Follow-Up",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 9 * * *" }]
+        }
+      },
+      "id": "trigger-daily-nurture",
+      "name": "Daily 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.APP_URL }}/api/leads?status=new&limit=50",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth"
+      },
+      "id": "fetch-new-leads",
+      "name": "Fetch New Leads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "1", "name": "Fortis API Auth" }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "={{ $json }}"
+      },
+      "id": "split-leads",
+      "name": "Split Per Lead",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            { "value1": "={{ $json.email }}", "operation": "isNotEmpty" }
+          ]
+        }
+      },
+      "id": "has-email",
+      "name": "Has Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "gpt-4o-mini" },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"Write a short, warm follow-up email for a lead named {{ $json.name }} who came from {{ $json.source }}. Brand: Fortis Invicta. Keep it under 100 words. No subject line. Just the email body. Sign off as 'The Fortis Team'.\"}]"
+            },
+            { "name": "temperature", "value": 0.7 },
+            { "name": "max_tokens", "value": 200 }
+          ]
+        }
+      },
+      "id": "generate-email",
+      "name": "AI: Generate Follow-Up Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 200],
+      "credentials": {
+        "httpHeaderAuth": { "id": "4", "name": "OpenAI API" }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fortis-invicta.com",
+        "toEmail": "={{ $('Split Per Lead').item.json.email }}",
+        "subject": "A quick note from Fortis Invicta",
+        "emailType": "text",
+        "message": "={{ $json.choices[0].message.content }}"
+      },
+      "id": "send-email",
+      "name": "Send Follow-Up Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1340, 200],
+      "credentials": {
+        "smtp": { "id": "5", "name": "SMTP" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $env.APP_URL }}/api/leads/{{ $('Split Per Lead').item.json.id }}/status",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [{ "name": "status", "value": "contacted" }]
+        }
+      },
+      "id": "mark-contacted",
+      "name": "Mark Lead as Contacted",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 200],
+      "credentials": {
+        "httpHeaderAuth": { "id": "1", "name": "Fortis API Auth" }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "📬 Follow-up sent to *{{ $('Split Per Lead').item.json.name }}* ({{ $('Split Per Lead').item.json.source }}) — Lead score: {{ $('Split Per Lead').item.json.score }}"
+      },
+      "id": "log-to-slack",
+      "name": "Log to Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1780, 200],
+      "credentials": {
+        "slackApi": { "id": "2", "name": "Slack" }
+      }
+    }
+  ],
+  "connections": {
+    "Daily 9am": {
+      "main": [[{ "node": "Fetch New Leads", "type": "main", "index": 0 }]]
+    },
+    "Fetch New Leads": {
+      "main": [[{ "node": "Split Per Lead", "type": "main", "index": 0 }]]
+    },
+    "Split Per Lead": {
+      "main": [[{ "node": "Has Email?", "type": "main", "index": 0 }]]
+    },
+    "Has Email?": {
+      "main": [
+        [{ "node": "AI: Generate Follow-Up Email", "type": "main", "index": 0 }]
+      ]
+    },
+    "AI: Generate Follow-Up Email": {
+      "main": [[{ "node": "Send Follow-Up Email", "type": "main", "index": 0 }]]
+    },
+    "Send Follow-Up Email": {
+      "main": [[{ "node": "Mark Lead as Contacted", "type": "main", "index": 0 }]]
+    },
+    "Mark Lead as Contacted": {
+      "main": [[{ "node": "Log to Slack", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "staticData": null,
+  "tags": ["leads", "nurturing", "email", "automation"]
+}

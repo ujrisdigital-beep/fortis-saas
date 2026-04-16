@@ -1,0 +1,26 @@
+[
+  {
+    "id": "energy-hubs-001",
+    "title": "Smart Battery Pack Hub Expansion",
+    "sector": "energy",
+    "region": "West Coast Region",
+    "valueUsd": 1200000,
+    "status": "open"
+  },
+  {
+    "id": "agri-bug-factory-001",
+    "title": "Pilot Bug Factory Launch",
+    "sector": "agriculture",
+    "region": "Kanifing",
+    "valueUsd": 850000,
+    "status": "active"
+  },
+  {
+    "id": "sme-saas-001",
+    "title": "SME SaaS Rollout Cohort 1",
+    "sector": "saas",
+    "region": "Banjul",
+    "valueUsd": 300000,
+    "status": "open"
+  }
+]

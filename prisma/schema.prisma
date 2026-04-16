@@ -1,0 +1,417 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CEO
+  BOARD
+  MANAGER
+  CLIENT
+  GOVERNMENT
+  PUBLIC
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      UserRole @default(PUBLIC)
+  orgId     String?
+  createdAt DateTime @default(now())
+
+  organisation Organisation? @relation(fields: [orgId], references: [id])
+  cases        Case[]
+  projects     Project[]
+  ideas        Idea[]
+  notifications Notification[]
+}
+
+model Organisation {
+  id              String  @id @default(cuid())
+  name            String
+  sector          String
+  size            String
+  region          String
+  digitalMaturity Int
+  score           Float
+
+  users User[]
+}
+
+model Case {
+  id        String   @id @default(cuid())
+  title     String
+  type      String
+  status    String
+  ownerId   String
+  createdAt DateTime @default(now())
+
+  owner User @relation(fields: [ownerId], references: [id])
+}
+
+model Grant {
+  id               String   @id @default(cuid())
+  title            String
+  funder           String
+  deadline         DateTime
+  amount           Float
+  status           String
+  eligibilityScore Float
+}
+
+model Partner {
+  id       String   @id @default(cuid())
+  name     String
+  type     String
+  country  String
+  mouDate  DateTime?
+  status   String
+  pageSlug String   @unique
+}
+
+model EnergyUnit {
+  id         String   @id @default(cuid())
+  serial     String   @unique
+  type       String
+  status     String
+  agentId    String?
+  lastCharge DateTime?
+  location   String
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  title     String
+  vertical  String
+  status    String
+  budget    Float
+  progress  Float
+  managerId String?
+
+  manager User? @relation(fields: [managerId], references: [id])
+  media   MediaItem[]
+}
+
+model Idea {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  submittedBy String
+  category    String
+  score       Float
+  status      String
+  ownerId     String?
+
+  owner User? @relation(fields: [ownerId], references: [id])
+}
+
+model MediaItem {
+  id          String   @id @default(cuid())
+  url         String
+  type        String
+  caption     String?
+  projectId   String?
+  uploadedAt  DateTime @default(now())
+  accessLevel String
+
+  project Project? @relation(fields: [projectId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String
+  type      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// ─── MULTI-BRAND WORKSPACE ──────────────────────────────────────────────────
+
+enum BrandMemberRole {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+enum ContentStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentPlatform {
+  TWITTER
+  INSTAGRAM
+  LINKEDIN
+  FACEBOOK
+  TIKTOK
+  YOUTUBE
+  THREADS
+  CIRCLE
+}
+
+enum InboxMessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+enum ActivityType {
+  POST_PUBLISHED
+  STORY_PUBLISHED
+  REEL_PUBLISHED
+  COMMENT_REPLIED
+  DM_SENT
+  LEAD_CAPTURED
+  CONTENT_APPROVED
+}
+
+enum GuaranteeStatus {
+  ACTIVE
+  AT_RISK
+  COMPLIANT
+  CLAIMED
+  RESOLVED
+}
+
+enum RefundClaimStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  PAID
+}
+
+model Brand {
+  id          String   @id @default(cuid())
+  name        String
+  handle      String   @unique
+  niche       String
+  voiceTone   String?
+  primaryColor String?
+  logoUrl     String?
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members      BrandMember[]
+  contentItems ContentItem[]
+  schedules    ContentSchedule[]
+  inboxMessages UnifiedInboxMessage[]
+  leads        Lead[]
+  activityLogs UserActivityLog[]
+  guarantees   GuaranteeAgreement[]
+  prompts      SystemPromptTemplate[]
+}
+
+model BrandMember {
+  id      String          @id @default(cuid())
+  brandId String
+  userId  String
+  role    BrandMemberRole @default(VIEWER)
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([brandId, userId])
+}
+
+model ContentItem {
+  id          String          @id @default(cuid())
+  brandId     String
+  platform    ContentPlatform
+  contentType String          // post | reel | story | thread | short
+  caption     String
+  hashtags    String[]
+  mediaUrls   String[]
+  status      ContentStatus   @default(DRAFT)
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  engagements Json?           // { likes, comments, shares, reach, saves }
+  forecast    Json?           // predicted engagement from KPI Lens
+  chiScore    Float?          // Chi Engine quality score
+  createdAt   DateTime        @default(now())
+
+  brand    Brand            @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  schedule ContentSchedule? @relation(fields: [scheduleId], references: [id])
+  scheduleId String?
+}
+
+model ContentSchedule {
+  id          String   @id @default(cuid())
+  brandId     String
+  name        String
+  weekStarting DateTime
+  generatedAt DateTime @default(now())
+  chiPlan     Json     // the full Chi Engine content plan object
+
+  brand    Brand         @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  contents ContentItem[]
+}
+
+model UnifiedInboxMessage {
+  id         String             @id @default(cuid())
+  brandId    String
+  platform   ContentPlatform
+  externalId String
+  senderName String
+  senderHandle String?
+  body       String
+  status     InboxMessageStatus @default(UNREAD)
+  aiReply    String?
+  repliedAt  DateTime?
+  receivedAt DateTime           @default(now())
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@unique([platform, externalId])
+}
+
+model Lead {
+  id         String   @id @default(cuid())
+  brandId    String
+  name       String
+  email      String?
+  phone      String?
+  source     String
+  notes      String?
+  tags       String[]
+  score      Float    @default(0)
+  convertedAt DateTime?
+  createdAt  DateTime @default(now())
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+}
+
+model UserActivityLog {
+  id           String       @id @default(cuid())
+  brandId      String
+  userId       String
+  activityType ActivityType
+  platform     ContentPlatform?
+  referenceId  String?      // contentItemId or inboxMessageId
+  details      Json?
+  loggedAt     DateTime     @default(now())
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+}
+
+model GuaranteeAgreement {
+  id              String          @id @default(cuid())
+  brandId         String
+  userId          String
+  tier            String          // starter | growth | scale
+  startDate       DateTime
+  endDate         DateTime
+  requiredActions Int             // actions per month required to stay eligible
+  completedActions Int            @default(0)
+  status          GuaranteeStatus @default(ACTIVE)
+  createdAt       DateTime        @default(now())
+
+  brand   Brand         @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  refunds RefundClaim[]
+}
+
+model RefundClaim {
+  id           String            @id @default(cuid())
+  agreementId  String
+  claimantId   String
+  reason       String
+  evidence     Json?             // activity proof submitted
+  status       RefundClaimStatus @default(PENDING)
+  reviewNotes  String?
+  resolvedAt   DateTime?
+  createdAt    DateTime          @default(now())
+
+  agreement GuaranteeAgreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+}
+
+model SystemPromptTemplate {
+  id          String   @id @default(cuid())
+  brandId     String?
+  name        String
+  category    String   // founder-mode | chi-engine | brand-voice | hashtag | scheduler
+  prompt      String
+  variables   String[] // placeholder variable names
+  isGlobal    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  brand Brand? @relation(fields: [brandId], references: [id], onDelete: SetNull)
+}
+
+model CirclePost {
+  id          String   @id @default(cuid())
+  spaceId     String
+  authorId    String
+  title       String?
+  body        String
+  publishedAt DateTime @default(now())
+  likes       Int      @default(0)
+  comments    Int      @default(0)
+}
+
+// ─── COURT ORDER PII ACCESS SYSTEM ─────────────────────────────────────────
+
+model CourtOrder {
+  id              String    @id @default(cuid())
+  requestingAdmin String
+  targetUserId    String    // ID only — no PII stored here
+  reason          String
+  documentHash    String    // SHA-256 of uploaded court order file
+  accessTokenHash String    // SHA-256 of raw token (raw token never stored)
+  signature       String    // HMAC-SHA256 for tamper-evidence
+  expiresAt       DateTime
+  status          String    @default("pending") // pending | active | expired | revoked
+  approvedBy      String?
+  approvedAt      DateTime?
+  revokedAt       DateTime?
+  revokeReason    String?
+  createdAt       DateTime  @default(now())
+
+  accessLogs AccessLog[]
+}
+
+model AccessLog {
+  id           String     @id @default(cuid())
+  courtOrderId String
+  action       String     // approved | revoked | token_used | expired
+  performedBy  String
+  ipAddress    String?
+  dataCategory String?    // category of data accessed — NOT the data itself
+  loggedAt     DateTime   @default(now())
+
+  courtOrder CourtOrder @relation(fields: [courtOrderId], references: [id])
+}
+
+// ─── PLATFORM CREDENTIALS ──────────────────────────────────────────────────
+
+model PlatformCredential {
+  id           String    @id @default(cuid())
+  userId       String
+  platform     String    // instagram | facebook | twitter | etc.
+  accessToken  String    // AES-256-encrypted at rest in production
+  refreshToken String?
+  tokenExpiry  DateTime?
+  pageId       String?
+  username     String?
+  webhookUrl   String?
+  botToken     String?
+  channelId    String?
+  instanceUrl  String?
+  apiKey       String?
+  isActive     Boolean   @default(true)
+  connectedAt  DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([userId, platform])
+}

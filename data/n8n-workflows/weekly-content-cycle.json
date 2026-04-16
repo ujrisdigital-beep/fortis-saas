@@ -1,0 +1,138 @@
+{
+  "name": "Fortis — Weekly Content Cycle",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 7 * * 1" }]
+        }
+      },
+      "id": "trigger-weekly",
+      "name": "Every Monday 7am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $env.APP_URL }}/api/brands",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "fetch-brands",
+      "name": "Fetch All Active Brands",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "1", "name": "Fortis API Auth" }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "={{ $json }}"
+      },
+      "id": "split-brands",
+      "name": "Split Into Brands",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.APP_URL }}/api/chi-engine/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "brandId", "value": "={{ $json.id }}" },
+            {
+              "name": "platforms",
+              "value": "={{ $json.preferredPlatforms ?? ['INSTAGRAM', 'LINKEDIN', 'TWITTER'] }}"
+            }
+          ]
+        }
+      },
+      "id": "generate-plan",
+      "name": "Generate Chi Plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "1", "name": "Fortis API Auth" }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.plan.averageChiScore }}",
+              "operation": "largerEqual",
+              "value2": 60
+            }
+          ]
+        }
+      },
+      "id": "chi-score-check",
+      "name": "Chi Score ≥ 60?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "✅ *Weekly content plan ready* for @{{ $json.plan.brandHandle }}\n Chi Score: {{ $json.plan.averageChiScore }} | {{ $json.plan.totalPieces }} pieces across {{ $json.plan.slots | map(s => s.platform) | unique | join(', ') }}\nSchedule ID: `{{ $json.scheduleId }}`"
+      },
+      "id": "notify-slack-ok",
+      "name": "Notify Slack (Plan Ready)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1340, 200],
+      "credentials": {
+        "slackApi": { "id": "2", "name": "Slack" }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "⚠️ *Low Chi Score* for @{{ $json.plan.brandHandle }} — score: {{ $json.plan.averageChiScore }}. Consider revising the brand brief before scheduling."
+      },
+      "id": "notify-slack-low",
+      "name": "Notify Slack (Low Score)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1340, 400],
+      "credentials": {
+        "slackApi": { "id": "2", "name": "Slack" }
+      }
+    }
+  ],
+  "connections": {
+    "Every Monday 7am": {
+      "main": [[{ "node": "Fetch All Active Brands", "type": "main", "index": 0 }]]
+    },
+    "Fetch All Active Brands": {
+      "main": [[{ "node": "Split Into Brands", "type": "main", "index": 0 }]]
+    },
+    "Split Into Brands": {
+      "main": [[{ "node": "Generate Chi Plan", "type": "main", "index": 0 }]]
+    },
+    "Generate Chi Plan": {
+      "main": [[{ "node": "Chi Score ≥ 60?", "type": "main", "index": 0 }]]
+    },
+    "Chi Score ≥ 60?": {
+      "main": [
+        [{ "node": "Notify Slack (Plan Ready)", "type": "main", "index": 0 }],
+        [{ "node": "Notify Slack (Low Score)", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "staticData": null,
+  "tags": ["content", "automation", "chi-engine"]
+}

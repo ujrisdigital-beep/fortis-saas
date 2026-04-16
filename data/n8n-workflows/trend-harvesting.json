@@ -1,0 +1,118 @@
+{
+  "name": "Fortis — Daily Trend Harvesting",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 6 * * *" }]
+        }
+      },
+      "id": "trigger-daily",
+      "name": "Every Day 6am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://trends.google.com/trends/trendingsearches/daily/rss?geo=GM",
+        "options": {}
+      },
+      "id": "google-trends",
+      "name": "Google Trends (Gambia)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 200]
+    },
+    {
+      "parameters": {
+        "url": "https://api.twitter.com/2/trends/by/woeid/2217963",
+        "authentication": "oAuth2",
+        "options": {}
+      },
+      "id": "twitter-trends",
+      "name": "Twitter Trends (WA)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 400],
+      "credentials": {
+        "oAuth2Api": { "id": "3", "name": "Twitter OAuth2" }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "multiplex"
+      },
+      "id": "merge-trends",
+      "name": "Merge Trend Sources",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "gpt-4o-mini" },
+            {
+              "name": "messages",
+              "value": "=[{\"role\":\"user\",\"content\":\"You are a trend analyst for African social media. Review these trends and identify the top 5 most relevant for a West African audience interested in tech, finance, entrepreneurship, or lifestyle. Return JSON: {\\\"trends\\\":[{\\\"topic\\\":\\\"\\\",\\\"angle\\\":\\\"\\\",\\\"platforms\\\":[],\\\"urgency\\\":\\\"high|medium|low\\\"}]}\\n\\nTrends: {{ JSON.stringify($json) }}\"}]"
+            },
+            { "name": "response_format", "value": "={\"type\":\"json_object\"}" },
+            { "name": "temperature", "value": 0.5 }
+          ]
+        }
+      },
+      "id": "ai-filter-trends",
+      "name": "AI: Filter & Analyse Trends",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [920, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "4", "name": "OpenAI API" }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "={{ $env.SLACK_CHANNEL_ID }}",
+        "text": "📈 *Daily Trend Report*\n{{ $json.choices[0].message.content }}\n\n_Use these in today's content for maximum reach._"
+      },
+      "id": "send-trend-report",
+      "name": "Send Trend Report to Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1140, 300],
+      "credentials": {
+        "slackApi": { "id": "2", "name": "Slack" }
+      }
+    }
+  ],
+  "connections": {
+    "Every Day 6am": {
+      "main": [
+        [{ "node": "Google Trends (Gambia)", "type": "main", "index": 0 }],
+        [{ "node": "Twitter Trends (WA)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Google Trends (Gambia)": {
+      "main": [[{ "node": "Merge Trend Sources", "type": "main", "index": 0 }]]
+    },
+    "Twitter Trends (WA)": {
+      "main": [[{ "node": "Merge Trend Sources", "type": "main", "index": 1 }]]
+    },
+    "Merge Trend Sources": {
+      "main": [[{ "node": "AI: Filter & Analyse Trends", "type": "main", "index": 0 }]]
+    },
+    "AI: Filter & Analyse Trends": {
+      "main": [[{ "node": "Send Trend Report to Slack", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "staticData": null,
+  "tags": ["trends", "automation", "daily"]
+}

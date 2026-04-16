@@ -1,0 +1,223 @@
+/* Google Fonts – loaded in layout */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Brand palette */
+  --color-primary: #1B4D3E;
+  --color-secondary: #D4AF37;
+  --color-bg: #FFFFFF;
+  --color-text: #0A1C2E;
+  --color-text-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-card-bg: #F8FAFC;
+  --color-success: #10B981;
+  --color-danger: #E63946;
+  --color-warning: #F59E0B;
+
+  /* Derived shades */
+  --color-primary-light: rgba(27, 77, 62, 0.08);
+  --color-primary-mid: rgba(27, 77, 62, 0.14);
+  --color-secondary-light: rgba(212, 175, 55, 0.12);
+  --color-secondary-mid: rgba(212, 175, 55, 0.24);
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+a {
+  color: inherit;
+}
+
+/* Shared card */
+.fortis-card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(10, 28, 46, 0.06);
+}
+
+/* Form elements */
+.fortis-input {
+  width: 100%;
+  border: 1.5px solid var(--color-border);
+  background: #FFFFFF;
+  color: var(--color-text);
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.fortis-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.fortis-textarea {
+  width: 100%;
+  border: 1.5px solid var(--color-border);
+  background: #FFFFFF;
+  color: var(--color-text);
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 130px;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.fortis-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  font-family: inherit;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #163f33;
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 0.6rem;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-primary-light);
+}
+
+/* Score badge */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: var(--color-secondary-light);
+  color: var(--color-primary);
+  border: 2px solid var(--color-secondary);
+}
+
+/* Result boxes */
+.result-section {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+}
+
+.result-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem;
+}
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* Page container */
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 5rem;
+}
+
+/* Nav bar */
+.fortis-nav {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 8px rgba(10, 28, 46, 0.06);
+}
+
+/* Mobile responsive breakpoints */
+@media (max-width: 640px) {
+  .page-wrap {
+    padding: 1.25rem 1rem 5rem;
+  }
+}

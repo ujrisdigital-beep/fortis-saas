@@ -1,0 +1,23 @@
+{
+  "name": "FORTIS OS — UJU GROUP LIMITED",
+  "short_name": "FORTIS OS",
+  "description": "AI-powered business transformation, brand intelligence, and document analysis for African leaders.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1B4D3E",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en"
+}

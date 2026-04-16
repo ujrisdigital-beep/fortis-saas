@@ -1,0 +1,48 @@
+{
+  "name": "fortis-saas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "vercel-build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:deploy": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.2",
+    "@types/leaflet": "^1.9.21",
+    "bcrypt": "^5.1.1",
+    "ci-info": "^4.4.0",
+    "framer-motion": "^12.38.0",
+    "leaflet": "^1.9.4",
+    "next": "14.2.24",
+    "next-auth": "^4.24.11",
+    "nodemailer": "^7.0.7",
+    "openai": "^6.34.0",
+    "prisma": "6.19.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-leaflet": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "20.17.28",
+    "@types/nodemailer": "^7.0.11",
+    "@types/react": "18.3.20",
+    "@types/react-dom": "18.3.5",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.24",
+    "ts-node": "^10.9.2",
+    "typescript": "5.8.2"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}

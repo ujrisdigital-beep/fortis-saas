@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production build artifacts
+.next/
+out/
+build/
+
+# Misc
+.DS_Store
+*.pem
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Local environment variables (DO NOT COMMIT)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Generated Prisma client
+prisma/generated/
+
+# Build logs
+build.log
+build-output.txt
+.vercel
+
+# Archives
+*.tar.gz
+*.zip
+
+# SQLite dev database
+prisma/dev.db
+prisma/*.db
+prisma/*.db-journal
+
+# Generated Prisma client (alternate output path)
+generated/
+
+# TypeScript build info
+tsconfig.tsbuildinfo
+
+# Type stubs
+type
