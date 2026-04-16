@@ -4,10 +4,11 @@ import Navigation from "../components/Navigation";
 import { AskUjrisFab } from "../components/ask-ujris-fab";
 import { ServiceWorkerRegister } from "../components/sw-register";
 import "../styles/design-tokens.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FORTIS OS — UJU GROUP LIMITED",
-  description: "AI-powered business transformation, brand intelligence, and forensic document analysis for African leaders.",
+  title: "FORTIS OS — National Economic Intelligence Platform",
+  description: "AI-powered business transformation, economic intelligence, and forensic document analysis for The Gambia.",
   manifest: "/manifest.json",
 };
 
@@ -19,6 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1B4D3E" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

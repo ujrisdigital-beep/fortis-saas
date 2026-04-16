@@ -1,10 +1,13 @@
 // app/api/ikenga/generate/route.ts
 import { NextRequest, NextResponse } from "next/server";
+import { getTonePrompt, getTone } from "@/lib/ikenga-tones";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { brandName, brandNiche, platforms, voiceTone, primaryGoal, contentType } = body;
+    const { brandName, brandNiche, platforms, primaryGoal, contentType, toneId } = body;
+    const tone = getTone(toneId ?? "IKENGA");
+    const tonePromptInstruction = getTonePrompt(toneId ?? "IKENGA");
 
     if (!brandName || !platforms?.length) {
       return NextResponse.json({ error: "Brand name and platforms required" }, { status: 400 });
@@ -42,18 +45,22 @@ export async function POST(req: NextRequest) {
 
         if (process.env.OPENAI_API_KEY) {
           try {
-            const contentPrompt = `Write a ${contentType || "educational"} post for ${platformName}.
+            const contentPrompt = `${tonePromptInstruction}
+
+Write a ${contentType || "educational"} ${platformName} post for a Gambian business.
 Brand: ${brandName}
 Niche: ${brandNiche || "General Business"}
-Voice Tone: ${voiceTone || "Professional"}
+Voice Tone: ${tone.name} — ${tone.description}
 Primary Goal: ${primaryGoal || "brand_awareness"}
+Day: ${daysOfWeek[day]}
+Platform: ${platformName} (optimise caption length and style for this platform)
 
-Return ONLY valid JSON:
+Return ONLY valid JSON (no markdown, no backticks):
 {
-  "caption": "The full post text",
-  "hook": "The first line/sentence (max 15 words)",
-  "hashtags": ["tag1", "tag2", "tag3"],
-  "callToAction": "What action should users take?"
+  "caption": "The full post text optimised for ${platformName}",
+  "hook": "The attention-grabbing first line (max 15 words)",
+  "hashtags": ["tag1", "tag2", "tag3", "tag4"],
+  "callToAction": "Specific action for this platform and goal"
 }`;
 
             const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
