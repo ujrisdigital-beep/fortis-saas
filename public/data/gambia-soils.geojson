@@ -1,0 +1,125 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "soilType": "Continental Terminal",
+        "code": "CT",
+        "description": "Well-drained upland soils, sandy to loamy sand surface",
+        "pH": 5.5,
+        "organicCarbon": 0.35,
+        "phosphorus": 5,
+        "cec": 4.2,
+        "salinity": "low",
+        "drainage": "good",
+        "suitableCrops": ["groundnut", "millet", "maize", "cashew", "sesame"],
+        "fertilizerN": 40,
+        "fertilizerP": 45,
+        "fertilizerK": 30,
+        "irrigationNeed": "high",
+        "color": "#D4A373"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-16.8, 13.6], [-16.5, 13.6], [-16.5, 13.3], [-16.8, 13.3], [-16.8, 13.6]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "soilType": "Alluvial Lowland",
+        "code": "AL",
+        "description": "Hydromorphic lowland soils, fine clay/silt texture",
+        "pH": 5.2,
+        "organicCarbon": 0.4,
+        "phosphorus": 8,
+        "cec": 15,
+        "salinity": "medium",
+        "drainage": "poor",
+        "suitableCrops": ["rice", "rice-fish", "vegetables"],
+        "fertilizerN": 80,
+        "fertilizerP": 40,
+        "fertilizerK": 30,
+        "irrigationNeed": "medium",
+        "color": "#6A9C89"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-16.2, 13.5], [-15.8, 13.5], [-15.8, 13.2], [-16.2, 13.2], [-16.2, 13.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "soilType": "Saline Tidal",
+        "code": "ST",
+        "description": "Seasonally saline tidal swamps, acid sulfate potential",
+        "pH": 4.8,
+        "organicCarbon": 0.5,
+        "phosphorus": 6,
+        "cec": 18,
+        "salinity": "high",
+        "drainage": "very poor",
+        "suitableCrops": ["salt-tolerant rice", "mangrove"],
+        "fertilizerN": 60,
+        "fertilizerP": 35,
+        "fertilizerK": 40,
+        "irrigationNeed": "low",
+        "color": "#C1666B"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-16.9, 13.4], [-16.6, 13.4], [-16.6, 13.1], [-16.9, 13.1], [-16.9, 13.4]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "soilType": "Coastal Salt Production",
+        "code": "CSP",
+        "description": "Coastal zones suitable for solar salt production",
+        "pH": 7.2,
+        "organicCarbon": 0.2,
+        "phosphorus": 3,
+        "cec": 8,
+        "salinity": "extreme",
+        "drainage": "variable",
+        "suitableCrops": ["salt", "brine shrimp"],
+        "fertilizerN": 0,
+        "fertilizerP": 0,
+        "fertilizerK": 0,
+        "irrigationNeed": "none",
+        "color": "#E8B86B"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-16.8, 13.5], [-16.7, 13.5], [-16.7, 13.4], [-16.8, 13.4], [-16.8, 13.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "soilType": "Iron Pan (Laterite)",
+        "code": "IP",
+        "description": "Ironstone and laterite hardpan soils, low fertility",
+        "pH": 5.8,
+        "organicCarbon": 0.25,
+        "phosphorus": 4,
+        "cec": 3.5,
+        "salinity": "none",
+        "drainage": "moderate",
+        "suitableCrops": ["cashew", "mango", "agroforestry"],
+        "fertilizerN": 30,
+        "fertilizerP": 35,
+        "fertilizerK": 20,
+        "irrigationNeed": "high",
+        "color": "#A0522D"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-14.5, 13.4], [-14.2, 13.4], [-14.2, 13.1], [-14.5, 13.1], [-14.5, 13.4]]]
+      }
+    }
+  ]
+}

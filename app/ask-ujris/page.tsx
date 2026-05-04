@@ -1,435 +1,266 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "../../components/navbar";
-import { Footer } from "../../components/footer";
-import { StarRating } from "../../components/star-rating";
-import { saveAnalysis } from "../../lib/learning-engine";
 
-const WATERMARK = "\n\n— FORTIS OS™ | UJU GROUP LIMITED | Confidential Analysis";
+const G = "#1B4D3E";
+const GOLD = "#C4943A";
+const DARK = "#0A2E1A";
 
-const DOC_TYPES = ["Contract", "Agreement", "Police Statement", "SAR Response", "Employment Letter", "Court Order", "MOU", "Policy Document", "Service Agreement", "Loan Agreement", "Other"];
+const DOC_TYPES = [
+  "Employment Contract",
+  "Lease / Tenancy Agreement",
+  "Loan Agreement",
+  "Service Agreement",
+  "Supplier Contract",
+  "Partnership Agreement",
+  "Government Tender Document",
+  "MOU / Memorandum of Understanding",
+  "Non-Disclosure Agreement (NDA)",
+  "Share Purchase / Investment Agreement",
+  "Other",
+];
 
-const ACCEPTED_TYPES: Record<string, { type: string; icon: string; label: string }> = {
-  "application/pdf": { type: "document", icon: "📄", label: "PDF" },
-  "application/msword": { type: "document", icon: "📝", label: "Word Doc" },
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": { type: "document", icon: "📝", label: "Word Doc" },
-  "text/plain": { type: "document", icon: "📃", label: "Text File" },
-  "text/rtf": { type: "document", icon: "📃", label: "RTF" },
-  "application/rtf": { type: "document", icon: "📃", label: "RTF" },
-  "application/zip": { type: "archive", icon: "🗜️", label: "ZIP Archive" },
-  "application/x-rar-compressed": { type: "archive", icon: "🗜️", label: "RAR Archive" },
-  "application/x-7z-compressed": { type: "archive", icon: "🗜️", label: "7Z Archive" },
-  "image/jpeg": { type: "image", icon: "🖼️", label: "JPEG Image" },
-  "image/png": { type: "image", icon: "🖼️", label: "PNG Image" },
-  "image/gif": { type: "image", icon: "🖼️", label: "GIF Image" },
-  "image/webp": { type: "image", icon: "🖼️", label: "WebP Image" },
-  "audio/mpeg": { type: "audio", icon: "🎵", label: "MP3 Audio" },
-  "audio/wav": { type: "audio", icon: "🎵", label: "WAV Audio" },
-  "audio/ogg": { type: "audio", icon: "🎵", label: "OGG Audio" },
-  "audio/mp4": { type: "audio", icon: "🎵", label: "M4A Audio" },
-  "video/mp4": { type: "video", icon: "🎬", label: "MP4 Video" },
-  "video/webm": { type: "video", icon: "🎬", label: "WebM Video" },
-};
-
-type RedFlag = { severity: "Critical" | "High" | "Medium" | "Low"; text: string };
-type UjrisResult = {
+interface Analysis {
   integrityScore: number;
-  redFlags: RedFlag[];
+  redFlags: string[];
   recommendations: string[];
-  gambianLawViolations: string[];
   summary: string;
-};
+}
 
-function IntegrityGauge({ score }: { score: number }) {
-  const pct = Math.min(100, Math.max(0, score));
-  const { color, bg, label } =
-    pct >= 70 ? { color: "#065f46", bg: "#dcfce7", label: "Low Risk" }
-    : pct >= 45 ? { color: "#92400e", bg: "#fef3c7", label: "Moderate Risk" }
-    : { color: "#991b1b", bg: "#fee2e2", label: "High Risk" };
-  const r = 50;
-  const circ = 2 * Math.PI * r;
-  const fill = (pct / 100) * circ;
-  const strokeColor = pct >= 70 ? "#10B981" : pct >= 45 ? "#D4AF37" : "#E63946";
+interface ApiResponse {
+  ok: boolean;
+  analysis?: Analysis;
+  legalDisclaimer?: string;
+  error?: string;
+}
+
+function ScoreRing({ score }: { score: number }) {
+  const color = score >= 70 ? "#16a34a" : score >= 40 ? "#d97706" : "#dc2626";
+  const label = score >= 70 ? "Low Risk" : score >= 40 ? "Moderate Risk" : "High Risk";
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
-      <div style={{ position: "relative", width: 120, height: 120, flexShrink: 0 }}>
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r={r} fill="none" stroke="#E2E8F0" strokeWidth="10" />
-          <circle cx="60" cy="60" r={r} fill="none" stroke={strokeColor} strokeWidth="10" strokeLinecap="round"
-            strokeDasharray={`${fill} ${circ - fill}`} transform="rotate(-90 60 60)"
-            style={{ transition: "stroke-dasharray 0.8s ease" }} />
-          <text x="60" y="52" textAnchor="middle" fontSize="22" fontWeight="800" fill={strokeColor}>{pct}</text>
-          <text x="60" y="68" textAnchor="middle" fontSize="9" fill="#64748B">/100 SCORE</text>
-        </svg>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+      <div style={{
+        width: 80, height: 80, borderRadius: "50%",
+        border: `6px solid ${color}`,
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        background: "#fff",
+      }}>
+        <span style={{ fontSize: "1.5rem", fontWeight: 900, color, lineHeight: 1 }}>{score}</span>
+        <span style={{ fontSize: "0.55rem", color: "#6b7280", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>/ 100</span>
       </div>
-      <div>
-        <div style={{ display: "inline-block", padding: "0.3rem 0.85rem", borderRadius: "999px", background: bg, color, fontWeight: 800, fontSize: "0.88rem", marginBottom: "0.4rem" }}>
-          {label}
-        </div>
-        <p style={{ margin: 0, fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-text-muted)" }}>
-          Document Integrity Score
-        </p>
-      </div>
+      <span style={{ fontSize: "0.75rem", fontWeight: 700, color }}>{label}</span>
     </div>
   );
 }
 
-const SEVERITY_STYLES: Record<string, { bg: string; color: string; border: string }> = {
-  Critical: { bg: "#fef2f2", color: "#991b1b", border: "rgba(239,68,68,0.3)" },
-  High: { bg: "#fff7ed", color: "#9a3412", border: "rgba(249,115,22,0.3)" },
-  Medium: { bg: "#fefce8", color: "#92400e", border: "rgba(234,179,8,0.3)" },
-  Low: { bg: "#f0fdf4", color: "#166534", border: "rgba(34,197,94,0.3)" },
-};
-
-function parseRedFlags(raw: unknown[]): RedFlag[] {
-  return raw.map((item) => {
-    if (typeof item === "string") {
-      const lower = item.toLowerCase();
-      const severity: RedFlag["severity"] = lower.includes("critical") ? "Critical"
-        : lower.includes("high") ? "High"
-        : lower.includes("medium") ? "Medium"
-        : "Low";
-      return { severity, text: item };
-    }
-    const obj = item as Record<string, string>;
-    return {
-      severity: (obj.severity as RedFlag["severity"]) ?? "Medium",
-      text: obj.text ?? obj.flag ?? String(item),
-    };
-  });
-}
-
-export default function AskUjrisPage() {
-  const [docType, setDocType] = useState("Contract");
-  const [concern, setConcern] = useState("");
+export default function AskUJRISPage() {
   const [docText, setDocText] = useState("");
-  const [fileName, setFileName] = useState("");
-  const [fileType, setFileType] = useState("");
-  const [fileNote, setFileNote] = useState("");
+  const [docType, setDocType] = useState("");
+  const [concern, setConcern] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<UjrisResult | null>(null);
-  const [error, setError] = useState("");
-  const [lastInput, setLastInput] = useState<object>({});
-  const [feedbackDone, setFeedbackDone] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [audioLoading, setAudioLoading] = useState(false);
-  const [audioMock, setAudioMock] = useState(false);
+  const [result, setResult] = useState<ApiResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const charCount = docText.length;
+  const wordCount = docText.trim() ? docText.trim().split(/\s+/).length : 0;
 
-  async function handleListen(text: string) {
-    setAudioLoading(true);
-    setAudioUrl(null);
-    setAudioMock(false);
-    try {
-      const res = await fetch("/api/audio/summary", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text.slice(0, 3000) }),
-      });
-      const data = await res.json();
-      if (data.mock) { setAudioMock(true); return; }
-      setAudioUrl(data.audioUrl);
-    } catch {
-      setAudioMock(true);
-    } finally {
-      setAudioLoading(false);
-    }
-  }
-
-  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const info = ACCEPTED_TYPES[file.type] ?? { type: "unknown", icon: "📁", label: file.type || "Unknown" };
-
-    if (info.type === "unknown" && !file.name.match(/\.(pdf|doc|docx|txt|rtf|zip|rar|7z|jpe?g|png|gif|webp|mp3|wav|ogg|m4a|mp4|webm)$/i)) {
-      setFileNote(`⚠️ File type "${file.type || file.name.split(".").pop()}" is not supported. Please upload a document, image, audio, video, or archive.`);
-      setFileName("");
-      return;
-    }
-
-    setFileName(`${info.icon} ${file.name} (${info.label})`);
-    setFileType(info.type);
-    setFileNote("");
-
-    if (info.type === "document" && (file.type === "text/plain" || file.name.endsWith(".txt") || file.name.endsWith(".rtf"))) {
-      const reader = new FileReader();
-      reader.onload = () => setDocText(String(reader.result ?? ""));
-      reader.readAsText(file);
-    } else if (info.type === "image") {
-      setDocText((prev) => prev || `[${info.icon} IMAGE UPLOADED: ${file.name}]\nOCR placeholder — image text extraction will be processed server-side.\nPlease also paste any visible text from the image below.`);
-    } else if (info.type === "audio") {
-      setDocText((prev) => prev || `[${info.icon} AUDIO UPLOADED: ${file.name}]\nTranscription placeholder — audio will be transcribed server-side.\nPlease summarise the audio content below if known.`);
-    } else if (info.type === "video") {
-      setDocText((prev) => prev || `[${info.icon} VIDEO UPLOADED: ${file.name}]\nVideo audio extraction placeholder — will be processed server-side.\nPlease summarise the video content below.`);
-    } else if (info.type === "archive") {
-      setDocText((prev) => prev || `[${info.icon} ARCHIVE UPLOADED: ${file.name}]\nArchive contents will be extracted and listed server-side.\nPlease list the key documents inside the archive below.`);
-    } else {
-      setDocText((prev) => prev || `[${info.icon} UPLOADED: ${file.name}]\nPaste the key clauses or text from this document below for analysis.`);
-    }
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!docText.trim()) { setError("Please paste document text or upload a readable file."); return; }
-    setError("");
-    setLoading(true);
+  async function handleAnalyse() {
+    if (!docText.trim()) { setError("Please paste document text before analysing."); return; }
+    if (docText.trim().length < 50) { setError("Document text is too short for meaningful analysis (minimum 50 characters)."); return; }
+    setError(null);
     setResult(null);
-    setFeedbackDone(false);
-
-    const input = { documentType: docType, concern, documentText: docText };
-    setLastInput(input);
-
-    const offlineKey = `offline_ujris_page_${Date.now()}`;
-    localStorage.setItem(offlineKey, JSON.stringify(input));
-
+    setLoading(true);
     try {
       const res = await fetch("/api/ask-ujris", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(input),
+        body: JSON.stringify({ documentText: docText, documentType: docType || undefined, concern: concern || undefined }),
       });
-      const data = await res.json();
-      const a = data.analysis ?? data;
-
-      const rawFlags = a.redFlags ?? a.flaggedClauses ?? [];
-      const flags = parseRedFlags(rawFlags);
-
-      setResult({
-        integrityScore: Number(a.integrityScore ?? a.scores?.integrityScore ?? 0),
-        redFlags: flags,
-        recommendations: a.recommendations ?? a.recommendedActions ?? [],
-        gambianLawViolations: a.gambianLawViolations ?? a.lawViolations ?? [],
-        summary: a.summary ?? "",
-      });
-      localStorage.removeItem(offlineKey);
+      const data = await res.json() as ApiResponse;
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Analysis failed. Please try again.");
+      } else {
+        setResult(data);
+      }
     } catch {
-      setError("Analysis failed. Your submission has been saved offline.");
+      setError("Network error. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }
   }
 
-  async function handleFeedback(rating: number, feedback: string) {
-    if (result) {
-      await saveAnalysis("ask-ujris", lastInput, result, rating, feedback);
-    }
-    setFeedbackDone(true);
+  function handleClear() {
+    setDocText(""); setDocType(""); setConcern(""); setResult(null); setError(null);
   }
 
-  function handleCopy() {
-    if (!result) return;
-    const text = [
-      `INTEGRITY SCORE: ${result.integrityScore}/100`,
-      `SUMMARY: ${result.summary}`,
-      result.redFlags.length ? `\nRED FLAGS:\n${result.redFlags.map(f => `[${f.severity}] ${f.text}`).join("\n")}` : "",
-      result.gambianLawViolations.length ? `\nGAMBIAN LAW CONCERNS:\n${result.gambianLawViolations.join("\n")}` : "",
-      result.recommendations.length ? `\nRECOMMENDATIONS:\n${result.recommendations.join("\n")}` : "",
-    ].filter(Boolean).join("\n");
-    navigator.clipboard.writeText(text + WATERMARK);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
-
-  const criticalCount = result?.redFlags.filter(f => f.severity === "Critical").length ?? 0;
-  const highCount = result?.redFlags.filter(f => f.severity === "High").length ?? 0;
+  const analysis = result?.analysis;
 
   return (
-    <>
-      <Navbar />
-      <main className="page-wrap" style={{ maxWidth: "860px" }}>
-        <div style={{ marginBottom: "1.75rem" }}>
-          <p style={eyebrowStyle}>ASK UJRIS™</p>
-          <h1 style={pageTitleStyle}>Forensic Document Analyzer</h1>
-          <p style={pageSubStyle}>
-            Upload any document, audio, video, image, or archive. UJRIS gives you an integrity score, flags risk clauses by severity, identifies Gambian law concerns, and recommends action before you sign.
+    <div style={{ minHeight: "100vh", background: "#f8fafc", fontFamily: "'DM Sans', system-ui, sans-serif" }}>
+
+      <div style={{ background: `linear-gradient(135deg, ${DARK}, ${G})`, padding: "3rem 1.5rem 2.5rem", borderBottom: `2px solid ${GOLD}40` }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12, flexWrap: "wrap" }}>
+            <div style={{ background: `${GOLD}20`, border: `1px solid ${GOLD}50`, borderRadius: 999, padding: "4px 14px", fontSize: "0.72rem", fontWeight: 700, color: GOLD, letterSpacing: "0.1em", textTransform: "uppercase" as const }}>
+              AI Tool
+            </div>
+            <div style={{ background: "#FEF3C720", border: "1px solid #FCD34D50", borderRadius: 999, padding: "4px 12px", fontSize: "0.72rem", fontWeight: 700, color: "#FCD34D", letterSpacing: "0.08em" }}>
+              Beta
+            </div>
+          </div>
+          <h1 style={{ margin: "0 0 8px", fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 900, color: "#fff" }}>
+            ASK UJRIS™
+          </h1>
+          <p style={{ margin: 0, color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", maxWidth: "55ch", lineHeight: 1.65 }}>
+            Forensic document analyser. Paste any business or legal document to get an integrity score, red flag analysis, and action recommendations.
           </p>
+          <div style={{ marginTop: "1rem", background: "rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.6rem 1rem", fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.12)" }}>
+            ⚠️ <strong style={{ color: "rgba(255,255,255,0.85)" }}>Legal disclaimer:</strong> ASK UJRIS outputs are analytical indicators only — not legal advice. Consult a qualified lawyer before signing, rejecting, or litigating any contract.
+          </div>
         </div>
+      </div>
 
-        <div className="fortis-card" style={{ padding: "2rem" }}>
-          <form onSubmit={handleSubmit} style={formStyle}>
-            {/* Type + Concern */}
-            <div style={rowStyle}>
-              <div style={fieldStyle}>
-                <label style={labelStyle}>Document Type <span style={reqStyle}>*</span></label>
-                <select className="fortis-input" value={docType} onChange={(e) => setDocType(e.target.value)}>
-                  {DOC_TYPES.map((t) => <option key={t}>{t}</option>)}
-                </select>
-              </div>
-              <div style={fieldStyle}>
-                <label style={labelStyle}>Your Main Concern</label>
-                <input type="text" className="fortis-input" value={concern} onChange={(e) => setConcern(e.target.value)} placeholder="e.g. Payment terms, IP rights, termination" />
-              </div>
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "2.5rem 1.5rem" }}>
+
+        <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #e2e8f0", padding: "1.5rem", marginBottom: "1.5rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+            <div>
+              <label style={{ display: "block", fontSize: "0.78rem", fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" as const, letterSpacing: "0.05em" }}>
+                Document Type
+              </label>
+              <select
+                value={docType}
+                onChange={e => setDocType(e.target.value)}
+                style={{ width: "100%", padding: "0.6rem 0.75rem", borderRadius: 8, border: "1px solid #d1d5db", fontSize: "0.85rem", color: "#374151", background: "#fff", fontFamily: "inherit" }}
+              >
+                <option value="">Select type (optional)</option>
+                {DOC_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
             </div>
-
-            {/* File upload */}
-            <div style={fieldStyle}>
-              <label style={labelStyle}>Upload File <span style={{ fontWeight: 400, color: "var(--color-text-muted)", fontSize: "0.8rem" }}>(docs, images, audio, video, archives)</span></label>
+            <div>
+              <label style={{ display: "block", fontSize: "0.78rem", fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" as const, letterSpacing: "0.05em" }}>
+                Your Concern (optional)
+              </label>
               <input
-                type="file"
-                accept=".pdf,.doc,.docx,.txt,.rtf,.zip,.rar,.7z,.jpg,.jpeg,.png,.gif,.webp,.mp3,.wav,.ogg,.m4a,.mp4,.webm"
-                onChange={handleFile}
-                className="fortis-input"
-                style={{ paddingTop: "0.55rem", cursor: "pointer" }}
-              />
-              {fileName && <p style={fileNameStyle}>{fileName}</p>}
-              {fileNote && <p style={fileNoteStyle}>{fileNote}</p>}
-              {fileType === "image" && <p style={hintStyle}>📸 OCR text extraction will be applied to the uploaded image.</p>}
-              {fileType === "audio" && <p style={hintStyle}>🎙️ Audio transcription will be applied server-side.</p>}
-              {fileType === "video" && <p style={hintStyle}>🎬 Video audio extraction placeholder.</p>}
-              {fileType === "archive" && <p style={hintStyle}>📦 Archive contents will be listed and analyzed.</p>}
-            </div>
-
-            {/* Text area */}
-            <div style={fieldStyle}>
-              <label style={labelStyle}>Document Text <span style={reqStyle}>*</span></label>
-              <textarea
-                className="fortis-textarea"
-                value={docText}
-                onChange={(e) => setDocText(e.target.value)}
-                placeholder="Paste the full document text, contract clauses, or key terms here. The more text, the more precise the analysis."
-                rows={8}
-                style={{ minHeight: "200px" }}
+                type="text"
+                placeholder="e.g. unfair termination clause, hidden fees…"
+                value={concern}
+                onChange={e => setConcern(e.target.value)}
+                style={{ width: "100%", padding: "0.6rem 0.75rem", borderRadius: 8, border: "1px solid #d1d5db", fontSize: "0.85rem", color: "#374151", fontFamily: "inherit", boxSizing: "border-box" as const }}
               />
             </div>
+          </div>
 
-            {error && <div style={errorBoxStyle}>{error}</div>}
+          <label style={{ display: "block", fontSize: "0.78rem", fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase" as const, letterSpacing: "0.05em" }}>
+            Document Text *
+          </label>
+          <textarea
+            value={docText}
+            onChange={e => setDocText(e.target.value)}
+            placeholder="Paste the full text of the document here. You can paste directly from a PDF, Word document, or email…"
+            rows={12}
+            style={{ width: "100%", padding: "0.75rem", borderRadius: 8, border: `1px solid ${docText.length > 0 ? G + "60" : "#d1d5db"}`, fontSize: "0.85rem", color: "#374151", fontFamily: "'DM Sans', system-ui, sans-serif", resize: "vertical" as const, lineHeight: 1.6, boxSizing: "border-box" as const, outline: "none" }}
+          />
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8, fontSize: "0.75rem", color: "#9ca3af" }}>
+            <span>{wordCount.toLocaleString()} words · {charCount.toLocaleString()} characters</span>
+            {charCount > 0 && <button onClick={handleClear} style={{ background: "none", border: "none", color: "#9ca3af", cursor: "pointer", fontSize: "0.75rem", padding: 0 }}>Clear ×</button>}
+          </div>
 
-            <button type="submit" className="btn-primary" disabled={loading || !docText.trim()} style={{ alignSelf: "flex-start", minWidth: "200px" }}>
-              {loading ? <><span className="spinner" /> Analyzing Document...</> : "Analyze Document"}
+          {error && (
+            <div style={{ marginTop: 12, background: "#FFF1F2", border: "1px solid #FECDD3", borderRadius: 8, padding: "0.75rem 1rem", fontSize: "0.83rem", color: "#be123c" }}>
+              {error}
+            </div>
+          )}
+
+          <div style={{ marginTop: 16, display: "flex", gap: 10 }}>
+            <button
+              onClick={handleAnalyse}
+              disabled={loading || !docText.trim()}
+              style={{
+                background: loading || !docText.trim() ? "#d1d5db" : `linear-gradient(135deg, ${DARK}, ${G})`,
+                color: "#fff", border: "none", borderRadius: 10, padding: "0.75rem 1.75rem",
+                fontSize: "0.9rem", fontWeight: 700, cursor: loading || !docText.trim() ? "not-allowed" : "pointer",
+                fontFamily: "inherit", display: "flex", alignItems: "center", gap: 8,
+                transition: "opacity 0.15s",
+              }}
+            >
+              {loading ? (
+                <>
+                  <span style={{ display: "inline-block", width: 14, height: 14, border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.6s linear infinite" }} />
+                  Analysing…
+                </>
+              ) : "Analyse Document →"}
             </button>
-          </form>
+          </div>
         </div>
 
-        {result && (
-          <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-            {/* Score + Summary */}
-            <div style={scoreBannerStyle}>
-              <IntegrityGauge score={result.integrityScore} />
-              <div style={{ flex: 1 }}>
-                <p style={{ margin: "0 0 0.5rem", fontSize: "0.85rem", lineHeight: 1.65, color: "var(--color-text)" }}>{result.summary}</p>
-                <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                  {criticalCount > 0 && <span style={severityCountBadge("Critical")}>{criticalCount} Critical</span>}
-                  {highCount > 0 && <span style={severityCountBadge("High")}>{highCount} High</span>}
-                  <button type="button" onClick={handleCopy} style={copyBtnStyle}>{copied ? "✓ Copied" : "📋 Copy Report"}</button>
-                  <button
-                    type="button"
-                    onClick={() => handleListen(
-                      `Document integrity score: ${result.integrityScore} out of 100. ${result.summary} ${result.redFlags.length > 0 ? `Red flags detected: ${result.redFlags.map(f => `${f.severity}: ${f.text}`).join(". ")}` : "No red flags detected."}`
-                    )}
-                    disabled={audioLoading}
-                    style={listenBtnStyle}
-                  >
-                    {audioLoading ? "⏳ Loading…" : "🔊 Listen"}
-                  </button>
-                </div>
-                {audioMock && (
-                  <p style={audioMockStyle}>Add <code>ELEVENLABS_API_KEY</code> to enable audio summaries.</p>
-                )}
-                {audioUrl && (
-                  <audio src={audioUrl} controls autoPlay style={{ width: "100%", marginTop: "0.5rem" }} />
+        {analysis && (
+          <div style={{ display: "flex", flexDirection: "column" as const, gap: 16 }}>
+            <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #e2e8f0", padding: "1.5rem", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" as const }}>
+              <ScoreRing score={analysis.integrityScore} />
+              <div style={{ flex: 1, minWidth: 200 }}>
+                <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#9ca3af", textTransform: "uppercase" as const, letterSpacing: "0.08em", marginBottom: 4 }}>Document Summary</div>
+                <p style={{ margin: 0, fontSize: "0.9rem", color: "#1a1a1a", lineHeight: 1.65, fontWeight: 500 }}>{analysis.summary}</p>
+                {result?.legalDisclaimer && (
+                  <p style={{ margin: "8px 0 0", fontSize: "0.75rem", color: "#9ca3af", lineHeight: 1.5 }}>{result.legalDisclaimer}</p>
                 )}
               </div>
             </div>
 
-            {/* Red Flags */}
-            {result.redFlags.length > 0 ? (
-              <div style={sectionCardStyle}>
-                <p style={sectionLabelStyle}>Red Flags — {result.redFlags.length} Issue{result.redFlags.length !== 1 ? "s" : ""} Detected</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                  {(["Critical", "High", "Medium", "Low"] as RedFlag["severity"][]).map((sev) => {
-                    const flags = result.redFlags.filter(f => f.severity === sev);
-                    if (flags.length === 0) return null;
-                    const s = SEVERITY_STYLES[sev];
-                    return (
-                      <div key={sev}>
-                        <p style={{ margin: "0 0 0.4rem", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: s.color }}>{sev}</p>
-                        {flags.map((flag, i) => (
-                          <div key={i} style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start", padding: "0.65rem 0.85rem", marginBottom: "0.35rem", background: s.bg, border: `1px solid ${s.border}`, borderRadius: "0.5rem" }}>
-                            <span style={{ flexShrink: 0, fontSize: "0.85rem" }}>⚠</span>
-                            <p style={{ margin: 0, fontSize: "0.88rem", color: s.color, lineHeight: 1.6 }}>{flag.text}</p>
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : (
-              <div style={{ padding: "1rem 1.25rem", background: "#f0fdf4", border: "1px solid rgba(16,185,129,0.25)", borderRadius: "0.75rem" }}>
-                <p style={{ margin: 0, fontSize: "0.92rem", color: "#065f46", fontWeight: 600 }}>
-                  ✓ No critical red flags detected. Proceed with careful standard review.
-                </p>
-              </div>
-            )}
-
-            {/* Gambian Law Violations */}
-            {result.gambianLawViolations.length > 0 && (
-              <div style={{ ...sectionCardStyle, borderColor: "rgba(239,68,68,0.2)", background: "#fff8f8" }}>
-                <p style={{ ...sectionLabelStyle, color: "#991b1b" }}>Gambian Law Concerns</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  {result.gambianLawViolations.map((v, i) => (
-                    <div key={i} style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start" }}>
-                      <span style={{ color: "#991b1b", fontWeight: 800, flexShrink: 0 }}>⚖</span>
-                      <p style={{ margin: 0, fontSize: "0.88rem", color: "#991b1b", lineHeight: 1.6 }}>{v}</p>
-                    </div>
+            {analysis.redFlags && analysis.redFlags.length > 0 && (
+              <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #FECDD3", padding: "1.5rem" }}>
+                <h3 style={{ margin: "0 0 12px", fontSize: "0.9rem", fontWeight: 800, color: "#be123c", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span>⚠️</span> Red Flags ({analysis.redFlags.length})
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: "1.25rem", display: "flex", flexDirection: "column" as const, gap: 8 }}>
+                  {analysis.redFlags.map((flag, i) => (
+                    <li key={i} style={{ fontSize: "0.85rem", color: "#374151", lineHeight: 1.6 }}>{flag}</li>
                   ))}
-                </div>
+                </ul>
               </div>
             )}
 
-            {/* Recommendations */}
-            {result.recommendations.length > 0 && (
-              <div style={sectionCardStyle}>
-                <p style={sectionLabelStyle}>Recommended Actions</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                  {result.recommendations.map((rec, i) => (
-                    <div key={i} style={recCardStyle}>
-                      <span style={recNumStyle}>{i + 1}</span>
-                      <p style={{ margin: 0, fontSize: "0.92rem", color: "var(--color-text)", lineHeight: 1.6 }}>{rec}</p>
-                    </div>
+            {analysis.recommendations && analysis.recommendations.length > 0 && (
+              <div style={{ background: "#fff", borderRadius: 12, border: "1px solid #86EFAC", padding: "1.5rem" }}>
+                <h3 style={{ margin: "0 0 12px", fontSize: "0.9rem", fontWeight: 800, color: "#166534", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span>✅</span> Recommendations ({analysis.recommendations.length})
+                </h3>
+                <ol style={{ margin: 0, paddingLeft: "1.25rem", display: "flex", flexDirection: "column" as const, gap: 8 }}>
+                  {analysis.recommendations.map((rec, i) => (
+                    <li key={i} style={{ fontSize: "0.85rem", color: "#374151", lineHeight: 1.6 }}>{rec}</li>
                   ))}
-                </div>
+                </ol>
               </div>
             )}
 
-            <p style={disclaimerStyle}>
-              AI-generated analysis for informational purposes. Always consult a qualified legal professional before signing. This report carries a metadata watermark when copied.
-            </p>
-
-            <StarRating tool="Ask UJRIS" onSubmit={handleFeedback} submitted={feedbackDone} />
+            <div style={{ background: "#FEF3C7", border: "1px solid #FCD34D", borderRadius: 10, padding: "1rem 1.25rem", fontSize: "0.82rem", color: "#92400E" }}>
+              <strong>⚠️ Important:</strong> This AI analysis is not legal advice. Do not sign, reject, or litigate a contract solely based on this output. Consult a qualified lawyer — especially for high-value or legally complex documents.
+            </div>
           </div>
         )}
-      </main>
-      <Footer />
-    </>
+
+        <div style={{ marginTop: "3rem", background: "#fff", border: `1px solid ${G}20`, borderRadius: 12, padding: "1.25rem 1.5rem" }}>
+          <h3 style={{ margin: "0 0 10px", fontSize: "0.85rem", fontWeight: 800, color: G }}>What ASK UJRIS analyses</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
+            {[
+              ["Integrity Score", "0–100 document fairness rating"],
+              ["Unfair Clauses", "Non-compete, penalty, and liability traps"],
+              ["Missing Protections", "Omissions that disadvantage the signing party"],
+              ["Jurisdiction Risk", "Gambian law compliance indicators"],
+              ["Termination Terms", "Exit conditions and notice period analysis"],
+              ["Dispute Resolution", "Arbitration, governing law, forum clauses"],
+            ].map(([title, desc]) => (
+              <div key={title} style={{ background: "#f8fafc", borderRadius: 8, padding: "0.75rem 1rem" }}>
+                <div style={{ fontWeight: 700, fontSize: "0.82rem", color: G, marginBottom: 2 }}>{title}</div>
+                <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>{desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+      `}</style>
+    </div>
   );
 }
-
-function severityCountBadge(sev: string): React.CSSProperties {
-  const s = SEVERITY_STYLES[sev];
-  return { padding: "0.2rem 0.65rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 700, background: s.bg, color: s.color, border: `1px solid ${s.border}` };
-}
-
-const eyebrowStyle: React.CSSProperties = { margin: 0, fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: "0.14em", color: "var(--color-primary)" };
-const pageTitleStyle: React.CSSProperties = { margin: "0.4rem 0 0.75rem", fontSize: "clamp(1.6rem,3vw,2.4rem)", fontWeight: 800, color: "var(--color-text)" };
-const pageSubStyle: React.CSSProperties = { margin: 0, color: "var(--color-text-muted)", fontSize: "1rem", lineHeight: 1.7, maxWidth: "64ch" };
-const formStyle: React.CSSProperties = { display: "flex", flexDirection: "column" as const, gap: "1.25rem" };
-const rowStyle: React.CSSProperties = { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" };
-const fieldStyle: React.CSSProperties = { display: "flex", flexDirection: "column" as const, gap: "0.35rem" };
-const labelStyle: React.CSSProperties = { fontSize: "0.88rem", fontWeight: 700, color: "var(--color-text)" };
-const reqStyle: React.CSSProperties = { color: "var(--color-danger)" };
-const fileNameStyle: React.CSSProperties = { margin: "0.3rem 0 0", fontSize: "0.82rem", color: "var(--color-primary)", fontWeight: 600 };
-const fileNoteStyle: React.CSSProperties = { margin: "0.3rem 0 0", fontSize: "0.82rem", color: "var(--color-danger)", fontWeight: 600 };
-const hintStyle: React.CSSProperties = { margin: "0.3rem 0 0", fontSize: "0.78rem", color: "var(--color-text-muted)" };
-const errorBoxStyle: React.CSSProperties = { padding: "0.75rem 1rem", background: "rgba(230,57,70,0.08)", border: "1px solid rgba(230,57,70,0.25)", borderRadius: "0.5rem", color: "#991b1b", fontSize: "0.88rem" };
-const scoreBannerStyle: React.CSSProperties = { display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.5rem", background: "var(--color-card-bg)", border: "1.5px solid var(--color-border)", borderRadius: "0.85rem", flexWrap: "wrap" as const };
-const sectionCardStyle: React.CSSProperties = { padding: "1.5rem", background: "#FFFFFF", border: "1px solid var(--color-border)", borderRadius: "0.85rem" };
-const sectionLabelStyle: React.CSSProperties = { margin: "0 0 0.85rem", fontSize: "0.72rem", fontWeight: 700, textTransform: "uppercase" as const, letterSpacing: "0.1em", color: "var(--color-primary)" };
-const recCardStyle: React.CSSProperties = { display: "flex", gap: "0.75rem", alignItems: "flex-start" };
-const recNumStyle: React.CSSProperties = { flexShrink: 0, width: "24px", height: "24px", borderRadius: "50%", background: "var(--color-primary)", color: "#FFFFFF", fontSize: "0.72rem", fontWeight: 800, display: "inline-flex", alignItems: "center", justifyContent: "center", marginTop: "1px" };
-const disclaimerStyle: React.CSSProperties = { margin: 0, fontSize: "0.78rem", color: "var(--color-text-muted)", lineHeight: 1.6, fontStyle: "italic" };
-const copyBtnStyle: React.CSSProperties = { border: "1px solid var(--color-border)", background: "#FFFFFF", color: "var(--color-text-muted)", fontSize: "0.78rem", fontWeight: 600, padding: "0.35rem 0.85rem", borderRadius: "0.45rem", cursor: "pointer", fontFamily: "inherit" };
-const listenBtnStyle: React.CSSProperties = { padding: "0.35rem 0.85rem", background: "var(--color-primary)", color: "#FFFFFF", border: "none", borderRadius: "0.45rem", fontWeight: 700, fontSize: "0.78rem", cursor: "pointer", fontFamily: "inherit" };
-const audioMockStyle: React.CSSProperties = { margin: "0.4rem 0 0", padding: "0.5rem 0.85rem", background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: "0.45rem", fontSize: "0.75rem", color: "#92400e" };

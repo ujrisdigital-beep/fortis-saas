@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-export type AppRole = "CEO" | "BOARD" | "MANAGER" | "CLIENT" | "GOVERNMENT" | "PUBLIC";
+export type AppRole = "SUPER_ADMIN" | "CEO" | "BOARD" | "MANAGER" | "CLIENT" | "GOVERNMENT" | "PUBLIC";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },

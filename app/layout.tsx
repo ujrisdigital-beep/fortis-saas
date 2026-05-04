@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Navigation from "../components/Navigation";
-import { AskUjrisFab } from "../components/ask-ujris-fab";
+import Providers from "../components/Providers";
+import FloatingUJU from "../components/FloatingUJU";
 import { ServiceWorkerRegister } from "../components/sw-register";
+import CopyrightProtection from "../components/CopyrightProtection";
+import TradeSecretWatermark from "../components/TradeSecretWatermark";
 import "../styles/design-tokens.css";
 import "./globals.css";
 
@@ -30,10 +33,14 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="FORTIS OS" />
       </head>
       <body>
-        <Navigation />
-        {children}
-        <AskUjrisFab />
-        <ServiceWorkerRegister />
+        <Providers>
+          <Navigation />
+          {children}
+          <FloatingUJU />
+          <ServiceWorkerRegister />
+          <CopyrightProtection />
+          <TradeSecretWatermark />
+        </Providers>
       </body>
     </html>
   );

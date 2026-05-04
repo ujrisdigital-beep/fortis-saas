@@ -18,22 +18,22 @@ export async function POST(req: Request) {
       name: string;
       email: string;
       password: string;
-      organisation: string;
-      roleRequest: string;
-      sector: string;
+      organisation?: string;
+      roleRequest?: string;
+      sector?: string;
     };
 
-    if (!body.name || !body.email || !body.password || !body.organisation || !body.roleRequest || !body.sector) {
-      return NextResponse.json({ error: "All fields are required." }, { status: 400 });
+    if (!body.name || !body.email || !body.password) {
+      return NextResponse.json({ error: "Name, email, and password are required." }, { status: 400 });
     }
 
     if (hasDisposableDomain(body.email)) {
       return NextResponse.json({ error: "Disposable email addresses are not allowed." }, { status: 400 });
     }
 
-    if (!allowedRoles.includes(body.roleRequest as AllowedRole)) {
-      return NextResponse.json({ error: "Invalid role selection." }, { status: 400 });
-    }
+    const roleRequest = body.roleRequest && allowedRoles.includes(body.roleRequest as AllowedRole)
+      ? (body.roleRequest as AllowedRole)
+      : "PUBLIC";
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -47,22 +47,23 @@ export async function POST(req: Request) {
     // Hash password
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
-    // Create or get organisation
-    let org = await prisma.organisation.findFirst({
-      where: { name: body.organisation },
-    });
-
-    if (!org) {
-      org = await prisma.organisation.create({
-        data: {
-          name: body.organisation,
-          sector: body.sector,
-          size: "unknown",
-          region: "unknown",
-          digitalMaturity: 0,
-          score: 0,
-        },
-      });
+    // Optionally link to organisation
+    let orgId: string | undefined;
+    if (body.organisation?.trim()) {
+      let org = await prisma.organisation.findFirst({ where: { name: body.organisation.trim() } });
+      if (!org) {
+        org = await prisma.organisation.create({
+          data: {
+            name: body.organisation.trim(),
+            sector: body.sector ?? "general",
+            size: "unknown",
+            region: "unknown",
+            digitalMaturity: 0,
+            score: 0,
+          },
+        });
+      }
+      orgId = org.id;
     }
 
     // Create user in database
@@ -71,8 +72,8 @@ export async function POST(req: Request) {
         email: body.email.toLowerCase(),
         name: body.name,
         password: hashedPassword,
-        role: body.roleRequest as AllowedRole,
-        orgId: org.id,
+        role: roleRequest,
+        ...(orgId ? { orgId } : {}),
       },
     });
 
@@ -84,7 +85,7 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           to: body.email,
           name: body.name,
-          role: body.roleRequest,
+          role: roleRequest,
         }),
       });
     } catch (emailError) {
@@ -97,9 +98,9 @@ export async function POST(req: Request) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          to: "ceo@fortisinvicta.com",
-          name: "Cadjatu Djalo",
-          role: `New signup request: ${body.roleRequest}`,
+          to: "ceo@fortisos.co.uk",
+          name: "CEO",
+          role: `New signup: ${roleRequest}`,
         }),
       });
     } catch (adminAlertError) {

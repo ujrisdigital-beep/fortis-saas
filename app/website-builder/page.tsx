@@ -392,6 +392,86 @@ export default function WebsiteBuilderPage() {
             </div>
           </div>
         </div>
+      {/* Professional Website Section */}
+      <section style={{
+        maxWidth: "1200px", margin: "0 auto", padding: "2.5rem 1.5rem 3rem",
+      }}>
+        <div style={{
+          background: "linear-gradient(135deg, #0F3D21 0%, #1B4D3E 60%, #2A6B52 100%)",
+          borderRadius: 16,
+          padding: "2.5rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "1.5rem",
+          position: "relative",
+          overflow: "hidden",
+        }}>
+          {/* Decorative ring */}
+          <div style={{
+            position: "absolute", right: -60, top: -60,
+            width: 240, height: 240, borderRadius: "50%",
+            border: "2px solid rgba(196,148,58,0.18)", pointerEvents: "none",
+          }} />
+          <div style={{
+            position: "absolute", right: -24, top: -24,
+            width: 140, height: 140, borderRadius: "50%",
+            border: "1.5px solid rgba(196,148,58,0.28)", pointerEvents: "none",
+          }} />
+
+          <div style={{ position: "relative" }}>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              background: "rgba(196,148,58,0.18)", border: "1px solid rgba(196,148,58,0.35)",
+              borderRadius: 999, padding: "3px 10px", marginBottom: "0.75rem",
+            }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#C4943A", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                Powered by Framer
+              </span>
+            </div>
+            <h2 style={{
+              margin: "0 0 0.5rem",
+              color: "#FFFFFF",
+              fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)",
+              fontWeight: 800,
+            }}>
+              Need a Professional Website?
+            </h2>
+            <p style={{
+              margin: 0,
+              color: "rgba(255,255,255,0.7)",
+              fontSize: "0.95rem",
+              lineHeight: 1.7,
+              maxWidth: "52ch",
+            }}>
+              Go beyond templates. Build a pixel-perfect, mobile-first website with Framer — the world&apos;s most powerful no-code builder — fully integrated with your FORTIS OS brand.
+            </p>
+          </div>
+
+          <a
+            href="/website-builder/framer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "0.8rem 1.6rem",
+              background: "#C4943A",
+              color: "#0F3D21",
+              borderRadius: 10,
+              fontWeight: 800,
+              fontSize: "0.95rem",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              position: "relative",
+              flexShrink: 0,
+            }}
+          >
+            🚀 Launch Professional Builder
+          </a>
+        </div>
+      </section>
+
       </main>
       <Footer />
     </>

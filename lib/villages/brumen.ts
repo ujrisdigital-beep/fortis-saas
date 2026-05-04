@@ -1,0 +1,55 @@
+export const brumenVillage = {
+  id: "brumen",
+  name: "Brumen Village",
+  district: "Foni Jarrol",
+  region: "West Coast Region",
+  lat: 13.2017,
+  lng: -15.8194,
+  population: "~3,500 (Foni Jarrol District cluster)",
+  landmark: {
+    name: "Foni Jarrol Health Centre",
+    type: "health",
+    description: "Primary healthcare facility serving Brumen, Kwinella, Jambur, Faraba, and surrounding villages. Provides maternal health, immunisation, basic outpatient care, and malaria treatment. Under the West Coast Region Health Team.",
+    website: "https://www.moh.gov.gm/facilities",
+    phone: "+220 7334567",
+    lat: 13.2017,
+    lng: -15.8194,
+  },
+  schools: [
+    {
+      name: "Brumen Lower Basic School",
+      type: "Lower Basic (Grades 1–9)",
+      description: "Government lower basic school serving Brumen and neighbouring communities. Run by the Ministry of Basic & Secondary Education.",
+      lat: 13.2005,
+      lng: -15.8210,
+    },
+  ],
+  agriculture: [
+    {
+      name: "Brumen Rice Field Cooperative",
+      type: "Rice farming collective",
+      description: "Community rice irrigation scheme on the floodplains north of the village. Grows local varieties and ISRIZ-7 salt-tolerant rice. Managed by women's kafo groups.",
+      lat: 13.1983,
+      lng: -15.8231,
+    },
+    {
+      name: "Foni Jarrol Groundnut Depot",
+      type: "Agricultural depot",
+      description: "Seasonal groundnut purchase and storage depot serving the Foni Jarrol district farmers under the Gambia Cooperative & Groundnut Union network.",
+      lat: 13.2040,
+      lng: -15.8160,
+    },
+  ],
+  roads: [
+    {
+      name: "Brumen–Kwinella Feeder Road",
+      type: "Feeder road",
+      description: "7 km laterite feeder road connecting Brumen to the South Bank Road (Trans-Gambia highway). Rehabilitated under AfDB rural connectivity programme.",
+    },
+  ],
+  nearbyVillages: ["Kwinella", "Jambur", "Faraba", "Brefet", "Sibanor"],
+  distanceFromBanjul: "~85 km south-east via South Bank Road",
+  streetViewUrl: `https://www.google.com/maps/place/13.2017,-15.8194/@13.2017,-15.8194,15z/data=!3m1!1e3`,
+  mapEmbedUrl: "https://maps.google.com/maps?q=13.2017,-15.8194&z=14&output=embed",
+  directionsUrl: "https://www.google.com/maps/dir//13.2017,-15.8194",
+};

@@ -31,6 +31,8 @@ const NAV_ITEMS = [
     links: [
       { href: "/energy", label: "⚡ Energy" },
       { href: "/agriculture", label: "🌾 Agriculture" },
+      { href: "/smart-agriculture", label: "  🧮 Smart Agriculture" },
+      { href: "/smart-livestock", label: "  🧮 Smart Livestock" },
       { href: "/housing", label: "🏠 Housing" },
       { href: "/health", label: "🏥 Health" },
       { href: "/fintech", label: "💰 Fintech" },

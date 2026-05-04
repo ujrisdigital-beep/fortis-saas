@@ -8,6 +8,7 @@ datasource db {
 }
 
 enum UserRole {
+  SUPER_ADMIN
   CEO
   BOARD
   MANAGER
@@ -17,13 +18,17 @@ enum UserRole {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  password  String
-  role      UserRole @default(PUBLIC)
-  orgId     String?
-  createdAt DateTime @default(now())
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password      String
+  role          UserRole  @default(PUBLIC)
+  orgId         String?
+  emailVerified DateTime?
+  industry      String?
+  jobRole       String?
+  department    String?
+  createdAt     DateTime  @default(now())
 
   organisation Organisation? @relation(fields: [orgId], references: [id])
   cases        Case[]
@@ -393,6 +398,172 @@ model AccessLog {
   courtOrder CourtOrder @relation(fields: [courtOrderId], references: [id])
 }
 
+// ─── PASSWORD RESET ────────────────────────────────────────────────────────
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ─── DIGITAL TECHNICAL TRAINING HUB ───────────────────────────────────────
+
+enum TrainingStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+  SUSPENDED
+}
+
+enum AssessmentResult {
+  PASS
+  FAIL
+  PENDING
+}
+
+model TrainingProgram {
+  id              String         @id @default(cuid())
+  title           String
+  slug            String         @unique
+  description     String
+  sector          String         // digital | agriculture | fintech | health | energy
+  level           String         // beginner | intermediate | advanced
+  durationWeeks   Int
+  modulesJson     Json           // array of {id, title, content, videoUrl, quiz}
+  aiGenerated     Boolean        @default(false)
+  status          TrainingStatus @default(DRAFT)
+  certTemplate    String?        // PDF template identifier
+  employerReady   Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  enrollments          Enrollment[]
+  assessments          Assessment[]
+  certificates         BlockchainCertificate[]
+  learningPaths        LearningPathProgram[]
+}
+
+model LearningPath {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  targetRole  String   // e.g. "Full-Stack Developer", "Data Analyst"
+  createdAt   DateTime @default(now())
+
+  programs LearningPathProgram[]
+}
+
+model LearningPathProgram {
+  id             String @id @default(cuid())
+  learningPathId String
+  programId      String
+  order          Int
+
+  learningPath LearningPath    @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  program      TrainingProgram @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@unique([learningPathId, programId])
+}
+
+model Enrollment {
+  id           String           @id @default(cuid())
+  userId       String
+  programId    String
+  status       EnrollmentStatus @default(ACTIVE)
+  progress     Float            @default(0)  // 0-100 percent
+  enrolledAt   DateTime         @default(now())
+  completedAt  DateTime?
+
+  program        TrainingProgram  @relation(fields: [programId], references: [id])
+  moduleProgress ModuleProgress[]
+  certificate    BlockchainCertificate?
+
+  @@unique([userId, programId])
+}
+
+model ModuleProgress {
+  id           String    @id @default(cuid())
+  enrollmentId String
+  moduleId     String    // references modulesJson[].id
+  completed    Boolean   @default(false)
+  score        Float?    // quiz score 0-100
+  timeSpentMin Int       @default(0)
+  completedAt  DateTime?
+
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+
+  @@unique([enrollmentId, moduleId])
+}
+
+model Assessment {
+  id              String           @id @default(cuid())
+  programId       String
+  userId          String
+  questionsJson   Json             // array of {q, options, correct} — stored encrypted
+  answersJson     Json?            // user answers
+  score           Float?
+  result          AssessmentResult @default(PENDING)
+  tabSwitches     Int              @default(0)
+  flagged         Boolean          @default(false)
+  flagReason      String?
+  startedAt       DateTime         @default(now())
+  submittedAt     DateTime?
+  gradedAt        DateTime?
+
+  program TrainingProgram @relation(fields: [programId], references: [id])
+}
+
+model BlockchainCertificate {
+  id             String   @id @default(cuid())
+  certificateNo  String   @unique  // FORTIS-2026-XXXXX
+  enrollmentId   String   @unique
+  programId      String
+  userId         String
+  userName       String
+  programTitle   String
+  issueDate      DateTime @default(now())
+  verifyHash     String   @unique  // SHA-256 for public verification
+  metadataJson   Json?    // score, completionDate, employer-visible fields
+  pdfUrl         String?
+
+  enrollment Enrollment      @relation(fields: [enrollmentId], references: [id])
+  program    TrainingProgram @relation(fields: [programId], references: [id])
+}
+
+model EmployerPartnership {
+  id             String   @id @default(cuid())
+  companyName    String
+  contactEmail   String
+  sector         String
+  openRoles      Json     // array of {title, skills, salaryRange, location}
+  verifiedAt     DateTime?
+  isVerified     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  jobMatches JobMatch[]
+}
+
+model JobMatch {
+  id           String   @id @default(cuid())
+  employerId   String
+  userId       String
+  programId    String
+  matchScore   Float    // AI-computed 0-100
+  status       String   @default("pending") // pending | contacted | hired | rejected
+  createdAt    DateTime @default(now())
+
+  employer EmployerPartnership @relation(fields: [employerId], references: [id], onDelete: Cascade)
+}
+
 // ─── PLATFORM CREDENTIALS ──────────────────────────────────────────────────
 
 model PlatformCredential {
@@ -414,4 +585,438 @@ model PlatformCredential {
   updatedAt    DateTime  @updatedAt
 
   @@unique([userId, platform])
+}
+
+// ─── CURATED CONTENT ───────────────────────────────────────────────────────
+
+model CuratedContent {
+  id             String    @id @default(cuid())
+  title          String
+  source         String
+  sourceUrl      String
+  originalUrl    String
+  summary        String
+  excerpt        String
+  category       String
+  relevanceScore Float     @default(0)
+  status         String    @default("pending")
+  publishedAt    DateTime?
+  approvedBy     String?
+  citation       String
+  imageUrl       String?
+  tags           String[]
+  createdAt      DateTime  @default(now())
+}
+
+model ExternalSource {
+  id          String    @id @default(cuid())
+  name        String
+  rssUrl      String?
+  searchQuery String?
+  category    String
+  active      Boolean   @default(true)
+  lastFetched DateTime?
+}
+
+// ─── TESTIMONIALS ──────────────────────────────────────────────────────────
+
+model Testimonial {
+  id           String    @id @default(cuid())
+  authorName   String
+  authorRole   String
+  businessName String?
+  content      String
+  rating       Int
+  verified     Boolean   @default(false)
+  featured     Boolean   @default(false)
+  approved     Boolean   @default(false)
+  submittedAt  DateTime  @default(now())
+  approvedAt   DateTime?
+  ipAddress    String?
+  userAgent    String?
+}
+
+// ─── MARKETPLACE REVIEWS ───────────────────────────────────────────────────
+
+model MarketplaceReview {
+  id               String   @id @default(cuid())
+  orderId          String
+  productId        String
+  reviewerId       String
+  rating           Int
+  comment          String
+  verifiedPurchase Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
+
+// ─── MARKETPLACE ORDER (Escrow) ────────────────────────────────────────────
+
+model MarketplaceOrder {
+  id               String    @id @default(cuid())
+  buyerEmail       String
+  sellerEmail      String?
+  totalAmount      Float
+  currency         String    @default("GMD")
+  paymentStatus    String    @default("pending")
+  deliveryStatus   String    @default("pending")
+  trackingNumber   String?
+  shippedAt        DateTime?
+  deliveredAt      DateTime?
+  buyerConfirmedAt DateTime?
+  autoReleaseAt    DateTime?
+  escrowReleasedAt DateTime?
+  itemsJson        Json
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+// ─── GAMBIAN LEGAL ENGINE ──────────────────────────────────────────────────
+
+model GambianLaw {
+  id          String   @id @default(cuid())
+  title       String
+  shortTitle  String   @unique
+  actNumber   String?
+  year        Int
+  category    String
+  summary     String
+  keySections Json
+  keywords    String[]
+  status      String   @default("active")
+  sourceUrl   String?
+  pdfUrl      String?
+  embeddedAt  DateTime @default(now())
+
+  rules LegalRule[]
+}
+
+model LegalRule {
+  id          String     @id @default(cuid())
+  lawId       String
+  law         GambianLaw @relation(fields: [lawId], references: [id], onDelete: Cascade)
+  ruleText    String
+  condition   String?
+  action      String
+  penalty     String?
+  toolContext String
+  severity    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model LegalComplianceLog {
+  id               String   @id @default(cuid())
+  toolName         String
+  userId           String
+  query            String
+  rulesTriggered   Json
+  aiResponse       String?
+  complianceStatus String
+  reviewedAt       DateTime?
+  reviewedBy       String?
+  createdAt        DateTime @default(now())
+}
+
+// ─── LEGAL INQUIRIES ───────────────────────────────────────────────────────
+
+model LegalInquiry {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  organization String?
+  inquiryType  String
+  message      String
+  reference    String   @unique
+  ipAddress    String?
+  status       String   @default("received")
+  respondedAt  DateTime?
+  createdAt    DateTime @default(now())
+}
+
+// ─── AUTOMATED DATA SOURCE MANAGEMENT ─────────────────────────────────────
+
+model DataSource {
+  id             String    @id @default(cuid())
+  name           String
+  type           String    // rss | api | scrape | manual
+  url            String?
+  apiKey         String?
+  fetchInterval  Int       @default(1440) // minutes, 1440 = daily
+  lastFetched    DateTime?
+  lastHash       String?
+  category       String    // news | statistics | environment | energy | agriculture
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  contents   DataContent[]
+  updateLogs UpdateLog[]
+}
+
+model DataContent {
+  id           String     @id @default(cuid())
+  sourceId     String
+  source       DataSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  title        String
+  content      String
+  summary      String
+  url          String?
+  contentHash  String     @unique
+  status       String     @default("pending") // pending | approved | rejected | published
+  qualityScore Int        @default(0)
+  createdAt    DateTime   @default(now())
+}
+
+model AdminAlert {
+  id        String   @id @default(cuid())
+  type      String   // new_content | source_error | quality_warning | approval_needed
+  title     String
+  message   String
+  contentId String?
+  priority  String   @default("medium") // low | medium | high | critical
+  isRead    Boolean  @default(false)
+  sentEmail Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model UpdateLog {
+  id        String     @id @default(cuid())
+  sourceId  String
+  source    DataSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  action    String     // fetch | parse | approve | reject | publish
+  details   Json
+  status    String     // success | error | skipped
+  createdAt DateTime   @default(now())
+}
+
+// ─── GAMBIA CENSUS DATA ────────────────────────────────────────────────────
+
+model CensusData {
+  id         String   @id @default(cuid())
+  year       Int      @unique
+  population Int
+  growthRate Float?
+  source     String
+  notes      String?
+  createdAt  DateTime @default(now())
+}
+
+model LGACensusData {
+  id             String  @id @default(cuid())
+  year           Int
+  lga            String
+  population     Int
+  urbanShare     Float?
+  density        Float?
+  dependencyRatio Float?
+  createdAt      DateTime @default(now())
+
+  @@unique([year, lga])
+}
+
+model ColonialCensus {
+  id          String   @id @default(cuid())
+  year        Int
+  area        String
+  population  Int
+  qualityFlag String
+  source      String
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model HistoricalEstimate {
+  id              String   @id @default(cuid())
+  period          String   @unique
+  populationLow   Int
+  populationMid   Int
+  populationHigh  Int
+  region          String
+  evidenceType    String
+  notes           String?
+  createdAt       DateTime @default(now())
+}
+
+// ─── CAR HIRE & ESCROW SYSTEM ──────────────────────────────────────────────
+
+enum EscrowStatus {
+  PENDING_DEPOSIT
+  ACTIVE
+  DEPLETED
+  FROZEN
+  RELEASING
+  RELEASED
+}
+
+enum VehicleHireStatus {
+  PENDING_ESCROW
+  ACTIVE
+  SUSPENDED
+  UNLISTED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum ClaimStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  SETTLED
+}
+
+model VehicleOwner {
+  id            String        @id @default(cuid())
+  userId        String        @unique
+  businessName  String?
+  phone         String
+  idType        String        // national_id | passport | drivers_licence
+  idNumber      String
+  bankName      String?
+  bankAccount   String?
+  verifiedAt    DateTime?
+  isVerified    Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+
+  escrowAccount EscrowAccount?
+  vehicles      HireVehicle[]
+  bookings      CarBooking[]  @relation("OwnerBookings")
+}
+
+model EscrowAccount {
+  id                    String        @id @default(cuid())
+  ownerId               String        @unique
+  owner                 VehicleOwner  @relation(fields: [ownerId], references: [id])
+  currentBalance        Float         @default(0)
+  minimumBalance        Float         @default(2000)
+  status                EscrowStatus  @default(PENDING_DEPOSIT)
+  lastReplenishReminder DateTime?
+  suspendedAt           DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  transactions          EscrowTransaction[]
+  allocations           BookingEscrowAllocation[]
+}
+
+model EscrowTransaction {
+  id              String        @id @default(cuid())
+  escrowId        String
+  escrow          EscrowAccount @relation(fields: [escrowId], references: [id], onDelete: Cascade)
+  amount          Float         // positive = deposit, negative = deduction
+  txType          String        // DEPOSIT | CLAIM_DEDUCTION | REPLENISHMENT | RELEASE
+  referenceId     String?       // bookingId or claimId
+  description     String
+  paymentRef      String?
+  createdAt       DateTime      @default(now())
+}
+
+model HireVehicle {
+  id              String            @id @default(cuid())
+  ownerId         String
+  owner           VehicleOwner      @relation(fields: [ownerId], references: [id])
+  make            String
+  model           String
+  year            Int
+  category        String            // economy | saloon | suv | luxury | minibus | van
+  licensePlate    String            @unique
+  seats           Int
+  hasAC           Boolean           @default(true)
+  features        String[]
+  photos          String[]
+  locationKey     String            // matches LOCATIONS in calculate-price API
+  hourlyRate      Float?
+  dailyRate       Float
+  weeklyRate      Float
+  driverRate      Float?            // optional driver surcharge per day
+  requiresEscrow  Float             @default(5000)
+  status          VehicleHireStatus @default(PENDING_ESCROW)
+  availableFrom   DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  bookings        CarBooking[]
+  inspections     VehicleInspection[]
+}
+
+model VehicleInspection {
+  id              String      @id @default(cuid())
+  vehicleId       String
+  vehicle         HireVehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  inspectorId     String?
+  odometer        Int?
+  fuelLevel       Int?        // 0-100 percent
+  photosBefore    String[]
+  photosAfter     String[]
+  damageNotes     String?
+  inspectionType  String      // pre_rental | post_rental | annual
+  status          String      @default("pending") // pending | passed | failed
+  createdAt       DateTime    @default(now())
+}
+
+model CarBooking {
+  id                  String        @id @default(cuid())
+  renterId            String        // userId of renter
+  vehicleId           String
+  vehicle             HireVehicle   @relation(fields: [vehicleId], references: [id])
+  ownerId             String
+  owner               VehicleOwner  @relation("OwnerBookings", fields: [ownerId], references: [id])
+  startTime           DateTime
+  endTime             DateTime
+  pickupLocation      String
+  dropoffLocation     String
+  withDriver          Boolean       @default(false)
+  totalDays           Float
+  rentalAmount        Float
+  driverAmount        Float         @default(0)
+  platformCommission  Float
+  ownerPayout         Float
+  renterDeposit       Float         @default(0) // ALWAYS 0 — owner escrow covers it
+  insuranceTier       String        @default("standard")
+  insuranceExcess     Float         @default(3000)
+  status              BookingStatus @default(PENDING)
+  paymentRef          String?
+  cancelledAt         DateTime?
+  cancelReason        String?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  escrowAllocation    BookingEscrowAllocation?
+  damageClaim         DamageClaim?
+}
+
+model BookingEscrowAllocation {
+  id              String        @id @default(cuid())
+  bookingId       String        @unique
+  booking         CarBooking    @relation(fields: [bookingId], references: [id])
+  escrowId        String
+  escrow          EscrowAccount @relation(fields: [escrowId], references: [id])
+  allocatedAmount Float
+  released        Boolean       @default(false)
+  releasedAt      DateTime?
+  createdAt       DateTime      @default(now())
+}
+
+model DamageClaim {
+  id              String      @id @default(cuid())
+  bookingId       String      @unique
+  booking         CarBooking  @relation(fields: [bookingId], references: [id])
+  claimantId      String
+  claimantType    String      // owner | renter
+  description     String
+  photos          String[]
+  estimatedAmount Float
+  approvedAmount  Float?
+  status          ClaimStatus @default(PENDING)
+  resolutionNotes String?
+  resolvedAt      DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }

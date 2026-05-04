@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { runCompletion } from "../../../lib/openai-client";
 import { analyzeAskUjris } from "../../../lib/fortis-tools";
+import { evaluateLegalCompliance } from "../../../lib/legal-engine";
 
 const DEFAULT_SYSTEM_PROMPT = `You are ASK UJRIS, an AI forensic document analyst specialising in business and legal documents.
 Analyze the document text provided and return a JSON object with these exact keys:
@@ -34,6 +35,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "documentText is required." }, { status: 400 });
     }
 
+    // Run Gambian legal compliance check (non-blocking — warnings added to response)
+    const legalVerdict = await evaluateLegalCompliance({
+      toolName: "ask-ujris",
+      userId: "anonymous",
+      content: body.documentText,
+      contentType: "document",
+    }).catch(() => null);
+
+    // Block critical violations (e.g., harmful content)
+    if (legalVerdict && !legalVerdict.compliant) {
+      return NextResponse.json({
+        ok: false,
+        error: "Document contains content that may violate Gambian law.",
+        legalVerdict,
+        suggestions: legalVerdict.violations.map(v => v.suggestion),
+      }, { status: 422 });
+    }
+
     const userMessage = [
       body.documentType ? `Document Type: ${body.documentType}` : null,
       body.concern ? `Client Concern: ${body.concern}` : null,
@@ -56,7 +75,13 @@ export async function POST(req: Request) {
       analysis = analyzeAskUjris(body);
     }
 
-    return NextResponse.json({ ok: true, analysis });
+    return NextResponse.json({
+      ok: true,
+      analysis,
+      legalVerdict: legalVerdict ?? null,
+      legalDisclaimer:
+        "This analysis is for informational purposes only and does not constitute legal advice. Consult a qualified Gambian legal professional for legal opinions. FORTIS OS™ — © FORTIS INVICTA LTD.",
+    });
   } catch (error) {
     console.error("ask-ujris error", error);
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });

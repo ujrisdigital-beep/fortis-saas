@@ -2,6 +2,9 @@
 import { useState, useRef } from "react";
 import { useLang } from "../../../hooks/useLang";
 import { MediaUpload } from "../../../components/MediaUpload";
+import dynamic from "next/dynamic";
+
+const CameraCapture = dynamic(() => import("../../../components/CameraCapture"), { ssr: false });
 
 const G = "#1B4D3E";
 const GOLD = "#D4AF37";
@@ -46,6 +49,7 @@ export default function ComposeDocumentPage() {
   const [toCc, setToCc] = useState("");
   const [bodyText, setBodyText] = useState("");
   const [attachFiles, setAttachFiles] = useState<File[]>([]);
+  const [showCamera, setShowCamera] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
   const [sending, setSending] = useState(false);
@@ -222,7 +226,29 @@ export default function ComposeDocumentPage() {
                 compact
                 label="Attach supporting documents"
               />
+              <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setShowCamera(true)}
+                  style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "#F0F4F0", border: `1.5px solid ${G}`, color: G, fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+                >
+                  📷 Capture Document with Camera
+                </button>
+                {attachFiles.some(f => f.name.startsWith("document-capture")) && (
+                  <span style={{ fontSize: 12, color: "#16A34A", fontWeight: 600 }}>✓ Camera capture added</span>
+                )}
+              </div>
             </div>
+
+            {showCamera && (
+              <CameraCapture
+                onCapture={(_dataUrl, file) => {
+                  setAttachFiles(prev => [...prev, file]);
+                  setShowCamera(false);
+                }}
+                onClose={() => setShowCamera(false)}
+              />
+            )}
 
             <button
               style={{ width: "100%", padding: "15px", background: G, color: "#fff", border: "none", borderRadius: 10, fontWeight: 700, fontSize: 17, cursor: "pointer", opacity: (!bodyText || !senderName || !subject) ? 0.5 : 1 }}
