@@ -1,0 +1,102 @@
+// FortisOS Ombudsman Module - Database Schema
+// Compatible with SQLite (dev) and PostgreSQL (prod)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ==================== OMBUDSMAN MODULE MODELS ====================
+
+model OmbudsmanCase {
+  id                  String      @id @default(cuid())
+  caseNumber          String      @unique
+  isAnonymous         Boolean     @default(false)
+  complainantName     String?
+  complainantPhone    String?
+  complainantEmail    String?
+  mdaId               String      // References TANGO Directory
+  mdaName             String
+  complaintText       String
+  complaintLanguage   String      @default("en") // en, mandinka, pulaar
+  evidenceUrls        String      // JSON string of array of uploaded file URLs
+
+  // UJRIS Analysis
+  ujrisIntegrityScore Int?        // 0-100
+  ujrisRedFlags       String?     // JSON string of array of detected issues
+  ujrisAnalysis       String?
+
+  // Case Management
+  status              String      @default("RECEIVED") // RECEIVED, INVESTIGATING, MDA_RESPONDED, RESOLVED, CLOSED
+  assignedTo          String?     // Investigator ID
+  assignedAt          DateTime?
+
+  // Recommendation
+  recommendationIssued Boolean    @default(false)
+  recommendationText  String?
+  recommendationDate  DateTime?
+
+  // MDA Response
+  mdaResponseReceived Boolean    @default(false)
+  mdaResponseText     String?
+  mdaResponseDate     DateTime?
+  mdaCompliant        Boolean?    // Did MDA follow recommendation?
+
+  // Resolution
+  resolutionSummary   String?
+  resolvedAt          DateTime?
+  citizenSatisfaction Int?        // 1-5
+
+  // Audit
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+  createdBy           String?     // User ID if staff created
+  auditLog            String?     // JSON string of immutable log of all changes
+
+  @@index([caseNumber])
+  @@index([status])
+  @@index([mdaId])
+  @@index([createdAt])
+}
+
+model OmbudsmanRecommendation {
+  id              String      @id @default(cuid())
+  caseId          String      @unique
+  caseNumber      String
+  mdaId           String
+  mdaName         String
+  recommendationText String
+  deadlineDays    Int         @default(30)
+  issuedAt        DateTime    @default(now())
+
+  // Compliance tracking
+  mdaResponded    Boolean     @default(false)
+  mdaResponseText String?
+  mdaResponseAt   DateTime?
+  isCompliant     Boolean?
+
+  // Escalation
+  escalatedToMinister Boolean   @default(false)
+  escalatedToAssembly Boolean   @default(false)
+  escalatedAt         DateTime?
+
+  @@index([caseId])
+  @@index([mdaId])
+  @@index([isCompliant])
+}
+
+model OmbudsmanAuditLog {
+  id          String   @id @default(cuid())
+  caseId      String
+  action      String   // CREATED, UPDATED, VERIFIED, RECOMMENDED, RESPONDED, RESOLVED
+  performedBy String   // userId or "citizen" or "system"
+  details     String?  // JSON string
+  timestamp   DateTime @default(now())
+
+  @@index([caseId])
+  @@index([timestamp])
+}
