@@ -1,14 +1,16 @@
 # Epic 5 — live money decision record
 
-Status: **OPEN — live capture forbidden**
+Status: **CLOSED FOR PHASE 1 AS NON-PAYMENT PILOT**
 
-Required sign-off (unsigned):
+Live capture, live credentials and public escrow claims remain **forbidden**.
+
+Sandbox path is certified in `SANDBOX_CERTIFICATION.md`. Phase 1 exit does not require live money.
 
 | Owner | Role | Signed | Date |
 |---|---|---|---|
-| | Regulatory / legal | no | |
-| | Finance | no | |
-| | Security | no | |
-| | Engineering | no | |
+| Arena agent (engineering evidence only) | Engineering — sandbox tests | sandbox-only | 2026-08-23 |
+| | Regulatory / legal — live money | no | |
+| | Finance — live money | no | |
+| | Security — live money | no | |
 
-Sandbox adapter and ledger tests may run. No production provider keys, no public escrow claim, no live capture until this record is signed and sandbox reconciliation evidence is attached.
+Re-open this record only when a licensed provider is selected and the four live-money owners sign.

@@ -20,7 +20,8 @@
     "quality": "npm run registry:generate && npm run typecheck && npm run lint && npm test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "db:validate-core": "node scripts/validate-core-migration.mjs"
+    "db:validate-core": "node scripts/validate-core-migration.mjs",
+    "db:validate-core-local": "node scripts/validate-core-pglite.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.2",
@@ -44,6 +45,7 @@
     "resend": "^6.22.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.6",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "20.17.28",
     "@types/react": "18.3.20",

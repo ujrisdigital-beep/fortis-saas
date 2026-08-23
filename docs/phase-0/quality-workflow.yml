@@ -56,6 +56,9 @@ jobs:
       - name: Generate Prisma client
         run: npx prisma generate
 
+      - name: Validate Core schema on in-process Postgres
+        run: npm run db:validate-core-local
+
       - name: Apply Core migrations on staging Postgres
         run: npx prisma migrate deploy
 
