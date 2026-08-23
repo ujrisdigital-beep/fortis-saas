@@ -32,6 +32,10 @@ const required = [
   "CanonicalRecordVersion",
   "ProvenanceRecord",
   "FeatureFlag",
+  "GrowAssessment",
+  "SignedCredential",
+  "DiscoverListing",
+  "GovernComplaint",
 ];
 
 const migrationsDir = join(process.cwd(), "prisma/migrations");

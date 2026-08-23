@@ -6,6 +6,8 @@ Updated: 23 August 2026
 
 Epics 1–4 and 6–8 are implemented. Epic 5 sandbox is certified. **Live money is closed for Phase 1 as a non-payment pilot** (see `PAYMENT_LIVE_DECISION.md`).
 
+Phases 2–4/7 domain slices continue in `docs/PHASE_2_PLUS.md`.
+
 ## Previously blocked items
 
 ### PostgreSQL Core migration — **validated**

@@ -6,6 +6,10 @@ export const DEFAULT_FLAGS: Record<string, boolean> = {
   "module.live_data.gbos": true,
   "module.live_data.cbg": true,
   "module.live_data.worldbank": true,
+  "module.grow.workspace": true,
+  "module.academy.credentials": true,
+  "module.discover.listings": true,
+  "module.govern.intake": true,
 };
 
 export function isFlagEnabled(key: string, overrides: Record<string, boolean> = {}): boolean {

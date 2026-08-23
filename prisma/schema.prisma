@@ -1626,3 +1626,52 @@ model FeatureFlag {
   enabled   Boolean @default(false)
   note      String?
 }
+
+model GrowAssessment {
+  id               String   @id @default(cuid())
+  organisationId   String
+  actorId          String
+  engineVersion    String
+  inputHash        String
+  preview          Json
+  fullReport       Json?
+  sourceChecksums  String[]
+  createdAt        DateTime @default(now())
+
+  @@index([organisationId, createdAt])
+}
+
+model SignedCredential {
+  id            String    @id @default(cuid())
+  serial        String    @unique
+  learnerId     String
+  programId     String
+  programTitle  String
+  issuedAt      DateTime  @default(now())
+  signature     String
+  revokedAt     DateTime?
+  revokeReason  String?
+
+  @@index([learnerId])
+}
+
+model DiscoverListing {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  status      String   @default("DRAFT")
+  sourceNote  String?
+  createdAt   DateTime @default(now())
+  verifiedAt  DateTime?
+}
+
+model GovernComplaint {
+  id           String   @id @default(cuid())
+  reference    String   @unique
+  organisationId String?
+  subject      String
+  body         String
+  status       String   @default("RECEIVED")
+  consent      Boolean
+  createdAt    DateTime @default(now())
+}
