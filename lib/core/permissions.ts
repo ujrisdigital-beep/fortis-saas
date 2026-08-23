@@ -54,6 +54,8 @@ export const SYSTEM_ROLES: Record<string, { name: string; grants: PermissionRule
       { applet: "govern", action: "write" },
       { applet: "training", action: "read" },
       { applet: "training", action: "write" },
+      { applet: "marketplace", action: "read" },
+      { applet: "marketplace", action: "write" },
       { applet: "billing", action: "read" },
       { applet: "billing", action: "entitlement.check" },
     ],
