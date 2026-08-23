@@ -10,6 +10,7 @@ declare module "next-auth" {
       image?: string | null;
       role?: "SUPER_ADMIN" | "CEO" | "BOARD" | "MANAGER" | "CLIENT" | "GOVERNMENT" | "PUBLIC";
       orgId?: string;
+      emailVerified?: boolean;
     };
   }
 }
@@ -18,5 +19,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     role?: "SUPER_ADMIN" | "CEO" | "BOARD" | "MANAGER" | "CLIENT" | "GOVERNMENT" | "PUBLIC";
     orgId?: string;
+    emailVerified?: boolean;
   }
 }

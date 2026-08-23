@@ -37,7 +37,7 @@ export async function requireApiAccess(
     actorId: userId,
     organisationId,
     memberships,
-    emailVerified: Boolean(session.user.email),
+    emailVerified: session.user.emailVerified !== false,
     requiresStepUp: options?.stepUp,
     stepUpSatisfied: false,
   };
