@@ -1,54 +1,54 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>'"]/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;",
+  })[char] ?? char);
+}
 
 export async function POST(req: Request) {
   try {
-    const body = (await req.json()) as {
-      to: string;
-      name: string;
-      role: string;
-    };
-
+    const body = (await req.json()) as { to?: string; name?: string; role?: string };
     if (!body.to || !body.name || !body.role) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
     }
 
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = Number(process.env.SMTP_PORT ?? 587);
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-
-    if (!smtpHost || !smtpUser || !smtpPass) {
-      console.log("SMTP not configured. Welcome email skipped.");
-      return NextResponse.json({ ok: true, skipped: true });
+    const apiKey = process.env.RESEND_API_KEY;
+    const from = process.env.EMAIL_FROM;
+    if (!apiKey || !from) {
+      return NextResponse.json(
+        { ok: false, code: "EMAIL_PROVIDER_NOT_CONFIGURED", error: "Email delivery is unavailable." },
+        { status: 503 },
+      );
     }
 
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: false,
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    });
-
-    const html = `
-      <div style="font-family: Inter, Arial, sans-serif; background:#112419; color:#fff; padding:24px; border-radius:12px; border:1px solid rgba(201,168,76,0.3)">
-        <h1 style="margin:0 0 12px; color:#FFD700;">Welcome to Fortis Invicta</h1>
-        <p>Hello ${body.name},</p>
-        <p>Your requested access has been received with role <strong>${body.role}</strong>.</p>
-        <p>Next steps: login to your dashboard, complete profile, and submit your first opportunity brief.</p>
-        <p style="margin-top:20px;">Platform link: <a href="${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}" style="color:#FFD700;">Open Fortis Platform</a></p>
-      </div>
-    `;
-
-    await transporter.sendMail({
-      from: process.env.SMTP_USER,
+    const name = escapeHtml(body.name.slice(0, 120));
+    const role = escapeHtml(body.role.slice(0, 80));
+    const appUrl = escapeHtml(process.env.NEXT_PUBLIC_APP_URL ?? "https://fortisos.cloud");
+    const resend = new Resend(apiKey);
+    const { error } = await resend.emails.send({
+      from,
       to: body.to,
-      subject: "Welcome to Fortis Invicta - Your Access is Confirmed",
-      html,
+      subject: "Welcome to FORTIS OS — access received",
+      html: `
+        <div style="font-family:Arial,sans-serif;background:#112419;color:#fff;padding:24px;border-radius:12px;border:1px solid rgba(201,168,76,.3)">
+          <h1 style="margin:0 0 12px;color:#FFD700">Welcome to FORTIS OS</h1>
+          <p>Hello ${name},</p>
+          <p>Your access request has been received for the role <strong>${role}</strong>.</p>
+          <p>Sign in to complete your profile. Access remains subject to verification and entitlements.</p>
+          <p style="margin-top:20px"><a href="${appUrl}" style="color:#FFD700">Open FORTIS OS</a></p>
+        </div>`,
     });
+
+    if (error) {
+      console.error("welcome-email provider error", error);
+      return NextResponse.json({ error: "Email provider rejected the message." }, { status: 502 });
+    }
 
     return NextResponse.json({ ok: true });
   } catch (error) {

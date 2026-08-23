@@ -279,7 +279,7 @@ export async function GET(req: Request) {
   const overallStatus = healthScore >= 90 ? "HEALTHY" : healthScore >= 70 ? "WARNING" : "CRITICAL";
   const recommendations = generateRecommendations(checks);
 
-  let billing = null;
+  let billing: Awaited<ReturnType<typeof getBillingSnapshot>> | null = null;
   const billingAccessGranted = await canViewBilling(req);
 
   if (billingAccessGranted) {

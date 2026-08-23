@@ -7,21 +7,25 @@
     "build": "prisma generate && next build",
     "vercel-build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --max-warnings=0",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
-    "db:deploy": "prisma db push",
+    "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "typecheck": "tsc --noEmit",
+    "registry:generate": "node scripts/generate-module-registry.mjs",
+    "security:audit": "npm audit --omit=dev --audit-level=high",
+    "quality": "npm run registry:generate && npm run typecheck && npm run lint && npm test && npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@prisma/client": "6.19.2",
     "@react-google-maps/api": "^2.20.8",
     "@turf/turf": "^7.3.5",
-    "@types/bcryptjs": "^2.4.6",
     "@types/leaflet": "^1.9.21",
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.3",
     "ci-info": "^4.4.0",
     "framer-motion": "^12.38.0",
@@ -29,28 +33,32 @@
     "leaflet": "^1.9.4",
     "lucide-react": "^1.11.0",
     "next": "14.2.35",
-    "next-auth": "^4.24.11",
-    "nodemailer": "^7.0.7",
+    "next-auth": "^4.24.15",
     "openai": "^6.34.0",
     "prisma": "6.19.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-leaflet": "^4.2.1",
     "recharts": "^3.8.1",
-    "resend": "^6.12.0"
+    "resend": "^6.22.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "20.17.28",
-    "@types/nodemailer": "^7.0.11",
     "@types/react": "18.3.20",
     "@types/react-dom": "18.3.5",
     "eslint": "8.57.1",
-    "eslint-config-next": "14.2.24",
+    "eslint-config-next": "^14.2.35",
     "ts-node": "^10.9.2",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "vitest": "^2.1.9"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
-  }
+  },
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10 <11"
+  },
+  "packageManager": "npm@10.9.8"
 }

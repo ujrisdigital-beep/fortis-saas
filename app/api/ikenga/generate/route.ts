@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       snapchat: "Snapchat", mastodon: "Mastodon",
     };
 
-    const posts = [];
+    const posts: Array<Record<string, unknown>> = [];
 
     for (const platform of platforms) {
       const time = optimalTimes[platform] || "12:00";

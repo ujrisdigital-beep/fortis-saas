@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
       brandId,
       name: `Week of ${week}`,
       weekStarting: new Date(week),
-      chiPlan: plan as unknown as Prisma.InputJsonValue,
+      chiPlan: plan as unknown as never,
     },
   });
 

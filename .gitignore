@@ -66,3 +66,8 @@ tsconfig.tsbuildinfo
 
 # Type stubs
 type
+
+# All environment files are private unless explicitly documented examples
+.env.*
+!.env.local.example
+!.env.example

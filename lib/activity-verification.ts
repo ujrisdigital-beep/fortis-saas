@@ -49,7 +49,7 @@ export async function logActivity(entry: ActivityEntry): Promise<void> {
       activityType: entry.activityType,
       platform: entry.platform,
       referenceId: entry.referenceId,
-      details: (entry.details ?? {}) as Prisma.InputJsonValue,
+      details: (entry.details ?? {}) as never,
     },
   });
 
@@ -195,7 +195,7 @@ export async function submitRefundClaim(params: {
       agreementId: params.agreementId,
       claimantId: params.claimantId,
       reason: params.reason,
-      evidence: (params.evidence ?? {}) as Prisma.InputJsonValue,
+      evidence: (params.evidence ?? {}) as never,
       status: "PENDING",
     },
   });

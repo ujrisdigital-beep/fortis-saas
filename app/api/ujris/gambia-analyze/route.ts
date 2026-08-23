@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     // Email correspondence analysis (if email text provided)
     const correspondenceAnalysis = emailBody ? analyseCorrespondence({ body: emailBody }) : null
 
-    let deadlineResult = null
+    let deadlineResult: { claimType: string; statutoryDeadline: string; discretionaryDeadline: string; daysRemaining: number; status: string } | null = null
     if (claimType && incidentDate) {
       const incident = new Date(incidentDate)
       const statutoryDeadline = new Date(incident)

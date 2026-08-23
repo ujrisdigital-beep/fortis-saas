@@ -99,7 +99,7 @@ export default function LearnerPortalPage() {
   const [assessResult, setAssessResult] = useState<{ score: number; passed: boolean; message: string } | null>(null);
   const [submittingFinal, setSubmittingFinal] = useState(false);
 
-  const module = DEMO_MODULES[currentModuleIdx];
+  const currentModule = DEMO_MODULES[currentModuleIdx];
   const totalModules = DEMO_MODULES.length;
   const progress = Math.round((completed.length / totalModules) * 100);
 
@@ -126,7 +126,7 @@ export default function LearnerPortalPage() {
   }
 
   function submitQuiz() {
-    const q = module.quiz;
+    const q = currentModule.quiz;
     let correct = 0;
     q.forEach((item, i) => {
       if (quizAnswers[i] === item.correct) correct++;
@@ -135,7 +135,7 @@ export default function LearnerPortalPage() {
     setQuizScore(score);
     setQuizSubmitted(true);
     if (score >= 70) {
-      setCompleted((prev) => prev.includes(module.id) ? prev : [...prev, module.id]);
+      setCompleted((prev) => prev.includes(currentModule.id) ? prev : [...prev, currentModule.id]);
     }
   }
 
@@ -143,7 +143,7 @@ export default function LearnerPortalPage() {
     setSubmittingFinal(true);
     const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000);
     const answers = Object.entries(quizAnswers).map(([qi, sel]) => ({
-      moduleId: module.id,
+      moduleId: currentModule.id,
       questionIndex: Number(qi),
       selectedOption: sel,
     }));
@@ -256,11 +256,11 @@ export default function LearnerPortalPage() {
               <div style={{ background: WHITE, border: "1.5px solid #E2E8F0", borderRadius: 12, overflow: "hidden", marginBottom: "1rem" }}>
                 <div style={{ background: `linear-gradient(135deg, ${DARK}, ${PRIMARY})`, padding: "1.25rem 1.5rem" }}>
                   <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginBottom: 4 }}>Module {currentModuleIdx + 1} of {totalModules}</div>
-                  <h2 style={{ margin: 0, color: WHITE, fontSize: "1.1rem", fontWeight: 800 }}>{module.title}</h2>
+                  <h2 style={{ margin: 0, color: WHITE, fontSize: "1.1rem", fontWeight: 800 }}>{currentModule.title}</h2>
                 </div>
                 <div style={{ padding: "1.5rem" }}>
                   <div style={{ fontSize: "0.9rem", color: "#374151", lineHeight: 1.8, whiteSpace: "pre-line" }}>
-                    {module.content}
+                    {currentModule.content}
                   </div>
                 </div>
               </div>
@@ -285,8 +285,8 @@ export default function LearnerPortalPage() {
                 </div>
               )}
               <div style={{ background: WHITE, border: "1.5px solid #E2E8F0", borderRadius: 12, padding: "1.5rem", marginBottom: "1rem" }}>
-                <h2 style={{ margin: "0 0 1.25rem", color: DARK, fontSize: "1rem", fontWeight: 800 }}>📝 Quiz: {module.title}</h2>
-                {module.quiz.map((q, qi) => (
+                <h2 style={{ margin: "0 0 1.25rem", color: DARK, fontSize: "1rem", fontWeight: 800 }}>📝 Quiz: {currentModule.title}</h2>
+                {currentModule.quiz.map((q, qi) => (
                   <div key={qi} style={{ marginBottom: "1.5rem" }}>
                     <div style={{ fontWeight: 600, fontSize: "0.9rem", color: DARK, marginBottom: "0.65rem" }}>
                       {qi + 1}. {q.q}
@@ -325,8 +325,8 @@ export default function LearnerPortalPage() {
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <button
                     onClick={submitQuiz}
-                    disabled={Object.keys(quizAnswers).length < module.quiz.length}
-                    style={{ padding: "0.7rem 1.75rem", background: Object.keys(quizAnswers).length < module.quiz.length ? "#9CA3AF" : `linear-gradient(135deg, ${PRIMARY}, #2A6B52)`, color: WHITE, border: "none", borderRadius: 8, fontSize: "0.9rem", fontWeight: 700, cursor: Object.keys(quizAnswers).length < module.quiz.length ? "not-allowed" : "pointer", fontFamily: "inherit" }}
+                    disabled={Object.keys(quizAnswers).length < currentModule.quiz.length}
+                    style={{ padding: "0.7rem 1.75rem", background: Object.keys(quizAnswers).length < currentModule.quiz.length ? "#9CA3AF" : `linear-gradient(135deg, ${PRIMARY}, #2A6B52)`, color: WHITE, border: "none", borderRadius: 8, fontSize: "0.9rem", fontWeight: 700, cursor: Object.keys(quizAnswers).length < currentModule.quiz.length ? "not-allowed" : "pointer", fontFamily: "inherit" }}
                   >
                     Submit Quiz
                   </button>

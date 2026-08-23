@@ -174,7 +174,7 @@ export async function evaluateLegalCompliance(context: LegalContext): Promise<Le
       toolName: context.toolName,
       userId: context.userId,
       query: context.content.slice(0, 500),
-      rulesTriggered: violations as unknown as import("@prisma/client").Prisma.InputJsonValue,
+      rulesTriggered: violations as unknown as never,
       complianceStatus,
     },
   }).catch(() => { /* non-blocking */ });

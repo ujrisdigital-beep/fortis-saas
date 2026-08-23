@@ -28,7 +28,7 @@ export default function EvidenceHub() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const processFilesLocally = useCallback(async (acceptedFiles: File[]): Promise<ExtractedData> => {
-    const localResults = [];
+    const localResults: Array<{ name: string; size: number; type: string; hash: string; evidenceId: string; timestamp: string; status: string }> = [];
     for (const file of acceptedFiles) {
       const buffer = await file.arrayBuffer();
       const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);

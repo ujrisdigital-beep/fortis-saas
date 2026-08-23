@@ -170,7 +170,7 @@ export async function fetchSource(sourceId: string): Promise<{ fetched: number; 
 
 export async function fetchAllActiveSources(): Promise<{ sourceId: string; name: string; fetched: number; new: number; errors: string[] }[]> {
   const sources = await prisma.dataSource.findMany({ where: { isActive: true } });
-  const results = [];
+  const results: { sourceId: string; name: string; fetched: number; new: number; errors: string[] }[] = [];
 
   for (const source of sources) {
     const result = await fetchSource(source.id);
