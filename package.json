@@ -19,7 +19,8 @@
     "security:audit": "npm audit --omit=dev --audit-level=high",
     "quality": "npm run registry:generate && npm run typecheck && npm run lint && npm test && npm run build",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:validate-core": "node scripts/validate-core-migration.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.2",
