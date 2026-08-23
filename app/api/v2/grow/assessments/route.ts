@@ -4,6 +4,7 @@ import { ingestCbgFxTable } from "@/lib/core/data/adapters/cbg";
 import { ingestGbosPayload } from "@/lib/core/data/adapters/gbos";
 import { runGrowDiagnostic } from "@/lib/grow/diagnostic";
 import { canUseFeature } from "@/lib/core/entitlements";
+import { listGrants } from "@/lib/entitlements/store";
 
 export async function POST(request: Request) {
   const access = await requireApiAccess("grow", "write");
@@ -39,7 +40,11 @@ export async function POST(request: Request) {
     sources,
   );
 
-  const entitled = canUseFeature([], access.session.organisationId, "grow.full_report");
+  const entitled = canUseFeature(
+    listGrants(access.session.organisationId),
+    access.session.organisationId,
+    "grow.full_report",
+  );
   return NextResponse.json({
     engineVersion: result.full.engineVersion,
     preview: result.preview,

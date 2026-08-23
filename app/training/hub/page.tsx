@@ -132,8 +132,8 @@ export default function TrainingHubPage() {
             <span style={{ color: GOLD }}>Digital Training Platform</span>
           </h1>
           <p style={{ margin: "0 0 2rem", color: "rgba(255,255,255,0.75)", fontSize: "clamp(1rem, 2vw, 1.15rem)", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-            AI-generated courses. AI-proctored assessments. Blockchain-verifiable certificates.
-            Free for every Gambian.
+            Browse free. Paid assessment attempts use bank/wallet transfer evidence.
+            Certificates are HMAC-signed registry records, not blockchain.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a href="#courses" style={{ padding: "0.75rem 2rem", background: `linear-gradient(135deg, ${GOLD}, #D4A855)`, color: DARK, borderRadius: 10, fontSize: 15, fontWeight: 800, textDecoration: "none", display: "inline-block" }}>
@@ -141,6 +141,9 @@ export default function TrainingHubPage() {
             </a>
             <a href="/training/verify" style={{ padding: "0.75rem 1.5rem", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: WHITE, borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-block" }}>
               🏅 Verify a Certificate
+            </a>
+            <a href="/pay/transfer" style={{ padding: "0.75rem 1.5rem", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: WHITE, borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-block" }}>
+              Pay assessment (transfer)
             </a>
           </div>
         </div>
