@@ -12,7 +12,7 @@
 - Upgraded Nodemailer to 9.0.5 and Resend to the current locked release.
 - Replaced native `bcrypt` with `bcryptjs` to remove native binary installation fragility and duplicate bcrypt dependencies.
 - Pinned Node 20 and npm 10.
-- Added CI quality/security workflow.
+- Added a CI quality/security workflow template. Activation under `.github/workflows/` requires a GitHub credential with workflow permission.
 - Added production fail-closed controls and tests for known simulated/placeholder modules.
 - Added initial authorization target matrix.
 
