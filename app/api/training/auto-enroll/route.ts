@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
     }).catch(() => null); // Non-fatal if user doesn't exist yet
 
     // Enroll in courses
-    const enrolled = [];
+    const enrolled: Array<{ courseId: string; title: string; enrollmentId: string }> = [];
     for (const title of cfg.courses) {
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       let program = await prisma.trainingProgram.findFirst({ where: { slug } });

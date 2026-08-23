@@ -1,0 +1,3601 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "publicMaturityLabels": [
+      "internal",
+      "preview",
+      "pilot",
+      "production"
+    ],
+    "note": "No asset is classified production until launch-gate evidence is linked. Preview does not permit simulated financial or official-data success."
+  },
+  "summary": {
+    "pages": 134,
+    "apis": 95,
+    "models": 59,
+    "datasets": 8,
+    "scheduledJobs": 4,
+    "blockedInProduction": 30,
+    "byApplet": {
+      "core": 131,
+      "grow": 49,
+      "govern": 24,
+      "discover": 25,
+      "academy": 21,
+      "partner": 46
+    }
+  },
+  "assets": [
+    {
+      "type": "page",
+      "path": "app/admin/ai-monitor/page.tsx",
+      "route": "/admin/ai-monitor",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/airport-dashboard/page.tsx",
+      "route": "/admin/airport-dashboard",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/billing/page.tsx",
+      "route": "/admin/billing",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/court-orders/page.tsx",
+      "route": "/admin/court-orders",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/curation/page.tsx",
+      "route": "/admin/curation",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/dashboard/page.tsx",
+      "route": "/admin/dashboard",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": false,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/data-sources/page.tsx",
+      "route": "/admin/data-sources",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/diagnostics/page.tsx",
+      "route": "/admin/diagnostics",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/escalations/page.tsx",
+      "route": "/admin/escalations",
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/gambia-dashboard/page.tsx",
+      "route": "/admin/gambia-dashboard",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/legal/page.tsx",
+      "route": "/admin/legal",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/login/page.tsx",
+      "route": "/admin/login",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/master/page.tsx",
+      "route": "/admin/master",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/sop/page.tsx",
+      "route": "/admin/sop",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/super/page.tsx",
+      "route": "/admin/super",
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/training-hub/page.tsx",
+      "route": "/admin/training-hub",
+      "applet": "academy",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/admin/ujris/page.tsx",
+      "route": "/admin/ujris",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/agriculture/page.tsx",
+      "route": "/agriculture",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/agriculture/produce-map/page.tsx",
+      "route": "/agriculture/produce-map",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/agriculture/rice-fish/page.tsx",
+      "route": "/agriculture/rice-fish",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/ask-ujris/page.tsx",
+      "route": "/ask-ujris",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/auth/forgot-password/page.tsx",
+      "route": "/auth/forgot-password",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/auth/login/page.tsx",
+      "route": "/auth/login",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/auth/register/page.tsx",
+      "route": "/auth/register",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/auth/reset-password/page.tsx",
+      "route": "/auth/reset-password",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/board/dashboard/page.tsx",
+      "route": "/board/dashboard",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/calculators/tax-import/page.tsx",
+      "route": "/calculators/tax-import",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/certificate/verify/page.tsx",
+      "route": "/certificate/verify",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/compliance/page.tsx",
+      "route": "/compliance",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/contact/page.tsx",
+      "route": "/contact",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/cooperatives/page.tsx",
+      "route": "/cooperatives",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/cybersecurity/ciip/page.tsx",
+      "route": "/cybersecurity/ciip",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/dashboard/page.tsx",
+      "route": "/dashboard",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/deadlines/page.tsx",
+      "route": "/deadlines",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/discover/page.tsx",
+      "route": "/discover",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/documents/compose/page.tsx",
+      "route": "/documents/compose",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/education/page.tsx",
+      "route": "/education",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/embassies/page.tsx",
+      "route": "/embassies",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/emergency/page.tsx",
+      "route": "/emergency",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/employers/dashboard/page.tsx",
+      "route": "/employers/dashboard",
+      "applet": "academy",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/energy/nawec-map/page.tsx",
+      "route": "/energy/nawec-map",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/energy/page.tsx",
+      "route": "/energy",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/evidence/page.tsx",
+      "route": "/evidence",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/festivals/page.tsx",
+      "route": "/festivals",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/financial-map/page.tsx",
+      "route": "/financial-map",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/fintech/page.tsx",
+      "route": "/fintech",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/funding/[grantId]/apply/page.tsx",
+      "route": "/funding/[grantId]/apply",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/funding/page.tsx",
+      "route": "/funding",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/gambian-culture/page.tsx",
+      "route": "/gambian-culture",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/government/page.tsx",
+      "route": "/government",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/grants/page.tsx",
+      "route": "/grants",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/health/page.tsx",
+      "route": "/health",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/housing/page.tsx",
+      "route": "/housing",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/ikenga/identity/page.tsx",
+      "route": "/ikenga/identity",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/ikenga/page.tsx",
+      "route": "/ikenga",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": false,
+      "findings": [
+        "mock-or-placeholder-indicator"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/investors/page.tsx",
+      "route": "/investors",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/knowledge/disclaimer/page.tsx",
+      "route": "/knowledge/disclaimer",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/knowledge/page.tsx",
+      "route": "/knowledge",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/knowledge/tango/page.tsx",
+      "route": "/knowledge/tango",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/legal/inquiries/page.tsx",
+      "route": "/legal/inquiries",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/livestock/page.tsx",
+      "route": "/livestock",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/cart/page.tsx",
+      "route": "/marketplace/cart",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/checkout/page.tsx",
+      "route": "/marketplace/checkout",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/currency-exchange/page.tsx",
+      "route": "/marketplace/currency-exchange",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/dashboard/page.tsx",
+      "route": "/marketplace/dashboard",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/disputes/page.tsx",
+      "route": "/marketplace/disputes",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/orders/page.tsx",
+      "route": "/marketplace/orders",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/page.tsx",
+      "route": "/marketplace",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/product/[id]/page.tsx",
+      "route": "/marketplace/product/[id]",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/marketplace/product/isriz7-seeds/page.tsx",
+      "route": "/marketplace/product/isriz7-seeds",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/media/page.tsx",
+      "route": "/media",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/my-emails/page.tsx",
+      "route": "/my-emails",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/national-asset/page.tsx",
+      "route": "/national-asset",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/owner/escrow-dashboard/page.tsx",
+      "route": "/owner/escrow-dashboard",
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/page.tsx",
+      "route": "/",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/partners/page.tsx",
+      "route": "/partners",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/payment/page.tsx",
+      "route": "/payment",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/payments/page.tsx",
+      "route": "/payments",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/pricing/page.tsx",
+      "route": "/pricing",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/privacy/page.tsx",
+      "route": "/privacy",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/professional-bodies/itag/page.tsx",
+      "route": "/professional-bodies/itag",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/professional-bodies/page.tsx",
+      "route": "/professional-bodies",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/afcfta/page.tsx",
+      "route": "/resources/afcfta",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/airport/page.tsx",
+      "route": "/resources/airport",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/resources/census/page.tsx",
+      "route": "/resources/census",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/cybersecurity/page.tsx",
+      "route": "/resources/cybersecurity",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/digital-economy/page.tsx",
+      "route": "/resources/digital-economy",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/digital-skills/page.tsx",
+      "route": "/resources/digital-skills",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/resources/fintech/page.tsx",
+      "route": "/resources/fintech",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/forest/page.tsx",
+      "route": "/resources/forest",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/gbos/page.tsx",
+      "route": "/resources/gbos",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/giepa/page.tsx",
+      "route": "/resources/giepa",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/historical/colonial-census/page.tsx",
+      "route": "/resources/historical/colonial-census",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/historical/pre-colonial/page.tsx",
+      "route": "/resources/historical/pre-colonial",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/nawec/page.tsx",
+      "route": "/resources/nawec",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/resources/population-data/page.tsx",
+      "route": "/resources/population-data",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/resources/telecom/page.tsx",
+      "route": "/resources/telecom",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/resources/waste/page.tsx",
+      "route": "/resources/waste",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/saas/page.tsx",
+      "route": "/saas",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/seller/register/page.tsx",
+      "route": "/seller/register",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/services/car-hire/page.tsx",
+      "route": "/services/car-hire",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/services/equipment-hire/page.tsx",
+      "route": "/services/equipment-hire",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/services/logistics/page.tsx",
+      "route": "/services/logistics",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/services/professionals/page.tsx",
+      "route": "/services/professionals",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/settings/platforms/page.tsx",
+      "route": "/settings/platforms",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/smart-agriculture/page.tsx",
+      "route": "/smart-agriculture",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/smart-livestock/page.tsx",
+      "route": "/smart-livestock",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/soil-mapping/crop-suitability/page.tsx",
+      "route": "/soil-mapping/crop-suitability",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/soil-mapping/page.tsx",
+      "route": "/soil-mapping",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/soil-mapping/salt-investment/page.tsx",
+      "route": "/soil-mapping/salt-investment",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/subscription/page.tsx",
+      "route": "/subscription",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/terms/page.tsx",
+      "route": "/terms",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/testimonials/page.tsx",
+      "route": "/testimonials",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/testimonials/submit/page.tsx",
+      "route": "/testimonials/submit",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/tourism/discover/page.tsx",
+      "route": "/tourism/discover",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/tourism/explore/page.tsx",
+      "route": "/tourism/explore",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/tourism/heritage/page.tsx",
+      "route": "/tourism/heritage",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/tourism/page.tsx",
+      "route": "/tourism",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/training/hub/page.tsx",
+      "route": "/training/hub",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/training/learn/page.tsx",
+      "route": "/training/learn",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/training/my-learning/page.tsx",
+      "route": "/training/my-learning",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/training/simulate/[industry]/page.tsx",
+      "route": "/training/simulate/[industry]",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/training/verify/page.tsx",
+      "route": "/training/verify",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/transport/ports-ferries/page.tsx",
+      "route": "/transport/ports-ferries",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/ujris/case-dashboard/page.tsx",
+      "route": "/ujris/case-dashboard",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/ujris/gambia/page.tsx",
+      "route": "/ujris/gambia",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/uju-cycle/page.tsx",
+      "route": "/uju-cycle",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": false,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/unions/page.tsx",
+      "route": "/unions",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/villages/brumen/page.tsx",
+      "route": "/villages/brumen",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/waste/hub/page.tsx",
+      "route": "/waste/hub",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/waste/page.tsx",
+      "route": "/waste",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/website-builder/framer/page.tsx",
+      "route": "/website-builder/framer",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "page",
+      "path": "app/website-builder/guides/page.tsx",
+      "route": "/website-builder/guides",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "page",
+      "path": "app/website-builder/page.tsx",
+      "route": "/website-builder",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/activity/claim/route.ts",
+      "route": "/api/activity/claim",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/activity/verify/route.ts",
+      "route": "/api/activity/verify",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/alerts/route.ts",
+      "route": "/api/admin/alerts",
+      "methods": [
+        "GET",
+        "PATCH"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/approve-content/route.ts",
+      "route": "/api/admin/approve-content",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/content-fetch/route.ts",
+      "route": "/api/admin/content-fetch",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/data-sources/route.ts",
+      "route": "/api/admin/data-sources",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/metrics/route.ts",
+      "route": "/api/admin/metrics",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": false,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/openai-stats/route.ts",
+      "route": "/api/admin/openai-stats",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/admin/pending-content/route.ts",
+      "route": "/api/admin/pending-content",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ai/board-briefing/route.ts",
+      "route": "/api/ai/board-briefing",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/ai/generate-grant-application/route.ts",
+      "route": "/api/ai/generate-grant-application",
+      "methods": [
+        "POST"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ai/generate-investor-pack/route.ts",
+      "route": "/api/ai/generate-investor-pack",
+      "methods": [
+        "POST"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/airport/schedule/route.ts",
+      "route": "/api/airport/schedule",
+      "methods": [
+        "GET"
+      ],
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ask-ujris/route.ts",
+      "route": "/api/ask-ujris",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/audio/summarize/route.ts",
+      "route": "/api/audio/summarize",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/audio/summary/route.ts",
+      "route": "/api/audio/summary",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/auth/[...nextauth]/route.ts",
+      "route": "/api/auth/[...nextauth]",
+      "methods": [],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/auth/forgot-password/route.ts",
+      "route": "/api/auth/forgot-password",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/auth/register/route.ts",
+      "route": "/api/auth/register",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/auth/reset-password/route.ts",
+      "route": "/api/auth/reset-password",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/brands/route.ts",
+      "route": "/api/brands",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/car-hire/bookings/route.ts",
+      "route": "/api/car-hire/bookings",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/car-hire/calculate-price/route.ts",
+      "route": "/api/car-hire/calculate-price",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/car-hire/claims/route.ts",
+      "route": "/api/car-hire/claims",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/car-hire/escrow/route.ts",
+      "route": "/api/car-hire/escrow",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/car-hire/vehicles/route.ts",
+      "route": "/api/car-hire/vehicles",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/chi-engine/generate/route.ts",
+      "route": "/api/chi-engine/generate",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/contact/route.ts",
+      "route": "/api/contact",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/court-order/approve/route.ts",
+      "route": "/api/court-order/approve",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/court-order/verify/route.ts",
+      "route": "/api/court-order/verify",
+      "methods": [
+        "POST",
+        "GET",
+        "DELETE"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/cron/batch-warnings/route.ts",
+      "route": "/api/cron/batch-warnings",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/cron/daily-diagnostics/route.ts",
+      "route": "/api/cron/daily-diagnostics",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/cron/fetch-sources/route.ts",
+      "route": "/api/cron/fetch-sources",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/cron/release-escrow/route.ts",
+      "route": "/api/cron/release-escrow",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/diagnostics/run/route.ts",
+      "route": "/api/diagnostics/run",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/diagnostics/sentry/route.ts",
+      "route": "/api/diagnostics/sentry",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/diagnostics/unified/route.ts",
+      "route": "/api/diagnostics/unified",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/documents/draft/route.ts",
+      "route": "/api/documents/draft",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/evidence/process/route.ts",
+      "route": "/api/evidence/process",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "govern",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/export-csv/route.ts",
+      "route": "/api/export-csv",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/forensic/analyze/route.ts",
+      "route": "/api/forensic/analyze",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/gbos/census/route.ts",
+      "route": "/api/gbos/census",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/gbos/census-data/route.ts",
+      "route": "/api/gbos/census-data",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/gbos/gdp/route.ts",
+      "route": "/api/gbos/gdp",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/gbos/inflation/route.ts",
+      "route": "/api/gbos/inflation",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/health/route.ts",
+      "route": "/api/health",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/ikenga/deep-search/route.ts",
+      "route": "/api/ikenga/deep-search",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ikenga/generate/route.ts",
+      "route": "/api/ikenga/generate",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ikenga/generate-logo/route.ts",
+      "route": "/api/ikenga/generate-logo",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/ikenga/publish/route.ts",
+      "route": "/api/ikenga/publish",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ikenga/route.ts",
+      "route": "/api/ikenga",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/learning/metrics/route.ts",
+      "route": "/api/learning/metrics",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/legal/compliance-logs/route.ts",
+      "route": "/api/legal/compliance-logs",
+      "methods": [
+        "GET"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/legal/inquiry/route.ts",
+      "route": "/api/legal/inquiry",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/legal/laws/route.ts",
+      "route": "/api/legal/laws",
+      "methods": [
+        "GET"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/cart/route.ts",
+      "route": "/api/marketplace/cart",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/checkout/route.ts",
+      "route": "/api/marketplace/checkout",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/currency-exchange/route.ts",
+      "route": "/api/marketplace/currency-exchange",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/currency-rates/route.ts",
+      "route": "/api/marketplace/currency-rates",
+      "methods": [
+        "GET"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/dashboard/route.ts",
+      "route": "/api/marketplace/dashboard",
+      "methods": [
+        "GET"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/dispute/[id]/resolve/route.ts",
+      "route": "/api/marketplace/dispute/[id]/resolve",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/dispute/route.ts",
+      "route": "/api/marketplace/dispute",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/order/[id]/confirm-delivery/route.ts",
+      "route": "/api/marketplace/order/[id]/confirm-delivery",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/order/[id]/confirm-location/route.ts",
+      "route": "/api/marketplace/order/[id]/confirm-location",
+      "methods": [
+        "POST",
+        "GET",
+        "DELETE"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/products/route.ts",
+      "route": "/api/marketplace/products",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/marketplace/reviews/route.ts",
+      "route": "/api/marketplace/reviews",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/national-stats/route.ts",
+      "route": "/api/national-stats",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/presentation/generate/route.ts",
+      "route": "/api/presentation/generate",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/security/reverse-engineering-attempt/route.ts",
+      "route": "/api/security/reverse-engineering-attempt",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/seller/deposit/route.ts",
+      "route": "/api/seller/deposit",
+      "methods": [
+        "POST"
+      ],
+      "applet": "partner",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/settings/platforms/route.ts",
+      "route": "/api/settings/platforms",
+      "methods": [
+        "GET",
+        "POST",
+        "DELETE",
+        "PATCH"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/soil/crop-suitability/route.ts",
+      "route": "/api/soil/crop-suitability",
+      "methods": [
+        "GET"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/subscriptions/route.ts",
+      "route": "/api/subscriptions",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/support/chat/route.ts",
+      "route": "/api/support/chat",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/tango/members/route.ts",
+      "route": "/api/tango/members",
+      "methods": [
+        "GET"
+      ],
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/testimonials/route.ts",
+      "route": "/api/testimonials",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/assess/route.ts",
+      "route": "/api/training/assess",
+      "methods": [
+        "POST"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/auto-enroll/route.ts",
+      "route": "/api/training/auto-enroll",
+      "methods": [
+        "POST"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/generate-course/route.ts",
+      "route": "/api/training/generate-course",
+      "methods": [
+        "POST"
+      ],
+      "applet": "academy",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/issue-certificate/route.ts",
+      "route": "/api/training/issue-certificate",
+      "methods": [
+        "POST"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/progress/route.ts",
+      "route": "/api/training/progress",
+      "methods": [
+        "GET"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/stats/route.ts",
+      "route": "/api/training/stats",
+      "methods": [
+        "GET"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/training/verify/route.ts",
+      "route": "/api/training/verify",
+      "methods": [
+        "GET"
+      ],
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/translate/route.ts",
+      "route": "/api/translate",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ujris/gambia-analyze/route.ts",
+      "route": "/api/ujris/gambia-analyze",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ujris/generate-presentation/route.ts",
+      "route": "/api/ujris/generate-presentation",
+      "methods": [
+        "POST"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ujris/process-evidence/route.ts",
+      "route": "/api/ujris/process-evidence",
+      "methods": [
+        "POST"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/ujris/tokens/route.ts",
+      "route": "/api/ujris/tokens",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ],
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/uju-cycle/route.ts",
+      "route": "/api/uju-cycle",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/uju-unified/route.ts",
+      "route": "/api/uju-unified",
+      "methods": [
+        "POST"
+      ],
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/unified-inbox/route.ts",
+      "route": "/api/unified-inbox",
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ],
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/v2/credit-score/route.ts",
+      "route": "/api/v2/credit-score",
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/verify-payment/route.ts",
+      "route": "/api/verify-payment",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "internal",
+      "decision": "rebuild-or-integrate",
+      "blockedInProduction": true,
+      "findings": [
+        "mock-or-placeholder-indicator",
+        "financial-domain",
+        "sensitive-domain"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "app/api/weather/route.ts",
+      "route": "/api/weather",
+      "methods": [
+        "GET"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": []
+    },
+    {
+      "type": "api",
+      "path": "app/api/welcome-email/route.ts",
+      "route": "/api/welcome-email",
+      "methods": [
+        "POST"
+      ],
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit",
+      "blockedInProduction": false,
+      "findings": [
+        "financial-domain"
+      ]
+    },
+    {
+      "type": "model",
+      "name": "User",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Organisation",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Case",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Grant",
+      "path": "prisma/schema.prisma",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Partner",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "EnergyUnit",
+      "path": "prisma/schema.prisma",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Project",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Idea",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "MediaItem",
+      "path": "prisma/schema.prisma",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Notification",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Brand",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "BrandMember",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "ContentItem",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "ContentSchedule",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "UnifiedInboxMessage",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Lead",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "UserActivityLog",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "GuaranteeAgreement",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "RefundClaim",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "SystemPromptTemplate",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "CirclePost",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "CourtOrder",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "AccessLog",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "PasswordResetToken",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "TrainingProgram",
+      "path": "prisma/schema.prisma",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "LearningPath",
+      "path": "prisma/schema.prisma",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "LearningPathProgram",
+      "path": "prisma/schema.prisma",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Enrollment",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "ModuleProgress",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Assessment",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "BlockchainCertificate",
+      "path": "prisma/schema.prisma",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "EmployerPartnership",
+      "path": "prisma/schema.prisma",
+      "applet": "academy",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "JobMatch",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "PlatformCredential",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "CuratedContent",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "ExternalSource",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "Testimonial",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "MarketplaceReview",
+      "path": "prisma/schema.prisma",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "MarketplaceOrder",
+      "path": "prisma/schema.prisma",
+      "applet": "partner",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "GambianLaw",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "LegalRule",
+      "path": "prisma/schema.prisma",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "LegalComplianceLog",
+      "path": "prisma/schema.prisma",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "LegalInquiry",
+      "path": "prisma/schema.prisma",
+      "applet": "govern",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "DataSource",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "DataContent",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "AdminAlert",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "UpdateLog",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "CensusData",
+      "path": "prisma/schema.prisma",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "LGACensusData",
+      "path": "prisma/schema.prisma",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "ColonialCensus",
+      "path": "prisma/schema.prisma",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "HistoricalEstimate",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "VehicleOwner",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "EscrowAccount",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "EscrowTransaction",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "HireVehicle",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "VehicleInspection",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "CarBooking",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "BookingEscrowAllocation",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "model",
+      "name": "DamageClaim",
+      "path": "prisma/schema.prisma",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "retain-and-audit"
+    },
+    {
+      "type": "dataset",
+      "path": "data/board-dashboard.ts",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/gambia-financial-institutions.ts",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/gambia-opportunities.json",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/grants-database.ts",
+      "applet": "grow",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/n8n-workflows/lead-nurturing.json",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/n8n-workflows/trend-harvesting.json",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/n8n-workflows/weekly-content-cycle.json",
+      "applet": "core",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    },
+    {
+      "type": "dataset",
+      "path": "data/tango-members.ts",
+      "applet": "discover",
+      "maturity": "preview",
+      "decision": "verify-source-licence-freshness"
+    }
+  ]
+}
