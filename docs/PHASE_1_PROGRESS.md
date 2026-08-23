@@ -2,54 +2,52 @@
 
 Updated: 23 August 2026
 
-## Scope executed
+## Exit status
 
-Work continues the Phase 0 artefacts in `docs/phase-0/` and the sequenced backlog in `docs/phase-0/PHASE_1_BACKLOG.md`.
+Epics 1–4 and 6–8 are implemented for the Core/GROW pilot with automated tests. Epic 5 sandbox path is implemented; **live money remains explicitly blocked** until `docs/phase-0/PAYMENT_LIVE_DECISION.md` is signed.
 
-### Epic 2 — Tenant identity and authorization
+## Epic 1 — Build and security baseline
 
-- Added `OrganisationMembership`, `RoleDefinition`, `PermissionGrant`, `ConsentRecord`, `SessionRevocation`, and `AuditEvent` to Prisma and SQL migration `20260823120000_fortis_core_phase1`.
-- Policy helper in `lib/core/policy.ts` uses membership + catalogue (`lib/core/permissions.ts`), never global `User.role` for tenant resources.
-- Cross-tenant and unprivileged admin/billing access fail in `tests/core/phase1-core.test.ts` and emit `audit.sensitive_access`.
-- Email verification, session revocation and step-up gates are enforced in the policy helper.
+- Quality workflow activated at `.github/workflows/quality.yml` (Prisma generate, migrate deploy on Postgres 16, typecheck, lint, test, build, production audit, secret scan).
+- Transitional ESLint baseline retained; Core modules are typed.
+- Next 14 / Prisma high audit findings: formal risk acceptance in `docs/phase-0/DEPENDENCY_RISK_ACCEPTANCE.md` with compensating controls. Audit remains a CI blocker until a dated deploy exception.
 
-### Epic 3 — Catalogue and entitlements
+## Epic 2 — Tenant identity and authorization
 
-- Versioned applet/product/plan/price/entitlement schema plus subscriptions, seats, one-off purchases and grants.
-- Server-owned GROW price `price_grow_diagnostic_gmd_v1` (GMD 25000) in `lib/core/catalogue.ts`.
-- Checkout quote (`lib/core/grow-checkout.ts`) and `GET /api/v2/catalogue/prices/[priceId]` resolve amount/currency from the catalogue only.
-- Entitlement grant requires verified subscription or one-off purchase; `POST /api/v2/entitlements/check` is deny-by-default without an active membership.
+- Memberships persisted via Prisma (`loadActiveMemberships` fail-closed).
+- `requireApiAccess` applied to admin, billing (`/api/subscriptions` POST), marketplace checkout/dashboard, training progress/certificates, and GOVERN compliance logs.
+- Session tenant is trusted; query `userId` spoofing removed from training progress.
+- OpenAI admin stats no longer accept an email query bypass.
 
-### Epic 4 — Usage metering
+## Epic 3–5
 
-- Append-only `UsageEvent` / `UsageReservation` / aggregates / limits.
-- In-memory reservation engine prevents concurrent over-consumption, is idempotent, records consume/fail, and reverses via compensating events.
+Unchanged from prior delivery: catalogue, entitlements, metering, sandbox adapter, signed webhooks, ledger, reconciliation. Live payments flag default `false`.
 
-### Epic 5 — Payment sandbox and ledger (interfaces only)
+## Epic 6 — Live data exchange
 
-- Provider adapter contract + `SandboxPaymentAdapter` (`fortis_sandbox` mode).
-- HMAC-SHA256 signed webhook inbox with replay/duplicate protection.
-- `POST /api/v2/payments/webhook` posts a balanced capture once per provider event id.
-- Double-entry posting with reverse-not-edit; reconciliation compares provider statement lines to ledger facts.
-- No live credentials, capture, or public escrow claim.
+- Entities + migration `20260823140000_fortis_core_live_data`.
+- Adapters: GBoS, CBG FX, World Bank WDI with checksums and provenance.
+- Freshness never masquerades STALE/UNAVAILABLE as current.
+- `DataTrustMark` component and `GET /api/v2/sources/[sourceKey]`.
 
-## PostgreSQL staging validation
+## Epic 7 — Free/local AI vertical slice
 
-Migration: `prisma/migrations/20260823120000_fortis_core_phase1/migration.sql`
+- Internal adapter contract; deterministic retrieval-first GROW report.
+- Unavailable inference falls back to sourced deterministic text, never fabricated output.
+- `/api/uju-cycle` and `/api/v2/grow/report` use the deterministic engine.
+
+## Epic 8 — Operations
+
+- `/api/v2/status` dependency health and SLOs.
+- Runbooks: incident, payments, backups, module launch.
+- Feature flags in `lib/core/feature-flags.ts`.
+- Accessibility / low-bandwidth checks on the launch checklist.
+
+## Staging validation
 
 ```
+DATABASE_URL=postgres://… npx prisma migrate deploy
 DATABASE_URL=postgres://… npm run db:validate-core
 ```
 
-The script exits `2` if `DATABASE_URL` is unset (this sandbox has no PostgreSQL). CI/staging must apply `prisma migrate deploy` then run the validator. Expected: all Core tables present and check constraints `LedgerEntry_amount_pos`, `Price_amountMinor_nonneg`, `UsageReservation_units_pos`.
-
-## Remaining Phase 1 (not claimed complete)
-
-- Epic 1: Prisma engine download / full production build in this sandbox; Next 14 high audit findings still need a tested major upgrade or formal risk acceptance.
-- Persist policy memberships from the database in every legacy route (matrix still a target).
-- Epics 6–8: live data adapters, free/local AI slice, ops/runbooks.
-- Epic 5 live money remains blocked pending provider/legal/finance sign-off.
-
-## Tests
-
-`tests/core/phase1-core.test.ts` covers membership/policy, catalogue/entitlements, metering concurrency/idempotency, signed webhooks, ledger invariants and reconciliation.
+This sandbox has no PostgreSQL; CI service container is the staging proof path.

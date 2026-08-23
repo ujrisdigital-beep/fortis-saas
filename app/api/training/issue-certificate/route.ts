@@ -2,6 +2,7 @@
 // Issues a verifiable digital certificate — unique ID, SHA-256 hash
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 function generateCertificateNo(): string {
   const year = new Date().getFullYear();
@@ -16,6 +17,8 @@ function generateVerifyHash(certNo: string, userId: string, programId: string, i
 
 export async function POST(req: NextRequest) {
   try {
+    const access = await requireApiAccess("training", "admin");
+    if (!access.ok) return access.response;
     const body = await req.json();
     const { userId, programId, programTitle, userName, score, enrollmentId } = body as {
       userId: string;

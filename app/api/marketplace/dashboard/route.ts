@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 // Live metrics — in production these come from database aggregations
 // Seeded with realistic Gambian marketplace numbers for demo/presentation
@@ -8,6 +9,8 @@ function liveCount(base: number, variance: number): number {
 }
 
 export async function GET() {
+  const access = await requireApiAccess("marketplace", "read");
+  if (!access.ok) return access.response;
   const data = {
     metrics: {
       totalTransactions: liveCount(1247, 8),

@@ -1,10 +1,13 @@
 // app/api/admin/alerts/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
+  const access = await requireApiAccess("admin", "read");
+  if (!access.ok) return access.response;
   try {
     const alerts = await prisma.adminAlert.findMany({
       where: { isRead: false },
@@ -18,6 +21,8 @@ export async function GET() {
 }
 
 export async function PATCH(req: Request) {
+  const access = await requireApiAccess("admin", "write");
+  if (!access.ok) return access.response;
   try {
     const body = await req.json() as { id: string };
     await prisma.adminAlert.update({

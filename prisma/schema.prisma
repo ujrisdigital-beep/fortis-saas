@@ -1518,3 +1518,111 @@ model AuditEvent {
 
   @@index([type, createdAt])
 }
+
+enum FreshnessState {
+  REAL_TIME
+  CURRENT
+  PERIODIC_OFFICIAL
+  VERIFIED_SNAPSHOT
+  STALE
+  UNAVAILABLE
+}
+
+model SourceDefinition {
+  id             String   @id @default(cuid())
+  sourceKey      String   @unique
+  name           String
+  authority      String
+  method         String
+  licence        String
+  attribution    String
+  cadence        String
+  adapterVersion String
+  createdAt      DateTime @default(now())
+
+  runs SourceAdapterRun[]
+}
+
+model SourceAdapterRun {
+  id              String   @id @default(cuid())
+  sourceKey       String
+  status          String
+  startedAt       DateTime @default(now())
+  finishedAt      DateTime?
+  error           String?
+  recordsIngested Int      @default(0)
+
+  source SourceDefinition @relation(fields: [sourceKey], references: [sourceKey], onDelete: Cascade)
+}
+
+model RawSourceObject {
+  id           String   @id @default(cuid())
+  sourceKey    String
+  sourceRecordId String
+  checksum     String   @unique
+  payload      Json
+  retrievedAt  DateTime @default(now())
+}
+
+model CanonicalDataset {
+  id          String @id @default(cuid())
+  key         String @unique
+  title       String
+  description String
+}
+
+model CanonicalRecordVersion {
+  id              String         @id @default(cuid())
+  datasetKey      String
+  indicatorKey    String
+  value           String
+  unit            String
+  period          String
+  freshness       FreshnessState
+  publishedAt     DateTime?
+  retrievedAt     DateTime
+  adapterVersion  String
+  checksum        String
+  sourceKey       String
+  sourceRecordId  String
+  sourceUrl       String
+  supersededById  String?
+
+  @@index([datasetKey, indicatorKey])
+}
+
+model ProvenanceRecord {
+  id             String   @id @default(cuid())
+  recordVersionId String
+  sourceKey      String
+  publisher      String
+  classification String
+  licence        String
+  attribution    String
+  createdAt      DateTime @default(now())
+}
+
+model DataQualityIssue {
+  id        String   @id @default(cuid())
+  sourceKey String
+  kind      String
+  detail    String
+  status    String   @default("OPEN")
+  createdAt DateTime @default(now())
+}
+
+model EditorialReview {
+  id        String   @id @default(cuid())
+  recordId  String
+  reviewer  String
+  decision  String
+  notes     String?
+  reviewedAt DateTime @default(now())
+}
+
+model FeatureFlag {
+  id        String  @id @default(cuid())
+  key       String  @unique
+  enabled   Boolean @default(false)
+  note      String?
+}

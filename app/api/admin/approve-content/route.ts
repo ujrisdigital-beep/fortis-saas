@@ -1,10 +1,13 @@
 // app/api/admin/approve-content/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
+  const access = await requireApiAccess("admin", "write");
+  if (!access.ok) return access.response;
   try {
     const body = await req.json() as { id: string; action: "approve" | "reject" };
 

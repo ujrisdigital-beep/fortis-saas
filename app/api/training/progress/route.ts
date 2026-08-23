@@ -2,19 +2,15 @@
 // User progress across all enrollments
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { getServerSession } from 'next-auth';
+import { requireApiAccess } from '@/lib/core/api-guard';
 
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession();
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get('userId') ?? (session?.user as { id?: string } | null)?.id;
-
-    if (!userId) {
-      return NextResponse.json({ error: 'userId required' }, { status: 400 });
-    }
+    const access = await requireApiAccess('training', 'read');
+    if (!access.ok) return access.response;
+    const userId = access.session.userId;
 
     const enrollments = await prisma.enrollment.findMany({
       where: { userId },

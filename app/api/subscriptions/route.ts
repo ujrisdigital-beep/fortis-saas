@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 const PLANS = [
   {
@@ -32,11 +33,14 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const access = await requireApiAccess("billing", "billing.manage");
+  if (!access.ok) return access.response;
   const body = await req.json();
-  const { planId, userId, paymentMethod, currency = "GMD", billing = "monthly" } = body;
+  const { planId, paymentMethod, currency = "GMD", billing = "monthly" } = body;
+  const userId = access.session.userId;
 
-  if (!planId || !userId) {
-    return NextResponse.json({ error: "planId and userId required" }, { status: 400 });
+  if (!planId) {
+    return NextResponse.json({ error: "planId required" }, { status: 400 });
   }
 
   const plan = PLANS.find((p) => p.id === planId);

@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 export async function POST(req: NextRequest) {
+  const access = await requireApiAccess("marketplace", "write");
+  if (!access.ok) return access.response;
   const body = await req.json();
   const { items, buyerName, buyerPhone, buyerAddress, paymentMethod, currency = "GMD" } = body;
 

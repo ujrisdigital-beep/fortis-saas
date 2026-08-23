@@ -26,6 +26,10 @@ export interface PolicyDecision {
   audit?: ReturnType<typeof createAuditEvent>;
 }
 
+export function forbidTenantSpoof(claimedOrgId: string | undefined, trustedOrgId: string): boolean {
+  return Boolean(claimedOrgId && claimedOrgId !== trustedOrgId);
+}
+
 export function authorize(
   ctx: PolicyContext,
   applet: PolicyApplet,

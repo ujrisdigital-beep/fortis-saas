@@ -25,6 +25,11 @@ const required = [
   "LedgerEntry",
   "ReconciliationRun",
   "AuditEvent",
+  "SourceDefinition",
+  "RawSourceObject",
+  "CanonicalRecordVersion",
+  "ProvenanceRecord",
+  "FeatureFlag",
 ];
 
 const url = process.env.DATABASE_URL;
