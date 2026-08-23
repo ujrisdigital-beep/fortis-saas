@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { PrismaClient } from "@prisma/client";
+import { firstApprove, secondApprove, type DualControlRequest } from "@/lib/govern/dual-control";
 
 const prisma = new PrismaClient();
 

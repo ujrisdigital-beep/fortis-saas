@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireApiAccess } from "@/lib/core/api-guard";
-import { DEMO_BANK, gradeAssessment, type SubmittedAnswer } from "@/lib/academy/assess";
+import { gradeAssessment, type SubmittedAnswer } from "@/lib/academy/assess";
+import { bankForProgram } from "@/lib/academy/banks";
 
 export async function POST(req: NextRequest) {
   const access = await requireApiAccess("training", "write");
@@ -15,7 +16,7 @@ export async function POST(req: NextRequest) {
     if (!body.programId || !body.answers) {
       return NextResponse.json({ error: "programId and answers are required" }, { status: 400 });
     }
-    const graded = gradeAssessment(DEMO_BANK, body.answers, {
+    const graded = gradeAssessment(bankForProgram(body.programId), body.answers, {
       tabSwitches: body.tabSwitches ?? 0,
       timeSpentSeconds: body.timeSpentSeconds ?? 0,
     });

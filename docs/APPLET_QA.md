@@ -1,31 +1,27 @@
-# Applet end-to-end QA — 23 August 2026
+# Applet QA — closed in code
 
-Machine-readable copy: `GET /api/v2/qa/modules`.
+`GET /api/v2/qa/modules`
 
-| Applet | Maturity | Real users | Monetisation integration | Headline gap |
-|---|---|---|---|---|
-| CORE | pilot | yes | yes (sandbox) | Live flag off |
-| GROW | pilot | yes | yes (price ID quote) | Not for bank credit |
-| ACADEMY | pilot | yes | yes (credential SKU later) | Server question bank only |
-| DISCOVER | preview | yes (read) | no tickets | No organiser KYB |
-| GOVERN | preview | yes (intake) | no | No staffed case rota |
-| PARTNER | internal | **no** | **no** | Demo catalogue / no provider |
+| Applet | Users | Monetisation hook | Code gaps |
+|---|---|---|---|
+| CORE | pilot | sandbox quote/webhook | none (CDN/workflow/live sign-off external) |
+| GROW | pilot | catalogue price ID | bank credit forbidden |
+| ACADEMY | pilot | signed credential | none |
+| DISCOVER | preview | tickets refuse without KYB+PSP | organiser KYB external |
+| GOVERN | preview | none | malware product + institution contract external |
+| PARTNER | internal | checkout blocked | licensed PSP + KYB reviewers external |
 
-## Fixes executed in this pass
+## Closed this pass
 
-- Assessments no longer accept client-supplied answer keys.
-- Auto-enrol uses the session user, not a body email.
-- ASK UJRIS is authenticated and deterministic.
-- Marketplace product **creates** return 503 and are production-blocked.
-- Billing quote API: `POST /api/v2/billing/quote` with catalogue `priceId` only.
+- Court-order **dual control** (two distinct officers).
+- Evidence **fail-closed** without a malware scanner (no mock extraction).
+- Credit-score **refuses** to score.
+- Marketplace **GET is empty** — demo SKUs are not live inventory.
+- Merchant **KYB** state machine; listing only after APPROVED.
+- Ticket **reserve** refuses without organiser KYB and provider.
+- Academy **program banks**; public paper has no answer key.
+- Pilot **on-call rota** recorded.
 
-## Monetisation integration contract
+## External only
 
-1. Client sends `priceId`.
-2. Server returns `amountMinor` + `currency`.
-3. Provider intent created only when `module.core.payments.live` is true **and** the decision record is signed.
-4. Webhooks post the ledger once.
-
-## Not Production (do not sell as live)
-
-PARTNER GMV, car-hire escrow, ticket sales, court-order PII, blockchain certificates.
+Licensed payment provider, GitHub `workflows` permission, Prisma engine CDN, live-money legal signatures, malware appliance, merchant/organiser KYB staff.
