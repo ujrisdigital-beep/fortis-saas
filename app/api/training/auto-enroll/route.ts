@@ -1,7 +1,7 @@
 // app/api/training/auto-enroll/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { getServerSession } from 'next-auth';
+import { requireApiAccess } from '@/lib/core/api-guard';
 
 const prisma = new PrismaClient();
 
@@ -70,10 +70,12 @@ const SECTOR_MAP: Record<string, string> = {
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession();
+    const access = await requireApiAccess('training', 'write');
+    if (!access.ok) return access.response;
     const body = await req.json();
-    const { email: bodyEmail, industry: bodyIndustry, jobRole, department } = body;
-    const userEmail = bodyEmail ?? (session?.user?.email ?? '');
+    const { industry: bodyIndustry, jobRole, department } = body;
+    const sessionUser = await prisma.user.findUnique({ where: { id: access.session.userId } });
+    const userEmail = sessionUser?.email ?? '';
 
     if (!userEmail) {
       return NextResponse.json({ error: 'Unauthorized — login required' }, { status: 401 });

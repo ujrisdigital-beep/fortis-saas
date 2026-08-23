@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 // In-memory demo store (replace with Prisma in production)
 const DEMO_PRODUCTS = [
@@ -25,20 +26,15 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ products, total: products.length });
 }
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { name, price, category, description, whatsapp, location } = body;
-
-  if (!name || !price || !category || !description || !whatsapp) {
-    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-  }
-
-  const product = {
-    id: `p${Date.now()}`,
-    name, price, category, description, whatsapp, location: location ?? "",
-    seller: "New Seller", rating: 0, reviews: 0, stock: 10,
-    images: [], verified: false,
-  };
-
-  return NextResponse.json({ product, message: "Product created successfully" }, { status: 201 });
+export async function POST() {
+  const access = await requireApiAccess("marketplace", "write");
+  if (!access.ok) return access.response;
+  return NextResponse.json(
+    {
+      error: "catalogue_not_authoritative",
+      code: "MODULE_NOT_PRODUCTION_READY",
+      message: "Merchant catalogue writes require a persistent reviewed product. Demo creates are disabled.",
+    },
+    { status: 503 },
+  );
 }

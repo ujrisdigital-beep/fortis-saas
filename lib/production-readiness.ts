@@ -167,6 +167,12 @@ export const PRODUCTION_BLOCKS: readonly ProductionBlock[] = [
     reason: "mock-data",
     replacement: "Validated, explainable and consented score model",
   },
+  {
+    path: "/api/marketplace/products",
+    methods: ["POST"],
+    reason: "mock-data",
+    replacement: "Persistent merchant catalogue with KYB and server prices",
+  },
 ] as const;
 
 const BLOCKED_PAGES = new Map<string, ProductionBlock>([
