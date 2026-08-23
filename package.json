@@ -21,7 +21,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:validate-core": "node scripts/validate-core-migration.mjs",
-    "db:validate-core-local": "node scripts/validate-core-pglite.mjs"
+    "db:validate-core-local": "node scripts/validate-core-pglite.mjs",
+    "data:refresh": "node scripts/refresh-public-data.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.2",

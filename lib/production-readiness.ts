@@ -41,6 +41,7 @@ export const PRODUCTION_BLOCKS: readonly ProductionBlock[] = [
   },
   {
     path: "/api/marketplace/currency-rates",
+    methods: ["POST", "PUT", "PATCH", "DELETE"],
     reason: "mock-data",
     replacement: "Timestamped CBG or approved open-data rate adapter",
   },

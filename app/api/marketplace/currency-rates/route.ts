@@ -1,41 +1,17 @@
 import { NextResponse } from "next/server";
+import { fetchOpenUsdRates } from "@/lib/core/data/fetchers/open-fx";
 
-// Fixed rates per spec: 1 USD=70, 1 GBP=85, 1 EUR=75 GMD
-// In production, fetch from ExchangeRate-API or Central Bank of The Gambia
-const BASE_RATES = {
-  GMD: 1,
-  USD: 70,
-  GBP: 85,
-  EUR: 75,
-};
-
-// Simulated slight market fluctuation (±2%)
-function jitter(base: number): number {
-  const variation = base * 0.02 * (Math.random() * 2 - 1);
-  return Math.round((base + variation) * 100) / 100;
-}
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const rates = {
-    base: "GMD",
-    rates: {
-      GMD: 1,
-      USD: jitter(BASE_RATES.USD),
-      GBP: jitter(BASE_RATES.GBP),
-      EUR: jitter(BASE_RATES.EUR),
-    },
-    inverseRates: {
-      GMD: 1,
-      USD: Math.round(10000 / BASE_RATES.USD) / 10000,
-      GBP: Math.round(10000 / BASE_RATES.GBP) / 10000,
-      EUR: Math.round(10000 / BASE_RATES.EUR) / 10000,
-    },
-    updatedAt: new Date().toISOString(),
-    source: "Fortis OS Exchange Engine (Central Bank of Gambia reference rates)",
-    commission: 0.005,
-  };
-
-  return NextResponse.json(rates, {
-    headers: { "Cache-Control": "public, max-age=300" },
+  const fx = await fetchOpenUsdRates();
+  if (!fx.ok) {
+    return NextResponse.json({ success: false, notice: fx.notice, live: false }, { status: 503 });
+  }
+  return NextResponse.json({
+    success: true,
+    live: true,
+    notOfficialCbg: true,
+    ...fx,
   });
 }
