@@ -36,10 +36,7 @@ const required = [
   "SignedCredential",
   "DiscoverListing",
   "GovernComplaint",
-<<<<<<< HEAD
-=======
   "EmailVerificationToken",
->>>>>>> 566c0b3 (Ship pilot onboarding with industry-baseline account QA.)
 ];
 
 const migrationsDir = join(process.cwd(), "prisma/migrations");
