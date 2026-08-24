@@ -1,24 +1,38 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { canListProducts } from "@/lib/partner/kyb";
 
 export default function PartnerModulePage() {
-  const demo = canListProducts({ merchantId: "demo", status: "NOT_STARTED" });
+  const [msg, setMsg] = useState("");
+
+  async function submitKyb() {
+    const res = await fetch("/api/v2/commerce/kyb/submit", { method: "POST" });
+    const data = await res.json();
+    setMsg(res.ok ? `KYB ${data.kyb.status}` : data.error ?? "Need a signed-in org owner");
+  }
+
   return (
     <main style={{ maxWidth: 680, margin: "2rem auto", padding: "0 1rem", fontFamily: "DM Sans, system-ui" }}>
       <p style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "#1B4D3E" }}>
         FORTIS PARTNER · preview
       </p>
-      <h1>Directory open. Commerce closed.</h1>
+      <h1>Directory open. Public commerce closed.</h1>
       <p>
-        Development-partner listings are informational. Merchant SKUs cannot go live until KYB is APPROVED and a
-        licensed checkout exists. Demo merchant can list products: {String(demo)}.
+        Submit KYB for staff review. Listing stays closed until APPROVED <em>and</em> a licensed PSP is contracted.
+        Readiness: <Link href="/api/v2/commerce/readiness">/api/v2/commerce/readiness</Link>
       </p>
+      <button type="button" onClick={submitKyb}>Submit KYB for this organisation</button>
+      {msg && <p>{msg}</p>}
       <ul>
         <li>
           <Link href="/partners">Development partners directory</Link>
         </li>
         <li>
-          <Link href="/marketplace">Marketplace (empty public inventory)</Link>
+          <Link href="/marketplace">Marketplace (empty)</Link>
+        </li>
+        <li>
+          <Link href="/ops/commerce">Staff KYB queue</Link>
         </li>
       </ul>
     </main>

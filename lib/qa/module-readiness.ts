@@ -114,7 +114,7 @@ export const APPLET_SCORECARDS: AppletScorecard[] = [
       F_ops: { pass: true, note: "Directory rota covered by pilot ops" },
     },
     gaps: ["External licensed marketplace provider + KYB reviewers for commerce"],
-    next: "Keep commerce closed; KYB must be APPROVED before any SKU",
+    next: "Provision FORTIS_KYB_REVIEWERS + licensed PSP; see docs/COMMERCE_READINESS.md",
   },
 ];
 
