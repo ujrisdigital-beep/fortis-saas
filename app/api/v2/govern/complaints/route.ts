@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import { openComplaint, publicComplaintView, type ComplaintCategory } from "@/lib/govern/complaints";
+import { openComplaint, publicComplaintView, type ComplaintCategory, type ComplaintChannel } from "@/lib/govern/complaints";
+import type { ExclusionCode } from "@/lib/govern/admissibility";
 import { findComplaint, saveComplaint } from "@/lib/govern/store";
 import { consumeRateLimit } from "@/lib/onboarding/rate-limit";
 import { isFlagEnabled } from "@/lib/core/feature-flags";
+import { rememberCategory, suggestCategory } from "@/lib/ujris/task-memory";
 
 const CATEGORIES: ComplaintCategory[] = [
   "maladministration",
@@ -29,23 +31,38 @@ export async function POST(request: Request) {
     category?: ComplaintCategory;
     organisationNamed?: string;
     contact?: string;
+    channel?: ComplaintChannel;
+    whistleblower?: boolean;
+    againstPublicAuthority?: boolean;
+    exhaustedInternal?: boolean;
+    awarenessDate?: string;
+    timeExtensionReason?: string;
+    exclusionsDeclared?: ExclusionCode[];
   } | null;
   try {
-    const category = body?.category && CATEGORIES.includes(body.category) ? body.category : "other";
+    const text = `${body?.subject ?? ""} ${body?.body ?? ""}`;
+    const hinted = body?.category && CATEGORIES.includes(body.category) ? body.category : suggestCategory(text, "other").category;
     const complaint = openComplaint({
       subject: body?.subject ?? "",
       body: body?.body ?? "",
       consent: Boolean(body?.consent),
-      channel: "ombudsman",
-      category,
+      channel: body?.channel === "platform_dispute" ? "platform_dispute" : "ombudsman",
+      category: hinted as ComplaintCategory,
       organisationNamed: body?.organisationNamed,
       contact: body?.contact,
+      whistleblower: body?.whistleblower,
+      againstPublicAuthority: body?.againstPublicAuthority,
+      exhaustedInternal: body?.exhaustedInternal,
+      awarenessDate: body?.awarenessDate,
+      timeExtensionReason: body?.timeExtensionReason,
+      exclusionsDeclared: body?.exclusionsDeclared,
     });
     saveComplaint(complaint);
+    rememberCategory(complaint.category);
     return NextResponse.json(
       {
         ...publicComplaintView(complaint),
-        message: "Complaint received. Free to the public. No determination has been made.",
+        message: "Received for human review. Free to the public. No determination has been made.",
       },
       { status: 201 },
     );

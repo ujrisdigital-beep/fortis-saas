@@ -64,7 +64,12 @@ describe("DISCOVER listings", () => {
 describe("GOVERN complaints", () => {
   it("requires consent and does not auto-resolve", () => {
     expect(() => openComplaint({ subject: "x", body: "y", consent: false })).toThrow("consent_required");
-    const c = openComplaint({ subject: "Billing", body: "Need a human review", consent: true });
+    const c = openComplaint({
+      subject: "Billing",
+      body: "Need a human review",
+      consent: true,
+      whistleblower: true,
+    });
     expect(c.status).toBe("RECEIVED");
     expect(c.feeToPublic).toBe("free");
     expect(c.channel).toBe("ombudsman");
