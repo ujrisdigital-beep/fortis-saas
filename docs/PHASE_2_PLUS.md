@@ -26,6 +26,14 @@
 - Consent-required complaint intake; no automated determination.
 - `POST /api/v2/govern/complaints`.
 
+## Module launch (24 August 2026)
+
+Pilot/preview flags on: CORE, GROW, ACADEMY, DISCOVER listings, GOVERN intake, PARTNER directory, RIDES hire.
+
+Still **off**: live card capture, Discover tickets, Partner commerce.
+
+Transfer catalogue SKUs: GROW GMD 250, Academy GMD 150, Rides GMD 350.
+
 ## Still later (not claimed Production)
 
 - Phase 5 marketplace / Phase 6 fleet: licensed provider + KYB.

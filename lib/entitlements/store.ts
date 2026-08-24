@@ -8,6 +8,9 @@ const FEATURE_BY_MODULE: Record<string, string> = {
   academy: "academy.assessment",
   marketplace: "marketplace.order",
   rides: "rides.trip",
+  discover: "discover.listing",
+  govern: "govern.intake",
+  partner: "partner.directory",
   core: "core.generic",
 };
 

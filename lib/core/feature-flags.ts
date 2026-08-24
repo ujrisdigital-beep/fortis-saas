@@ -1,4 +1,5 @@
 export const DEFAULT_FLAGS: Record<string, boolean> = {
+  "module.core.control_plane": true,
   "module.grow.launch": true,
   "module.core.payments.sandbox": true,
   "module.core.payments.live": false,
@@ -8,8 +9,13 @@ export const DEFAULT_FLAGS: Record<string, boolean> = {
   "module.live_data.worldbank": true,
   "module.grow.workspace": true,
   "module.academy.credentials": true,
+  "module.academy.assessment": true,
   "module.discover.listings": true,
+  "module.discover.tickets": false,
   "module.govern.intake": true,
+  "module.partner.directory": true,
+  "module.partner.commerce": false,
+  "module.rides.hire": true,
 };
 
 export function isFlagEnabled(key: string, overrides: Record<string, boolean> = {}): boolean {

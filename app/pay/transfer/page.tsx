@@ -46,10 +46,18 @@ export default function TransferPayPage() {
       <h1>Bank / wallet transfer</h1>
       <p>Available on GROW, Academy and other catalogue prices while SBN-COMCACHE is pending.</p>
       <form onSubmit={quote} style={{ display: "grid", gap: 8 }}>
-        <input name="priceId" required defaultValue="price_grow_diagnostic_gmd_v1" />
+        <select name="priceId" defaultValue="price_grow_diagnostic_gmd_v1">
+          <option value="price_grow_diagnostic_gmd_v1">GROW full report — GMD 250</option>
+          <option value="price_academy_assessment_gmd_v1">Academy assessment — GMD 150</option>
+          <option value="price_rides_trip_gmd_v1">Rides trip — GMD 350</option>
+        </select>
         <select name="module">
           <option value="grow">GROW</option>
           <option value="academy">Academy</option>
+          <option value="rides">Rides</option>
+          <option value="discover">Discover</option>
+          <option value="govern">Govern</option>
+          <option value="partner">Partner</option>
           <option value="marketplace">Marketplace</option>
           <option value="core">Core</option>
         </select>

@@ -87,5 +87,12 @@ describe("launch flags", () => {
   it("keeps live payments off", () => {
     expect(isFlagEnabled("module.core.payments.live")).toBe(false);
     expect(isFlagEnabled("module.grow.launch")).toBe(true);
+    expect(isFlagEnabled("module.academy.credentials")).toBe(true);
+    expect(isFlagEnabled("module.discover.listings")).toBe(true);
+    expect(isFlagEnabled("module.govern.intake")).toBe(true);
+    expect(isFlagEnabled("module.partner.directory")).toBe(true);
+    expect(isFlagEnabled("module.partner.commerce")).toBe(false);
+    expect(isFlagEnabled("module.discover.tickets")).toBe(false);
+    expect(isFlagEnabled("module.rides.hire")).toBe(true);
   });
 });

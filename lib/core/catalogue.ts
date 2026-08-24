@@ -34,7 +34,7 @@ export function resolveCheckoutPrice(prices: CataloguePrice[], priceId: string):
   return price;
 }
 
-export const GROW_DIAGNOSTIC_CATALOGUE: CataloguePrice[] = [
+export const FORTIS_CATALOGUE: CataloguePrice[] = [
   {
     id: "price_grow_diagnostic_gmd_v1",
     planId: "plan_grow_starter_v1",
@@ -44,4 +44,25 @@ export const GROW_DIAGNOSTIC_CATALOGUE: CataloguePrice[] = [
     status: "ACTIVE",
     version: 1,
   },
+  {
+    id: "price_academy_assessment_gmd_v1",
+    planId: "plan_academy_assess_v1",
+    currency: "GMD",
+    amountMinor: 15000,
+    interval: "one_off",
+    status: "ACTIVE",
+    version: 1,
+  },
+  {
+    id: "price_rides_trip_gmd_v1",
+    planId: "plan_rides_trip_v1",
+    currency: "GMD",
+    amountMinor: 35000,
+    interval: "one_off",
+    status: "ACTIVE",
+    version: 1,
+  },
 ];
+
+/** @deprecated use FORTIS_CATALOGUE */
+export const GROW_DIAGNOSTIC_CATALOGUE = FORTIS_CATALOGUE;

@@ -7,6 +7,18 @@ import { Lang, LANG_META, getStoredLang, storeLang } from "../lib/i18n";
 
 const NAV_ITEMS = [
   {
+    name: "Modules",
+    links: [
+      { href: "/modules", label: "All modules" },
+      { href: "/grow/workspace", label: "GROW" },
+      { href: "/academy", label: "Academy" },
+      { href: "/discover", label: "Discover" },
+      { href: "/govern", label: "Govern" },
+      { href: "/partner", label: "Partner" },
+      { href: "/rides", label: "Rides" },
+    ]
+  },
+  {
     name: "AI Tools",
     links: [
       { href: "/uju-cycle", label: "UJU Cycle™" },
@@ -185,8 +197,8 @@ export function Navbar() {
                 </div>
               </div>
 
-              <Link href="/subscription" className="bg-[#D4AF37] text-[#0A1C2E] px-5 py-2 rounded-lg font-bold text-sm hover:bg-[#C49C2E] transition shadow-md">
-                Get Access
+              <Link href="/pay/transfer" className="bg-[#D4AF37] text-[#0A1C2E] px-5 py-2 rounded-lg font-bold text-sm hover:bg-[#C49C2E] transition shadow-md">
+                Pay by transfer
               </Link>
             </div>
 

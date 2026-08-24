@@ -5,7 +5,7 @@ export interface TransferInstruction {
   id: string;
   reference: string;
   organisationHint?: string;
-  module: "rides" | "grow" | "academy" | "marketplace" | "core";
+  module: "rides" | "grow" | "academy" | "marketplace" | "core" | "discover" | "govern" | "partner";
   serviceId: string;
   amountMinor: number;
   currency: string;

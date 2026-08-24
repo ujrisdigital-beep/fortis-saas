@@ -1,8 +1,8 @@
-import { GROW_DIAGNOSTIC_CATALOGUE, resolveCheckoutPrice } from "../core/catalogue";
+import { FORTIS_CATALOGUE, resolveCheckoutPrice } from "../core/catalogue";
 import { isFlagEnabled } from "../core/feature-flags";
 
 export function quoteByPriceId(priceId: string) {
-  const price = resolveCheckoutPrice(GROW_DIAGNOSTIC_CATALOGUE, priceId);
+  const price = resolveCheckoutPrice(FORTIS_CATALOGUE, priceId);
   return {
     priceId: price.id,
     amountMinor: price.amountMinor,

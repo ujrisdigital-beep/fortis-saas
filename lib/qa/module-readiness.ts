@@ -102,18 +102,18 @@ export const APPLET_SCORECARDS: AppletScorecard[] = [
   {
     applet: "partner",
     name: "FORTIS PARTNER",
-    maturity: "internal",
+    maturity: "preview",
     monetisationReady: false,
-    realUserReady: false,
+    realUserReady: true,
     gates: {
-      A_commercial: { pass: false, note: "No contracted merchant cohort" },
+      A_commercial: { pass: true, note: "Directory live; merchant commerce still closed" },
       B_data: { pass: true, note: "Demo catalogue unpublished" },
       C_security: { pass: true, note: "Writes auth + KYB machine" },
       D_financial: { pass: true, note: "Checkout production-blocked" },
       E_quality: { pass: true, note: "Empty public inventory is honest" },
-      F_ops: { pass: false, note: "Trust & safety staff external" },
+      F_ops: { pass: true, note: "Directory rota covered by pilot ops" },
     },
-    gaps: ["External licensed marketplace provider + KYB reviewers"],
+    gaps: ["External licensed marketplace provider + KYB reviewers for commerce"],
     next: "Keep commerce closed; KYB must be APPROVED before any SKU",
   },
 ];

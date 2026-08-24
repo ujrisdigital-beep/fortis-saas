@@ -5,11 +5,11 @@ import { quoteByPriceId } from "../../lib/monetisation/quote";
 import { getProductionBlock } from "../../lib/production-readiness";
 
 describe("applet QA scorecards", () => {
-  it("never marks PARTNER as real-user or monetisation ready", () => {
+  it("opens PARTNER directory as preview without monetised commerce", () => {
     const partner = APPLET_SCORECARDS.find((s) => s.applet === "partner");
-    expect(partner?.realUserReady).toBe(false);
+    expect(partner?.realUserReady).toBe(true);
     expect(partner?.monetisationReady).toBe(false);
-    expect(partner?.maturity).toBe("internal");
+    expect(partner?.maturity).toBe("preview");
   });
 
   it("marks CORE and GROW as monetisation-integration ready without live capture", () => {

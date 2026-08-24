@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { GROW_DIAGNOSTIC_CATALOGUE, resolveCheckoutPrice, PriceResolutionError } from "@/lib/core/catalogue";
+import { FORTIS_CATALOGUE, resolveCheckoutPrice, PriceResolutionError } from "@/lib/core/catalogue";
 
 export async function GET(_request: Request, context: { params: { priceId: string } }) {
   try {
-    const price = resolveCheckoutPrice(GROW_DIAGNOSTIC_CATALOGUE, context.params.priceId);
+    const price = resolveCheckoutPrice(FORTIS_CATALOGUE, context.params.priceId);
     return NextResponse.json({
       priceId: price.id,
       amountMinor: price.amountMinor,

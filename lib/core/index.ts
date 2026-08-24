@@ -11,6 +11,7 @@ export * from "./payments/webhooks";
 export * from "./payments/sandbox-adapter";
 export * from "./api-guard";
 export * from "./feature-flags";
+export * from "./modules";
 export * from "./ai/adapter";
 export * from "./ai/grow-report";
 export * from "./data/types";

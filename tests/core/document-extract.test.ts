@@ -5,10 +5,7 @@ import { growNarrativeOptional, buildDeterministicGrowReport } from "../../lib/c
 describe("Wave C extractors", () => {
   it("fail closed when optional engines are absent", async () => {
     expect((await extractPdfText(new Uint8Array([1]))).ok).toBe(false);
-<<<<<<< HEAD
-=======
     expect((await extractPdfText(new Uint8Array([1, 2, 3, 4]))).reason).toBe("not_a_pdf");
->>>>>>> 9c49106 (Add lazy pdf.js extraction for GOVERN only.)
     expect((await ocrImage(new Uint8Array([1]))).ok).toBe(false);
     expect((await embedLocally("hi")).ok).toBe(false);
   });

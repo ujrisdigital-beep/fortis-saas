@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   if (!access.ok) return access.response;
   const body = (await request.json().catch(() => ({}))) as {
     priceId?: string;
-    module?: "rides" | "grow" | "academy" | "marketplace" | "core";
+    module?: "rides" | "grow" | "academy" | "marketplace" | "core" | "discover" | "govern" | "partner";
     serviceId?: string;
   };
   try {
