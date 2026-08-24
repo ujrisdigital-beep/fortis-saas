@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 
 function escapeHtml(value: string): string {
   return value.replace(/[&<>'"]/g, (char) => ({
@@ -30,6 +29,7 @@ export async function POST(req: Request) {
     const name = escapeHtml(body.name.slice(0, 120));
     const role = escapeHtml(body.role.slice(0, 80));
     const appUrl = escapeHtml(process.env.NEXT_PUBLIC_APP_URL ?? "https://fortisos.cloud");
+    const { Resend } = await import("resend");
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
       from,
