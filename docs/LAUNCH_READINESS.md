@@ -2,7 +2,7 @@
 
 FORTIS-SBN is a **Next.js 14 / Prisma / NextAuth** app on GitHub `ujrisdigital-beep/fortis-saas`. There is no AI Studio Publish / `[name].ai.studio` Cloud Run button. Phases below follow your protocol **against the actual stack**.
 
-**Date:** 24 August 2026. **Verdict: NEEDS MORE WORK** (pilot / preview only). Live money stays off.
+**Date:** 24 August 2026. **Verdict: NEEDS MORE WORK** for public commerce. Pilot ops: `docs/MSOMP.md`. Live money stays off. Super-admin fake GMV/escrow widgets removed.
 
 ## Phase 1 — Project self-audit
 

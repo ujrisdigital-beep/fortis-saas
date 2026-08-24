@@ -7,6 +7,12 @@ describe("public-commerce hygiene", () => {
     expect(isFlagEnabled("module.core.payments.live")).toBe(false);
   });
 
+  it("does not publish invented escrow or GMV on the super-admin page", () => {
+    const admin = readFileSync("app/admin/super/page.tsx", "utf8");
+    expect(admin).not.toMatch(/MOCK_AGGREGATES|escrowHolding|subscriptionMRR/);
+    expect(admin).toMatch(/Commerce is not live/);
+  });
+
   it("does not advertise OpenAI or Stripe as the live rail", () => {
     const privacy = readFileSync("app/privacy/page.tsx", "utf8");
     const terms = readFileSync("app/terms/page.tsx", "utf8");
