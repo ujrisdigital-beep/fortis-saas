@@ -1684,3 +1684,54 @@ model GovernComplaint {
   consent      Boolean
   createdAt    DateTime @default(now())
 }
+
+model TransferInstructionRecord {
+  id                 String   @id @default(cuid())
+  reference          String   @unique
+  module             String
+  serviceId          String
+  amountMinor        Int
+  currency           String
+  status             String
+  organisationHint   String?
+  payload            Json
+  createdAt          DateTime @default(now())
+}
+
+model RideOwnerRecord {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  displayName String
+  phone       String
+  createdAt   DateTime @default(now())
+}
+
+model RideVehicleRecord {
+  id              String   @id @default(cuid())
+  ownerUserId     String
+  make            String
+  model           String
+  year            Int
+  category        String
+  licensePlate    String   @unique
+  seats           Int
+  dailyRateMinor  Int
+  currency        String
+  location        String
+  withDriver      Boolean
+  status          String
+}
+
+model RideBookingRecord {
+  id                 String   @id @default(cuid())
+  renterId           String
+  vehicleId          String
+  days               Int
+  amountMinor        Int
+  currency           String
+  transferReference  String
+  status             String
+  pickup             String
+  startDate          String
+  createdAt          DateTime @default(now())
+}

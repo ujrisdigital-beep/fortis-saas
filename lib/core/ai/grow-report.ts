@@ -1,4 +1,5 @@
 import { analyzeUjuCycle } from "../../fortis-tools";
+import { geminiComplete, geminiConfigured } from "../../ai/gemini-optional";
 import type { CanonicalIndicator } from "../data/types";
 import type { InternalModelAdapter, ModelRequest, ModelResponse } from "./adapter";
 
@@ -67,4 +68,22 @@ export function growWithFallback(
     return buildDeterministicGrowReport(input, sources);
   }
   return inference;
+}
+
+export async function growNarrativeOptional(base: ModelResponse): Promise<ModelResponse> {
+  if (!geminiConfigured()) return base;
+  try {
+    const extra = await geminiComplete(
+      "You write a short GROW narrative. Do not invent statistics. Use only the supplied text.",
+      base.text,
+    );
+    return {
+      kind: "local_narrative",
+      text: `${base.text}\n\n${extra}`,
+      citations: base.citations,
+      fabricated: false,
+    };
+  } catch {
+    return base;
+  }
 }

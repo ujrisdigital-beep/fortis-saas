@@ -139,8 +139,8 @@ export default function CarHirePage() {
         <div style={container}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>🚗</div>
           <h1 style={{ fontSize: 36, fontWeight: 800, marginBottom: 8, letterSpacing: -1 }}>Car Hire & Airport Transfers</h1>
-          <p style={{ fontSize: 17, opacity: 0.85, maxWidth: 600, margin: "0 auto 32px" }}>
-            Economy to luxury vehicles, minibuses, vans. With or without driver. Fixed airport transfer rates.
+          <p style={{ fontSize: 17, opacity: 0.85, maxWidth: 600, margin: "0 auto 16px" }}>
+            Catalogue below is illustrative only. Live booking and transfer pay: <a href="/rides" style={{ color: GOLD }}>/rides</a>.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             {["✈️ Airport Transfers", "👨‍✈️ Optional Driver", "🛡️ Fully Insured", "📱 Instant Booking"].map(b => (
@@ -390,9 +390,9 @@ export default function CarHirePage() {
                 <button
                   style={{ width: "100%", padding: 14, background: G, color: "#fff", border: "none", borderRadius: 8, fontWeight: 700, fontSize: 16, cursor: "pointer", opacity: (!renterName || !renterPhone || !renterPickup || !pickupDate || !returnDate) ? 0.5 : 1 }}
                   disabled={!renterName || !renterPhone || !renterPickup || !pickupDate || !returnDate}
-                  onClick={() => setBookSent(true)}
+                  onClick={() => { window.location.href = "/rides"; }}
                 >
-                  🚗 Confirm Booking
+                  Continue on live booking →
                 </button>
               </>
             )}

@@ -37,6 +37,10 @@ const required = [
   "DiscoverListing",
   "GovernComplaint",
   "EmailVerificationToken",
+  "TransferInstructionRecord",
+  "RideOwnerRecord",
+  "RideVehicleRecord",
+  "RideBookingRecord",
 ];
 
 const migrationsDir = join(process.cwd(), "prisma/migrations");
