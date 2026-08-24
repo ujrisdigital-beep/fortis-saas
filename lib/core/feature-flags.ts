@@ -15,6 +15,12 @@ export const DEFAULT_FLAGS: Record<string, boolean> = {
   "module.govern.intake": true,
   "module.partner.directory": true,
   "module.partner.commerce": false,
+<<<<<<< HEAD
+=======
+  "module.partner.professionals": true,
+  "module.partner.equipment": true,
+  "module.partner.logistics": true,
+>>>>>>> 61c7adf (Overhaul Partner service desks and record launch-readiness.)
   "module.rides.hire": true,
 };
 
