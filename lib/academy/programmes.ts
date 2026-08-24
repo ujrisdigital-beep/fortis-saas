@@ -1,3 +1,5 @@
+import { CC_BY_SA_NOTICE, MEDIA_BODIES, PHOTO_BODIES } from "./briefs/photography-media";
+
 export type ProgrammeStatus = "approved_outline" | "external_link_only";
 export type ProgrammeLevel = "beginner" | "intermediate";
 
@@ -13,6 +15,9 @@ export interface ProgrammeLesson {
   title: string;
   minutes: number;
   brief: string;
+  /** Longer CC-attributed body when the lesson is an OER adaptation. */
+  body?: string;
+  shareAlike?: string;
 }
 
 export interface AcademyProgramme {
@@ -104,13 +109,15 @@ export const ACADEMY_PROGRAMMES: AcademyProgramme[] = [
     summary: "Light, frame, consent and a simple edit — using the phone you already have.",
     assessmentProgramId: "phone-photography",
     lessons: [
-      { id: "ph-1", title: "Light before gadgets", minutes: 25, brief: "Face the light. Avoid noon harshness. Clean the lens." },
-      { id: "ph-2", title: "Frame and story", minutes: 25, brief: "Subject, background clutter, one idea per frame." },
-      { id: "ph-3", title: "Consent and dignity", minutes: 20, brief: "Ask before faces, children, ceremonies. Credit when you reuse." },
-      { id: "ph-4", title: "Edit and deliver", minutes: 25, brief: "Crop, exposure, export size for WhatsApp vs print." },
+      { id: "ph-1", title: "Light before gadgets", minutes: 40, brief: "Face the light. Avoid noon harshness. Clean the lens.", body: PHOTO_BODIES["ph-1"], shareAlike: CC_BY_SA_NOTICE },
+      { id: "ph-2", title: "Frame and story", minutes: 40, brief: "Subject, background clutter, one idea per frame.", body: PHOTO_BODIES["ph-2"], shareAlike: CC_BY_SA_NOTICE },
+      { id: "ph-3", title: "Consent and dignity", minutes: 30, brief: "Ask before faces, children, ceremonies. Credit when you reuse.", body: PHOTO_BODIES["ph-3"], shareAlike: CC_BY_SA_NOTICE },
+      { id: "ph-4", title: "Edit and deliver", minutes: 35, brief: "Crop, exposure, export size for WhatsApp vs print.", body: PHOTO_BODIES["ph-4"], shareAlike: CC_BY_SA_NOTICE },
     ],
     sources: [
-      { name: "Wikibooks — Photography", url: "https://en.wikibooks.org/wiki/Photography", licence: "CC BY-SA", use: "adapt" },
+      { name: "Wikibooks — Digital Photography", url: "https://en.wikibooks.org/wiki/Digital_Photography", licence: "CC BY-SA", use: "adapt" },
+      { name: "Wikibooks — Modern Photography / Light", url: "https://en.wikibooks.org/wiki/Modern_Photography/Light", licence: "CC BY-SA", use: "adapt" },
+      { name: "Wikibooks — Modern Photography / Composition", url: "https://en.wikibooks.org/wiki/Modern_Photography/Composition", licence: "CC BY-SA", use: "adapt" },
       { name: "Wikimedia Commons — Photography", url: "https://commons.wikimedia.org/wiki/Commons:Photography", licence: "CC mix", use: "cite_link" },
     ],
   },
@@ -124,13 +131,16 @@ export const ACADEMY_PROGRAMMES: AcademyProgramme[] = [
     summary: "Plan a 30–60s clip, record clean audio, cut, caption, publish with rights.",
     assessmentProgramId: "digital-media",
     lessons: [
-      { id: "dm-1", title: "A brief, not a vibe", minutes: 20, brief: "Audience, one message, call to action." },
-      { id: "dm-2", title: "Record", minutes: 30, brief: "Stable phone, quiet room, mic distance, B-roll." },
-      { id: "dm-3", title: "Edit and caption", minutes: 30, brief: "Cut silence, burn captions, keep under data-friendly size." },
-      { id: "dm-4", title: "Rights and music", minutes: 20, brief: "No stolen tracks. Credit stills. Disclose ads." },
+      { id: "dm-1", title: "A brief, not a vibe", minutes: 30, brief: "Audience, one message, call to action.", body: MEDIA_BODIES["dm-1"], shareAlike: CC_BY_SA_NOTICE },
+      { id: "dm-2", title: "Record", minutes: 40, brief: "Stable phone, quiet room, mic distance, B-roll.", body: MEDIA_BODIES["dm-2"], shareAlike: CC_BY_SA_NOTICE },
+      { id: "dm-3", title: "Edit and caption", minutes: 35, brief: "Cut silence, burn captions, keep under data-friendly size.", body: MEDIA_BODIES["dm-3"], shareAlike: CC_BY_SA_NOTICE },
+      { id: "dm-4", title: "Rights and music", minutes: 25, brief: "No stolen tracks. Credit stills. Disclose ads.", body: MEDIA_BODIES["dm-4"], shareAlike: CC_BY_SA_NOTICE },
     ],
     sources: [
-      { name: "Mozilla Web Literacy — create", url: "https://mozilla.github.io/curriculum-final/", licence: "CC BY-SA", use: "adapt" },
+      { name: "Wikibooks — Movie Making Manual / Lighting", url: "https://en.wikibooks.org/wiki/Movie_Making_Manual/Lighting", licence: "CC BY-SA", use: "adapt" },
+      { name: "Wikibooks — Movie Making Manual / Cinematography", url: "https://en.wikibooks.org/wiki/Movie_Making_Manual/Cinematography", licence: "CC BY-SA", use: "adapt" },
+      { name: "Wikibooks — Modern Photography / Composition", url: "https://en.wikibooks.org/wiki/Modern_Photography/Composition", licence: "CC BY-SA", use: "adapt" },
+      { name: "Mozilla Web Literacy — create", url: "https://mozilla.github.io/curriculum-final/", licence: "CC BY-SA", use: "cite_link" },
       { name: "UNESCO MIL", url: "https://www.unesco.org/en/media-information-literacy", licence: "UNESCO terms", use: "cite_link" },
     ],
   },

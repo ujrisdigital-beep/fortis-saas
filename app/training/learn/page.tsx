@@ -61,8 +61,16 @@ export default function LearnPage() {
       <p><strong>Who it is for:</strong> {programme.youthFit}</p>
       <ol>
         {programme.lessons.map((l) => (
-          <li key={l.id} style={{ marginBottom: 12 }}>
+          <li key={l.id} style={{ marginBottom: 20 }}>
             <strong>{l.title}</strong> ({l.minutes} min) — {l.brief}
+            {l.body && (
+              <div style={{ whiteSpace: "pre-line", marginTop: 8, fontSize: 15, lineHeight: 1.55, color: "#1f2937" }}>
+                {l.body}
+              </div>
+            )}
+            {l.shareAlike && (
+              <p style={{ fontSize: 12, color: "#6b7280", marginTop: 8 }}>{l.shareAlike}</p>
+            )}
           </li>
         ))}
       </ol>

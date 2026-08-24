@@ -24,6 +24,15 @@ describe("vocational academy catalogue", () => {
     expect(publicProgrammes().every((p) => p.sources.length > 0)).toBe(true);
   });
 
+  it("ships CC BY-SA photography and media briefs longer than a tagline", () => {
+    const photo = programmeById("phone-photography");
+    const media = programmeById("digital-media");
+    expect(photo?.lessons.every((l) => (l.body?.length ?? 0) > 400)).toBe(true);
+    expect(media?.lessons.every((l) => (l.body?.length ?? 0) > 300)).toBe(true);
+    expect(photo?.lessons[0].shareAlike).toMatch(/CC BY-SA/);
+    expect(photo?.sources.some((s) => s.url.includes("wikibooks.org") && s.use === "adapt")).toBe(true);
+  });
+
   it("does not treat Google Garage as remixable FORTIS content", () => {
     const g = programmeById("google-digital-marketing");
     expect(g?.status).toBe("external_link_only");
