@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-export const metadata = { title: "GROW workspace — FORTIS" };
-
-export default function GrowWorkspacePage() {
-=======
 "use client";
 
 import { FormEvent, useState } from "react";
@@ -28,34 +23,28 @@ export default function GrowWorkspacePage() {
     }
     setPreview(data.preview?.summary ?? "Preview ready");
     setFull(Boolean(data.exportAllowed));
-    setError(data.exportAllowed ? "" : "Full blueprint locked. Pay by transfer then retry.");
+    setError(data.exportAllowed ? "" : "Full blueprint locked until transfer evidence is accepted.");
   }
 
->>>>>>> f90a36c (Unlock GROW, Academy and marketplace via the same transfer evidence.)
   return (
     <main style={{ maxWidth: 720, margin: "2rem auto", padding: "0 1rem", fontFamily: "DM Sans, system-ui" }}>
-      <p style={{ letterSpacing: "0.08em", fontSize: 12, color: "#C4943A" }}>FORTIS GROW™ · PILOT</p>
-      <h1>Strategy workspace</h1>
-<<<<<<< HEAD
+      <p style={{ letterSpacing: "0.08em", fontSize: 12, color: "#C4943A" }}>FORTIS GROW™ · GMD 250.00 one-off</p>
+      <h1>Paid diagnostic workspace</h1>
       <p>
-        Free preview uses the deterministic UJU engine. A full blueprint export requires a verified
-        entitlement. Scores are advisory and not authorised for bank credit decisions.
+        Free preview is deterministic and sourced. The full blueprint is a catalogue SKU
+        (`price_grow_diagnostic_gmd_v1`). Advisory only — not a credit score.
       </p>
-      <ul>
-        <li>POST /api/v2/grow/assessments — preview + citations</li>
-        <li>GET /api/v2/grow/grants — catalogue matches with source dates (editorial scores)</li>
-        <li>Sources carry GBoS/CBG freshness; stale values are never labelled current</li>
-      </ul>
-=======
-      <p>Preview is free. Full export unlocks after bank/wallet transfer evidence.</p>
       <form onSubmit={onSubmit} style={{ display: "grid", gap: 8 }}>
         <textarea name="overview" required rows={5} placeholder="Describe the business" />
-        <button type="submit">Run preview</button>
+        <button type="submit">Run free preview</button>
       </form>
       {preview && <p>{preview}</p>}
-      {error && <p>{error} <Link href="/pay/transfer">Pay by transfer</Link></p>}
-      {full && <p>Full report entitled (provisional).</p>}
->>>>>>> f90a36c (Unlock GROW, Academy and marketplace via the same transfer evidence.)
+      {error && (
+        <p>
+          {error} <Link href="/pay/transfer">Unlock full report by transfer</Link>
+        </p>
+      )}
+      {full && <p>Full report entitled (provisional). Download remains advisory.</p>}
     </main>
   );
 }

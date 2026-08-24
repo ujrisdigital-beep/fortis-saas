@@ -16,12 +16,13 @@ export default function HomePage() {
               <span style={heroAccentStyle}>African Business Leaders</span>
             </h1>
             <p style={heroCopyStyle}>
-              Three AI-powered tools — business transformation analysis, brand intelligence assessment, and forensic document review — built for founders, operators, and strategists across Africa.
+              Gambia-focused diagnostics, skills and sourced public data. Start with a free GROW preview,
+              then unlock the full blueprint by bank or mobile-money transfer.
             </p>
             <div style={heroButtonRowStyle}>
-              <Link href="/uju-cycle" style={primaryLinkStyle}>Launch UJU Cycle™</Link>
-              <Link href="/ikenga" style={secondaryLinkStyle}>Run Ikenga™</Link>
-              <Link href="/ask-ujris" style={tertiaryLinkStyle}>Ask UJRIS™</Link>
+              <Link href="/onboarding" style={primaryLinkStyle}>Create account</Link>
+              <Link href="/grow/workspace" style={secondaryLinkStyle}>Free GROW preview</Link>
+              <Link href="/pay/transfer" style={tertiaryLinkStyle}>Pay by transfer</Link>
             </div>
           </div>
           <div style={heroGraphicStyle}>
@@ -75,9 +76,9 @@ export default function HomePage() {
         {/* Get Started Banner */}
         <section style={ctaBannerStyle}>
           <div style={ctaInnerStyle}>
-            <h2 style={ctaTitleStyle}>Ready to activate FORTIS OS?</h2>
-            <p style={ctaSubStyle}>Start with one tool. Transform your entire operation.</p>
-            <Link href="/payment" style={ctaButtonStyle}>Get Full Access →</Link>
+            <h2 style={ctaTitleStyle}>Buy the GROW full blueprint</h2>
+            <p style={ctaSubStyle}>Catalogue price ID only. Transfer evidence unlocks the report. Not a bank credit product.</p>
+            <Link href="/pay/transfer" style={ctaButtonStyle}>Pay GMD 250 by transfer →</Link>
           </div>
         </section>
       </main>
@@ -87,9 +88,9 @@ export default function HomePage() {
 }
 
 const stats = [
-  { value: "GPT-4", label: "AI Engine" },
-  { value: "3", label: "Active Tools" },
-  { value: "∞", label: "Analyses" },
+  { value: "GROW", label: "Lead SKU" },
+  { value: "GMD 250", label: "Full report" },
+  { value: "Transfer", label: "Pay rail" },
 ];
 
 const tools = [
