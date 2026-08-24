@@ -9,11 +9,7 @@
 | ACADEMY | pilot | signed credential | none |
 | DISCOVER | preview | tickets refuse without KYB+PSP | organiser KYB external |
 | GOVERN | preview | none | malware product + institution contract external |
-<<<<<<< HEAD
-| PARTNER | internal | checkout blocked | licensed PSP + KYB reviewers external |
-=======
 | PARTNER | preview | checkout blocked; enquiry desk only | licensed PSP + KYB reviewers; empty pro/equipment inventory |
->>>>>>> 61c7adf (Overhaul Partner service desks and record launch-readiness.)
 
 ## Closed this pass
 
