@@ -13,7 +13,7 @@ const NAV_ITEMS = [
       { href: "/grow/workspace", label: "GROW" },
       { href: "/academy", label: "Academy" },
       { href: "/discover", label: "Discover" },
-      { href: "/govern", label: "Govern" },
+      { href: "/ombudsman", label: "Ombudsman" },
       { href: "/partner", label: "Partner" },
       { href: "/rides", label: "Rides" },
     ]

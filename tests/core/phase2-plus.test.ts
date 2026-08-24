@@ -66,6 +66,9 @@ describe("GOVERN complaints", () => {
     expect(() => openComplaint({ subject: "x", body: "y", consent: false })).toThrow("consent_required");
     const c = openComplaint({ subject: "Billing", body: "Need a human review", consent: true });
     expect(c.status).toBe("RECEIVED");
+    expect(c.feeToPublic).toBe("free");
+    expect(c.channel).toBe("ombudsman");
+    expect(c.reference.startsWith("OMB-")).toBe(true);
     expect(advanceComplaint(c, "TRIAGED").status).toBe("TRIAGED");
     expect(() => advanceComplaint(c, "CLOSED")).toThrow("invalid_transition");
   });

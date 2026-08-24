@@ -54,11 +54,11 @@ export const MODULE_LAUNCH: ModuleLaunch[] = [
   {
     id: "govern",
     name: "FORTIS GOVERN",
-    href: "/govern",
+    href: "/ombudsman",
     flag: "module.govern.intake",
     launched: isFlagEnabled("module.govern.intake"),
     maturity: "preview",
-    summary: "Consenting complaint intake. No automated judgment.",
+    summary: "Free public ombudsman intake, hosted on their behalf. No automated judgment.",
   },
   {
     id: "partner",

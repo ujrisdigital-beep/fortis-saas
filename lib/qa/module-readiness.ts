@@ -89,7 +89,7 @@ export const APPLET_SCORECARDS: AppletScorecard[] = [
     realUserReady: true,
     monetisationReady: false,
     gates: {
-      A_commercial: { pass: true, note: "Consenting intake" },
+      A_commercial: { pass: true, note: "Free to the public; hosted on behalf of the Ombudsman" },
       B_data: { pass: true, note: "Complaints + citation engine" },
       C_security: { pass: true, note: "Dual-control court orders; evidence scan fail-closed" },
       D_financial: { pass: true, note: "No money" },
