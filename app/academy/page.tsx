@@ -1,23 +1,41 @@
-"use client";
-
 import Link from "next/link";
+import { ACADEMY_PROGRAMMES, sectors } from "@/lib/academy/programmes";
 
 export default function AcademyPage() {
+  const tracks = sectors();
   return (
-    <main style={{ maxWidth: 720, margin: "2rem auto", padding: "0 1rem", fontFamily: "DM Sans, system-ui" }}>
+    <main style={{ maxWidth: 880, margin: "2rem auto", padding: "0 1rem 3rem", fontFamily: "DM Sans, system-ui" }}>
       <p style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "#1B4D3E" }}>
-        FORTIS ACADEMY · pilot
+        FORTIS ACADEMY · vocational pilot
       </p>
-      <h1>Learn free. Pay only for a signed assessment.</h1>
+      <h1>Skills young Gambians can actually use</h1>
       <p>
-        Courses stay open. Certificates are HMAC-signed server records — not blockchain, not a hash you type in.
-        Assessment unlocks after a GMD 150 transfer (price_academy_assessment_gmd_v1).
+        Foundation digital literacy plus photography, media, marketing, web, data, customer work, agri and solar
+        intros. Learning is free. A signed credential still needs a GMD 150 transfer assessment. We cite OER — we
+        do not copy Google Digital Garage.
       </p>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 24 }}>
-        <Link href="/training/hub">Open training hub</Link>
-        <Link href="/training/verify">Verify a credential</Link>
-        <Link href="/pay/transfer?priceId=price_academy_assessment_gmd_v1&module=academy">Pay for assessment</Link>
-      </div>
+      <p>
+        <Link href="/training/hub">Browse hub</Link>
+        {" · "}
+        <Link href="/pay/transfer?priceId=price_academy_assessment_gmd_v1&module=academy">Pay assessment</Link>
+        {" · "}
+        <Link href="/training/verify">Verify</Link>
+      </p>
+      {tracks.map((sector) => (
+        <section key={sector} style={{ marginTop: 28 }}>
+          <h2 style={{ fontSize: "1.05rem" }}>{sector}</h2>
+          <ul style={{ paddingLeft: 18 }}>
+            {ACADEMY_PROGRAMMES.filter((p) => p.sector === sector).map((p) => (
+              <li key={p.id} style={{ marginBottom: 10 }}>
+                <Link href={`/training/learn?program=${p.id}`}>{p.title}</Link>
+                {" — "}
+                {p.status === "external_link_only" ? "external link only" : `${p.lessons.length} lessons`}
+                . {p.youthFit}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </main>
   );
 }
