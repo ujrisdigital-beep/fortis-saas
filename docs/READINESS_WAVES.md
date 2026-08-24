@@ -2,10 +2,10 @@
 
 Still **no live SBN card money**.
 
-| Wave | Done in this pass |
+| Wave | Done |
 |---|---|
-| A | Persist schema for transfers/rides; car-hire UI no longer fake-confirms; GROW workspace + transfer entitlements already live |
-| B | `docs/GOOGLE_OPS.md`, `firebase.json`, optional Gemini narrative on GROW |
-| C | Fail-closed PDF/OCR/embedding adapters (`lib/govern/document-extract.ts`) — packages not downloaded until you install them |
+| A | Persist schema for transfers/rides; car-hire UI no longer fake-confirms |
+| B | Google ops notes, optional Gemini GROW narrative |
+| C | **pdf.js** lazy-loaded on `POST /api/v2/govern/pdf-extract`; OCR/embeddings still fail-closed |
 
-Install later (optional, large): `pdfjs-dist`, `tesseract.js`, `@xenova/transformers`.
+Not installed: `tesseract.js`, `@xenova/transformers`.

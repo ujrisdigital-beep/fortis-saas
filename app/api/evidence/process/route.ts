@@ -28,5 +28,7 @@ export async function GET() {
   return NextResponse.json({
     status: process.env.FORTIS_MALWARE_SCANNER ? "scanner_configured" : "scanner_unavailable",
     mockExtraction: false,
+    pdfExtract: "/api/v2/govern/pdf-extract",
+    ocr: false,
   });
 }
