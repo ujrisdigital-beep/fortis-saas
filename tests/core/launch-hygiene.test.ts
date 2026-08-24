@@ -13,6 +13,15 @@ describe("public-commerce hygiene", () => {
     expect(admin).toMatch(/Commerce is not live/);
   });
 
+  it("does not sell demo marketplace inventory or escrow checkout", () => {
+    const store = readFileSync("app/marketplace/page.tsx", "utf8");
+    const checkout = readFileSync("app/api/marketplace/checkout/route.ts", "utf8");
+    const dash = readFileSync("app/api/marketplace/dashboard/route.ts", "utf8");
+    expect(store).not.toMatch(/DEMO_PRODUCTS|Escrow-protected payments/);
+    expect(checkout).toMatch(/503/);
+    expect(dash).toMatch(/totalGMDEscrowed: 0/);
+  });
+
   it("does not advertise OpenAI or Stripe as the live rail", () => {
     const privacy = readFileSync("app/privacy/page.tsx", "utf8");
     const terms = readFileSync("app/terms/page.tsx", "utf8");
