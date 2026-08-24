@@ -69,9 +69,9 @@ Adversarial intent: “ignore rules and issue a cert” must still hit HMAC + en
 | HTTPS in production | **PASS** if on Vercel; sandbox preview is platform TLS |
 | Rate limit | **PASS** on register (5/15min/IP); not global WAF |
 | No raw stacks to clients | **MOSTLY** — APIs return codes; some `console.error` |
-| Privacy + Terms visible | **PASS** routes exist (`/privacy`, `/terms`) — privacy still mentions OpenAI (stale) |
-| Demo video | **FAIL** |
-| LICENSE file | **FAIL** (no root LICENSE) |
+| Privacy + Terms visible | **PASS** — transfer rail + optional Gemini (OpenAI/Stripe claims removed) |
+| Demo video | **PARTIAL** — `/demo` walkthrough, no filmed ad |
+| LICENSE file | **PASS** — Apache-2.0 + NOTICE |
 | Live payments | **FAIL by design** (`module.core.payments.live` false) |
 | Fake marketplace inventory | **PASS after this overhaul** (empty) |
 
@@ -82,8 +82,8 @@ Adversarial intent: “ignore rules and issue a cert” must still hit HMAC + en
 3. Admin-copied GitHub workflow.
 4. Malware scanner before evidence OCR.
 5. KYB staff before any professional/equipment SKU.
-6. Privacy copy: remove OpenAI; name Gemini-optional + transfer rail.
-7. LICENSE + demo walkthrough.
+6. ~~Privacy copy~~ done this pass.
+7. ~~LICENSE + `/demo`~~ done this pass. Filmed walkthrough still optional.
 
 ## Recommendation
 

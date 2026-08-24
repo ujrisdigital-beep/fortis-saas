@@ -10,7 +10,7 @@ export async function GET() {
     database: dbConfigured ? "configured" : "missing",
     auth: authConfigured ? "configured" : "missing",
     paymentLive: livePayments ? "open" : "blocked_pending_signoff",
-    openai: process.env.OPENAI_API_KEY ? "optional" : "unused_deterministic_fallback",
+    gemini: process.env.GEMINI_API_KEY ? "optional_byok" : "unused_deterministic_fallback",
   };
 
   const healthy = dbConfigured && authConfigured;

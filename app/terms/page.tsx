@@ -4,7 +4,7 @@ export const metadata = { title: 'Terms of Service — FORTIS OS', description: 
 
 const G = '#1B4D3E'
 const GOLD = '#C4943A'
-const LAST_UPDATED = '3 May 2026'
+const LAST_UPDATED = '24 August 2026'
 
 export default function TermsPage() {
   return (
@@ -45,7 +45,7 @@ export default function TermsPage() {
           </div>
           <p>The following modules are in <strong>Beta / Pilot</strong> status as of {LAST_UPDATED}:</p>
           <ul>
-            <li>Credit Scoring Engine — advisory outputs only, not for final lending decisions</li>
+            <li>Credit scoring — refused (HTTP 503). Not a lending product.</li>
             <li>Carbon Credit Origination — specification phase</li>
             <li>Master Dashboard — internal operations use</li>
             <li>ISO 27001 certification — currently being pursued (target Q4 2026)</li>
@@ -102,7 +102,7 @@ export default function TermsPage() {
             <li>Free tier: unlimited access to public resources, knowledge hub, and training</li>
             <li>Standard tier: AI tool access with monthly/annual billing</li>
             <li>Enterprise/API tier: institutional access with custom SLA — contact <a href="mailto:enterprise@fortisos.gm" style={{ color: G }}>enterprise@fortisos.gm</a></li>
-            <li>Payments processed by Stripe. Card data is never stored on our servers.</li>
+            <li>Paid SKUs use bank/wallet transfer (GMD catalogue). Live card capture is off. FORTIS is not a licensed PSP.</li>
             <li>Refunds: within 14 days of first payment if AI tools produce no usable output</li>
           </ul>
         </Section>

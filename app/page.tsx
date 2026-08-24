@@ -21,7 +21,7 @@ export default function HomePage() {
             </p>
             <div style={heroButtonRowStyle}>
               <Link href="/onboarding" style={primaryLinkStyle}>Create account</Link>
-              <Link href="/modules" style={secondaryLinkStyle}>Open all modules</Link>
+              <Link href="/demo" style={secondaryLinkStyle}>Honest walkthrough</Link>
               <Link href="/pay/transfer" style={tertiaryLinkStyle}>Pay by transfer</Link>
             </div>
           </div>
