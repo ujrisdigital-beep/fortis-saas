@@ -19,6 +19,19 @@ describe("vocational academy catalogue", () => {
         "agritech-lite",
         "solar-basics",
         "entrepreneur-lite",
+        "workplace-english-numeracy",
+        "hospitality-ops",
+        "agro-processing",
+        "fisheries-postharvest",
+        "construction-literacy",
+        "device-repair",
+        "bookkeeping-gra",
+        "teamwork-problems",
+        "fashion-digital",
+        "women-digital",
+        "remittances-family",
+        "tourism-product-photo",
+        "helpdesk-tester",
       ]),
     );
     expect(publicProgrammes().every((p) => p.sources.length > 0)).toBe(true);
@@ -31,6 +44,14 @@ describe("vocational academy catalogue", () => {
     expect(media?.lessons.every((l) => (l.body?.length ?? 0) > 300)).toBe(true);
     expect(photo?.lessons[0].shareAlike).toMatch(/CC BY-SA/);
     expect(photo?.sources.some((s) => s.url.includes("wikibooks.org") && s.use === "adapt")).toBe(true);
+  });
+
+  it("labels Wave A/B tracks as workplace prep not national tickets", () => {
+    const construction = programmeById("construction-literacy");
+    const fish = programmeById("fisheries-postharvest");
+    expect(construction?.summary).toMatch(/Not a NAQAA/i);
+    expect(fish?.summary).toMatch(/Not a fishing/i);
+    expect(bankForProgram("construction-literacy")[1].correctIndex).toBe(1);
   });
 
   it("does not treat Google Garage as remixable FORTIS content", () => {

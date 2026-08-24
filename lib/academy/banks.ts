@@ -213,6 +213,71 @@ const ENTERPRISE: ServerQuestion[] = [
   },
 ];
 
+const WORKPLACE_EN: ServerQuestion[] = [
+  { id: "we-q1", prompt: "A useful work message names:", options: ["Only emojis", "What happened, what you did, what you need", "Your life story", "Someone else's PIN"], correctIndex: 1 },
+  { id: "we-q2", prompt: "A FORTIS workplace English pass is:", options: ["A WAEC certificate", "Job-language practice, not a WASSCE substitute", "University admission", "A GRA licence"], correctIndex: 1 },
+];
+
+const HOSPITALITY: ServerQuestion[] = [
+  { id: "ho-q1", prompt: "A WhatsApp booking note must include:", options: ["Only a smiley", "Dates, names, price, what is included", "A fake room photo from another hotel", "The guest OTP"], correctIndex: 1 },
+  { id: "ho-q2", prompt: "This hospitality outline is:", options: ["A chef licence", "Workplace prep, not a tour-guide ticket", "A GTHB inspector badge", "A liquor licence"], correctIndex: 1 },
+];
+
+const AGRO: ServerQuestion[] = [
+  { id: "ap-q1", prompt: "A truthful pack label includes:", options: ["Only a logo", "What it is, weight, date, who packed it", "A celebrity", "A random expiry"], correctIndex: 1 },
+  { id: "ap-q2", prompt: "A FORTIS agro-processing pass means:", options: ["You may run a cannery unsupervised", "You understand hygiene and batch notes — not a factory ticket", "FAO endorsement", "A RISE contractor award"], correctIndex: 1 },
+];
+
+const FISH: ServerQuestion[] = [
+  { id: "fi-q1", prompt: "Post-harvest quality starts with:", options: ["A skipper licence", "Time and temperature / ice", "A drone", "A hotel stock photo"], correctIndex: 1 },
+  { id: "fi-q2", prompt: "This programme does not make you:", options: ["More careful with ice", "A licensed skipper", "Better at honest product photos", "Able to spot spoilage"], correctIndex: 1 },
+];
+
+const CONSTRUCT: ServerQuestion[] = [
+  { id: "co-q1", prompt: "If a trench is deep and unshored you should:", options: ["Jump in to finish faster", "Stop and get a ticketed person", "Film it for TikTok first", "Remove your helmet"], correctIndex: 1 },
+  { id: "co-q2", prompt: "A FORTIS construction-literacy pass is:", options: ["A NAQAA trade certificate", "Site safety and measure literacy, not a trade ticket", "An electrician licence", "A building permit"], correctIndex: 1 },
+];
+
+const REPAIR: ServerQuestion[] = [
+  { id: "rp-q1", prompt: "Before opening a phone you should:", options: ["Guess the board is dead", "Ask what failed, when, liquid, last update", "Copy the client's photos", "Plug it into mains while open"], correctIndex: 1 },
+  { id: "rp-q2", prompt: "Client photos on a repair bench:", options: ["Are yours to keep", "Must not be copied; wipe only with consent", "Can be posted as a before/after", "Are backup for the shop"], correctIndex: 1 },
+];
+
+const BOOKS: ServerQuestion[] = [
+  { id: "bk-q1", prompt: "A cashbook line needs:", options: ["A motivational quote", "Date, in or out, what, who", "Only the total at month end", "The customer's OTP"], correctIndex: 1 },
+  { id: "bk-q2", prompt: "This bookkeeping outline is:", options: ["A GRA tax-agent licence", "Record-keeping literacy, not a GRA ticket", "A bank guarantee", "VAT registration"], correctIndex: 1 },
+];
+
+const TEAM: ServerQuestion[] = [
+  { id: "tw-q1", prompt: "Name the problem, not the person, means:", options: ["The ice melted — not 'Lamin is lazy'", "Shout first", "Hide the mistake", "Blame the guest"], correctIndex: 0 },
+  { id: "tw-q2", prompt: "Employers in a 2026 Gambia TVET survey were least happy with:", options: ["Time management only", "Problem-solving and teamwork", "Haircuts", "English accents"], correctIndex: 1 },
+];
+
+const FASHION: ServerQuestion[] = [
+  { id: "fa-q1", prompt: "A repeatable tailor job starts with:", options: ["A stolen lookbook photo only", "Written measurements and a deposit date", "Free unlimited alterations forever", "Guessing from memory"], correctIndex: 1 },
+  { id: "fa-q2", prompt: "Sell the actual cloth means:", options: ["Use any pretty picture online", "Daylight photo of the client's fabric", "A hotel interior", "A filter that changes the colour"], correctIndex: 1 },
+];
+
+const WOMEN: ServerQuestion[] = [
+  { id: "wd-q1", prompt: "A safer shared-phone setup includes:", options: ["One PIN everyone knows posted on the wall", "Your own PIN and knowing who can open the wallet", "Giving OTP to a helpful cousin", "Location sharing with strangers"], correctIndex: 1 },
+  { id: "wd-q2", prompt: "World Bank work cited here documents:", options: ["No gender gap in SSA digital skills", "A gender digital-skills divide that includes The Gambia", "That women need no money skills", "That OTP sharing is fine"], correctIndex: 1 },
+];
+
+const REMIT: ServerQuestion[] = [
+  { id: "re-q1", prompt: "Before a family send you should:", options: ["Ignore the fee", "Ask the corridor cost; 'free' is often in the rate", "Give the agent your PIN", "Post the MTCN in a public group"], correctIndex: 1 },
+  { id: "re-q2", prompt: "A FORTIS remittance pass means:", options: ["You may operate a money-transfer business", "You can receive and record more safely — not an MTO licence", "Western Union endorsement", "A CBG dealer licence"], correctIndex: 1 },
+];
+
+const TOURPHOTO: ServerQuestion[] = [
+  { id: "tp-q1", prompt: "A lodge listing photo should show:", options: ["A villa you found online", "The actual room the guest will get", "A filter that adds a pool", "A guest's child without asking"], correctIndex: 1 },
+  { id: "tp-q2", prompt: "Guests on a tour:", options: ["Must pose", "Can refuse to be photographed", "Belong to the guide", "Can be tagged without asking"], correctIndex: 1 },
+];
+
+const HELPDESK: ServerQuestion[] = [
+  { id: "ht-q1", prompt: "A usable bug note includes:", options: ["'It is broken'", "Device, steps, expected, actual", "The user's password", "A meme"], correctIndex: 1 },
+  { id: "ht-q2", prompt: "AfDB's Gambia digital-literacy work lists testers among:", options: ["Unneeded hobbies", "Most-needed ICT occupations", "Banned jobs", "Only diaspora roles"], correctIndex: 1 },
+];
+
 const BY_PROGRAM: Record<string, ServerQuestion[]> = {
   default: DEMO_BANK,
   "digital-literacy": DIGITAL_LITERACY,
@@ -228,6 +293,19 @@ const BY_PROGRAM: Record<string, ServerQuestion[]> = {
   "agritech-lite": AGRI,
   "solar-basics": SOLAR,
   "entrepreneur-lite": ENTERPRISE,
+  "workplace-english-numeracy": WORKPLACE_EN,
+  "hospitality-ops": HOSPITALITY,
+  "agro-processing": AGRO,
+  "fisheries-postharvest": FISH,
+  "construction-literacy": CONSTRUCT,
+  "device-repair": REPAIR,
+  "bookkeeping-gra": BOOKS,
+  "teamwork-problems": TEAM,
+  "fashion-digital": FASHION,
+  "women-digital": WOMEN,
+  "remittances-family": REMIT,
+  "tourism-product-photo": TOURPHOTO,
+  "helpdesk-tester": HELPDESK,
 };
 
 export function bankForProgram(programId: string): ServerQuestion[] {
