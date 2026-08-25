@@ -11,8 +11,8 @@ export default function EquipmentHirePage() {
       <h1>Equipment hire</h1>
       <p>
         Live machines on FORTIS: <strong>{live.length}</strong>. Euro day-rates, “available now”, waitlists and
-        WhatsApp quotes were demo inventory. We will take deposit + {PLATFORM_COMMISSION_BPS / 100}% commission{" "}
-        <em>on this platform</em> only after owner KYB, insurance evidence, and a licensed PSP.
+        WhatsApp quotes were demo inventory. SLA take is {PLATFORM_COMMISSION_BPS / 100}% (3% FORTIS + 1%
+        integrator) <em>on this platform</em> only after owner KYB, insurance evidence, and a licensed PSP.
       </p>
       <h2>Classes (empty until KYB)</h2>
       <ul>
