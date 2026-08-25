@@ -1,7 +1,9 @@
 import { publicCommerceReady } from "../commerce/readiness";
+import { SLA_TAKE_BPS, splitSlaCommission } from "../commerce/sla-commission";
 import { screenLeadMessage, type LeakHit } from "./lead-containment";
 
-export const PLATFORM_COMMISSION_BPS = 800; // 8.00% when commerce is live
+/** @deprecated use SLA_TAKE_BPS (4%) */
+export const PLATFORM_COMMISSION_BPS = SLA_TAKE_BPS;
 export const DESK_CURRENCY = "GMD";
 
 export type DeskKind = "logistics" | "equipment" | "coach" | "courier" | "professionals";
@@ -11,22 +13,32 @@ export type DeskThread = {
   kind: DeskKind;
   subject: string;
   createdAt: string;
-  messages: Array<{ at: string; from: "seeker" | "ops"; body: string }>;
+  messages: Array<{
+    at: string;
+    from: "seeker" | "merchant" | "ops";
+    body: string;
+    redacted?: boolean;
+  }>;
   booked: false;
   escrow: false;
   commissionBps: number;
+  circumventionFlags: LeakHit[];
 };
 
 const threads = new Map<string, DeskThread>();
 
 export function commissionPreview(amountMinor: number) {
-  const fee = Math.round((amountMinor * PLATFORM_COMMISSION_BPS) / 10_000);
+  const split = splitSlaCommission(amountMinor);
   return {
     currency: DESK_CURRENCY,
     amountMinor,
-    commissionBps: PLATFORM_COMMISSION_BPS,
-    commissionMinor: fee,
-    netToOperatorMinor: amountMinor - fee,
+    commissionBps: SLA_TAKE_BPS,
+    fortisBps: 300,
+    integratorBps: 100,
+    commissionMinor: split.fortisMinor + split.integratorMinor,
+    fortisMinor: split.fortisMinor,
+    integratorMinor: split.integratorMinor,
+    netToOperatorMinor: split.merchantNetMinor,
     collectable: false,
     reason: publicCommerceReady()
       ? "gates_pass_but_adapter_not_wired"

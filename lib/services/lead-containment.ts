@@ -49,7 +49,7 @@ export function screenLeadMessage(text: string) {
 export const LEAD_CONTAINMENT_POLICY = {
   publicMerchantContacts: false,
   whatsappRail: false,
-  commissionBpsWhenLive: 800,
+  commissionBpsWhenLive: 400,
   enforcement:
     "KYB merchants who steer clients to WhatsApp, Wave-to-personal, or cash-off-platform can be suspended. Heuristic filters are not a guarantee.",
 };

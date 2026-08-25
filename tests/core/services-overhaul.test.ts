@@ -40,7 +40,9 @@ describe("partner service verticals", () => {
     expect(pay.escrow).toBe(false);
     const fee = commissionPreview(100_000);
     expect(fee.collectable).toBe(false);
-    expect(fee.commissionMinor).toBe(8000);
+    expect(fee.commissionMinor).toBe(4000);
+    expect(fee.fortisMinor).toBe(3000);
+    expect(fee.integratorMinor).toBe(1000);
     const fx = estimateFreight({ kg: 100, origin: "Banjul Port", dest: "Dakar, Senegal" });
     expect(fx.freshness).toBe("ILLUSTRATIVE_MODEL");
   });

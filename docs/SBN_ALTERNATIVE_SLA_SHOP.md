@@ -13,7 +13,7 @@ Ask every shop the same six questions. If they cannot answer in writing, they ar
 1. **Licence.** CBG (or home regulator + CBG no-objection) for the product we will sell: retail collection, merchant acquiring, marketplace split / delayed payout, or only bill-pay.
 2. **Who holds the money.** Named trustee / bank / MMO. FORTIS must not be the custodian.
 3. **GMD rails.** Wave / QMoney / Afrimoney / bank transfer / GamSwitch. Sandbox + signed webhooks.
-4. **Commission.** Can they split **8%** to FORTIS and the rest to the merchant on the same payment, or only settle FORTIS later?
+4. **Commission.** Can they split a **4% SLA take** (3% FORTIS INVICTA + 1% integrator) on the same payment, or only settle later?
 5. **SLA numbers they will put in a contract.** Availability, payout hours, refund initiation hours, incident phone. Our *targets* (99.9%, sub-2s auth, 24h refund *initiation*) are **not** promises until they back them.
 6. **Exit.** How we get statements, balances and customer records if they walk.
 
@@ -69,7 +69,7 @@ Payments SLA ≠ uptime SLA. For infrastructure, shop **QuantumNet** (Kairaba Av
 
 ## One-page ask Cadja can leave on the desk
 
-> FORTIS INVICTA LTD needs a **licensed** partner to collect GMD for catalogue SKUs (GROW GMD 250, Academy GMD 150, Rides) and, later, **split payout** for Partner hires (8% platform). We will **not** hold customer money. We need sandbox, signed webhooks, daily statements, and a written SLA. Transfer evidence is our rail until you go live. Contact: CEO Cadjatu Djalo (on the ground).
+> FORTIS INVICTA LTD needs a **licensed** partner to collect GMD for catalogue SKUs (GROW GMD 250, Academy GMD 150, Rides) and, later, **split payout** for Partner hires (**4%** SLA take: 3% FORTIS, 1% integrator). We will **not** hold customer money. We need sandbox, signed webhooks, daily statements, and a written SLA. Transfer evidence is our rail until you go live. Contact: CEO Cadjatu Djalo (on the ground).
 
 ## What not to do this week
 

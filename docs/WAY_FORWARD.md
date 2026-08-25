@@ -19,7 +19,7 @@
 | **Discover** listings | Browse yes | Tickets **closed** | Preview |
 | **Govern / Ombudsman** | Yes, free | No money | Preview |
 | **Partner directory + KYB machine** | Apply yes | Commerce **closed** | Preview |
-| Logistics / equipment / professionals | Enquiry + DSK- thread | Pay **503**; 8% not collectable | Preview |
+| Logistics / equipment / professionals | Enquiry + DSK- thread | Pay **503**; 4% SLA take not collectable | Preview |
 | Marketplace inventory / checkout | Empty / 503 | Off | Correct |
 | Credit score | 503 | — | Correct |
 | Live cards / licensed escrow | Off | Off | Correct |
@@ -45,7 +45,7 @@ Public Gambia marketplace pattern (Gambia.com / mDalasi-style + generic mall SOP
 | 5. Buyer pays **on platform** | Wallet / card / agent cash-in | Transfer for FORTIS SKUs only | Yes for GROW; Mall-pay later |
 | 6. Platform holds / splits | Wallet or PSP delayed payout | **Not licensed** — 503 | **Do not copy until collector signs** |
 | 7. Delivery / complete | Buyer confirm | Not built for goods | Phase after money |
-| 8. Commission | Auto deduct | 8% scheduled, not collectable | Wire into PSP split |
+| 8. Commission | Auto deduct | 4% SLA (3% FORTIS + 1% integrator) | Wire into PSP split |
 | 9. Off-platform ban | Weak on most local malls (WhatsApp) | We **redact** wa.me / +220 | Keep — this is our edge |
 | 10. Disputes | Informal | DIS- desk vs Ombudsman OMB- | Keep dual channel |
 
@@ -63,7 +63,7 @@ User / SME  →  FORTIS OS (onboard, SKU, thread, entitlement)
 Licensed collector (bank / CBG MMO / authorised aggregator)
                     ↓  settlement statement
 FORTIS INVICTA LTD (GROW/Academy revenue)
-Merchant (later)     (net of 8%)
+Merchant (later)     (net of 4% SLA take)
 ```
 
 **Entity A — money (mandatory).** One of: QMoney, Afrimoney, Trust Bank / Ecobank / GTBank merchant account, or Waychit **if** they show CBG/sponsor-bank paper. See `docs/SBN_ALTERNATIVE_SLA_SHOP.md`.
@@ -93,7 +93,7 @@ FORTIS INVICTA remains **software + KYB ops**. The partner is named on receipts:
 
 ### Days 30–90 — Mall-like commerce (only if collector can split)
 
-10. Contract addendum: **split payout / delayed release** + 8% to FORTIS.  
+10. Contract addendum: **split payout / delayed release** — 3% FORTIS INVICTA + 1% integrator.  
 11. Approve **one** merchant category (start: equipment **or** inter-city courier — not 23 fake SKUs).  
 12. Flip `module.partner.commerce` only when readiness JSON is all-green.  
 13. Keep DSK- threads; never publish merchant WhatsApp.
