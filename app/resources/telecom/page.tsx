@@ -140,7 +140,7 @@ export default function TelecomPage() {
             📡 Telecommunications Infrastructure
           </h1>
           <p style={{ margin: "0 0 2rem", color: "rgba(255,255,255,0.7)", fontSize: "1rem", lineHeight: 1.7, maxWidth: "60ch" }}>
-            Coverage maps, provider market share, 5G rollout, and investment opportunities across The Gambia.
+            Editorial briefing for GROW. Not a live PURA subscriber feed or coverage API.
           </p>
           {/* Stats */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem" }}>

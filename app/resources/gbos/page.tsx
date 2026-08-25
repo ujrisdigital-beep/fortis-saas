@@ -104,8 +104,8 @@ export default function GBoSPage() {
           <p style={eyebrowStyle}>GAMBIA BUREAU OF STATISTICS</p>
           <h1 style={pageTitleStyle}>National Data Dashboard</h1>
           <p style={pageSubStyle}>
-            Live national statistics: population, GDP, inflation, and sector performance.
-            Sources: GBoS 2023 PHC · World Bank WDI · Central Bank of The Gambia.
+            Snapshot from FORTIS adapters when they respond. If a feed is down we must not invent a number.
+            Sources to verify: GBoS PHC, World Bank WDI, CBG publications.
           </p>
         </div>
 

@@ -39,6 +39,20 @@ const NAV_ITEMS = [
     ]
   },
   {
+    name: "Resources",
+    links: [
+      { href: "/resources", label: "All briefings" },
+      { href: "/resources/gbos", label: "GBoS snapshot (CORE)" },
+      { href: "/resources/nawec", label: "Energy map (GROW)" },
+      { href: "/resources/waste", label: "Waste planner (GROW)" },
+      { href: "/resources/giepa", label: "GIEPA desk (GROW)" },
+      { href: "/resources/fintech", label: "Fintech briefing (GROW)" },
+      { href: "/resources/digital-skills", label: "Digital skills (ACADEMY)" },
+      { href: "/resources/airport", label: "Airport (DISCOVER)" },
+      { href: "/resources/cybersecurity", label: "Cyber notes (GOVERN)" },
+    ],
+  },
+  {
     name: "Sectors",
     links: [
       { href: "/energy", label: "⚡ Energy" },

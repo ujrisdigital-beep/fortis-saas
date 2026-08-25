@@ -164,7 +164,7 @@ export default function WastePage() {
           </span>
           <h1 style={{ fontSize: 34, fontWeight: 800, marginBottom: 8, letterSpacing: -1 }}>Waste Generation & Valorisation Map</h1>
           <p style={{ fontSize: 16, opacity: 0.85, maxWidth: 600, marginBottom: 28 }}>
-            Turn Gambia's waste challenge into economic opportunity. Track streams, discover valorisation projects, and calculate your carbon credits.
+            GROW planning model — not NEA weighbridge data, not issued carbon credits, not live tenders.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12 }}>
             {[
@@ -283,9 +283,11 @@ export default function WastePage() {
                   </div>
                   <button
                     style={{ width: "100%", padding: "10px", background: G, color: "#fff", border: "none", borderRadius: 8, fontWeight: 700, cursor: "pointer", fontSize: 13 }}
-                    onClick={() => window.open(`https://wa.me/2203000001?text=${encodeURIComponent(`Hello, I'm interested in the ${opp.title} valorisation project in ${opp.location}. Please send details.`)}`, "_blank")}
+                    onClick={() => {
+                      window.location.href = "/services/logistics";
+                    }}
                   >
-                    Express Interest via WhatsApp
+                    Open FORTIS thread (no WhatsApp)
                   </button>
                 </div>
               ))}

@@ -22,6 +22,14 @@ describe("public-commerce hygiene", () => {
     expect(dash).toMatch(/totalGMDEscrowed: 0/);
   });
 
+  it("resources menu exists and waste hub is not a WhatsApp carbon desk", () => {
+    const nav = readFileSync("components/navbar.tsx", "utf8");
+    const waste = readFileSync("app/resources/waste/page.tsx", "utf8");
+    expect(nav).toMatch(/name: \"Resources\"/);
+    expect(waste).not.toMatch(/wa\.me/);
+    expect(waste).toMatch(/not issued carbon credits/);
+  });
+
   it("does not advertise OpenAI or Stripe as the live rail", () => {
     const privacy = readFileSync("app/privacy/page.tsx", "utf8");
     const terms = readFileSync("app/terms/page.tsx", "utf8");
