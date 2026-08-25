@@ -21,6 +21,7 @@ export async function POST(request: Request) {
     kind?: DeskKind;
     subject?: string;
     text?: string;
+    from?: "seeker" | "merchant" | "ops";
   } | null;
 
   if (body?.action === "checkout") {
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
 
   try {
     if (body?.action === "message") {
-      const row = postDeskMessage(body.id ?? "", body.text ?? "");
+      const row = postDeskMessage(body.id ?? "", body.text ?? "", body.from ?? "seeker");
       return NextResponse.json(row);
     }
     const row = openDeskThread({

@@ -5,8 +5,10 @@ import {
   commissionPreview,
   estimateFreight,
   openDeskThread,
+  postDeskMessage,
   resetDeskThreads,
 } from "../../lib/services/desk";
+import { detectOffPlatformLeak, redactLeaks } from "../../lib/services/lead-containment";
 
 describe("partner service verticals", () => {
   it("keeps live professional and equipment inventory empty", () => {
@@ -41,5 +43,15 @@ describe("partner service verticals", () => {
     expect(fee.commissionMinor).toBe(8000);
     const fx = estimateFreight({ kg: 100, origin: "Banjul Port", dest: "Dakar, Senegal" });
     expect(fx.freshness).toBe("ILLUSTRATIVE_MODEL");
+  });
+
+  it("strips WhatsApp and phone so merchants cannot lift the lead", () => {
+    expect(detectOffPlatformLeak("chat me on https://wa.me/2209901234").some((h) => h.kind === "whatsapp")).toBe(true);
+    expect(redactLeaks("pay me +220 7701234")).toMatch(/blocked:phone/);
+    resetDeskThreads();
+    const t = openDeskThread({ kind: "equipment", subject: "mixer", firstMessage: "need a mixer" });
+    const after = postDeskMessage(t.id, "WhatsApp me +2209901234 and pay Wave", "merchant");
+    expect(after.messages.at(-1)?.body).not.toMatch(/9901234/i);
+    expect(after.circumventionFlags.length).toBeGreaterThan(0);
   });
 });

@@ -58,6 +58,13 @@ export default function DeskThreadPage() {
         {row.kind} · booked={String(row.booked)} · escrow={String(row.escrow)} · listed commission{" "}
         {row.commissionBps / 100}%
       </p>
+      <p>
+        Lead stays here. Merchant phone / WhatsApp are not disclosed. Off-platform pay instructions are
+        redacted.
+      </p>
+      {row.circumventionFlags.length > 0 && (
+        <p>Flagged leak attempts: {row.circumventionFlags.map((f) => f.kind).join(", ")}</p>
+      )}
       <ol>
         {row.messages.map((m, i) => (
           <li key={i}>

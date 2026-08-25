@@ -34,7 +34,17 @@ export default function PartnerModulePage() {
         <li>
           <Link href="/ops/commerce">Staff KYB queue</Link>
         </li>
+        <li>
+          <Link href="/services/logistics">Logistics / coach desk (no WhatsApp)</Link>
+        </li>
+        <li>
+          <Link href="/services/equipment-hire">Equipment desk (no public contacts)</Link>
+        </li>
       </ul>
+      <p>
+        Stealing a lead to WhatsApp or Wave-to-personal is a KYB breach. Public listings never show
+        merchant numbers. See Terms §11.
+      </p>
     </main>
   );
 }

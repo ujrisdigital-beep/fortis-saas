@@ -1,4 +1,5 @@
 import { publicCommerceReady } from "../commerce/readiness";
+import { screenLeadMessage, type LeakHit } from "./lead-containment";
 
 export const PLATFORM_COMMISSION_BPS = 800; // 8.00% when commerce is live
 export const DESK_CURRENCY = "GMD";
@@ -35,26 +36,46 @@ export function commissionPreview(amountMinor: number) {
 
 export function openDeskThread(input: { kind: DeskKind; subject: string; firstMessage: string }): DeskThread {
   if (!input.subject.trim() || !input.firstMessage.trim()) throw new Error("incomplete");
+  const screen = screenLeadMessage(input.firstMessage);
   const id = `DSK-${new Date().getUTCFullYear()}-${Math.floor(Math.random() * 900000 + 100000)}`;
   const row: DeskThread = {
     id,
     kind: input.kind,
     subject: input.subject.trim(),
     createdAt: new Date().toISOString(),
-    messages: [{ at: new Date().toISOString(), from: "seeker", body: input.firstMessage.trim() }],
+    messages: [
+      {
+        at: new Date().toISOString(),
+        from: "seeker",
+        body: screen.storedBody,
+        redacted: screen.blocked,
+      },
+    ],
     booked: false,
     escrow: false,
     commissionBps: PLATFORM_COMMISSION_BPS,
+    circumventionFlags: screen.hits,
   };
   threads.set(id, row);
   return row;
 }
 
-export function postDeskMessage(id: string, body: string, from: "seeker" | "ops" = "seeker"): DeskThread {
+export function postDeskMessage(
+  id: string,
+  body: string,
+  from: "seeker" | "merchant" | "ops" = "seeker",
+): DeskThread {
   const row = threads.get(id);
   if (!row) throw new Error("thread_not_found");
   if (!body.trim()) throw new Error("incomplete");
-  row.messages.push({ at: new Date().toISOString(), from, body: body.trim() });
+  const screen = from === "ops" ? { hits: [] as LeakHit[], blocked: false, storedBody: body.trim() } : screenLeadMessage(body);
+  row.messages.push({
+    at: new Date().toISOString(),
+    from,
+    body: screen.storedBody,
+    redacted: screen.blocked,
+  });
+  row.circumventionFlags.push(...screen.hits);
   return row;
 }
 

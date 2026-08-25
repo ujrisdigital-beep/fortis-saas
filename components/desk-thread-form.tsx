@@ -33,8 +33,8 @@ export function DeskThreadForm({ kind, defaultSubject }: { kind: DeskKind; defau
   return (
     <form onSubmit={submit} style={{ display: "grid", gap: 8, maxWidth: 520 }}>
       <p style={{ margin: 0, fontSize: 13 }}>
-        In-house thread only. WhatsApp is not accepted as a FORTIS booking channel. Payment and 8%
-        commission stay blocked until licensed PSP + KYB.
+        Merchants never receive your WhatsApp or phone. If they ask you to pay or chat off FORTIS,
+        that is a policy breach — stay on this thread so commission can be taken when pay is live.
       </p>
       <input name="subject" required defaultValue={defaultSubject} placeholder="Subject" />
       <textarea name="text" required rows={4} placeholder="What you need (route, kg, days, site)" />

@@ -127,6 +127,23 @@ export default function TermsPage() {
           </ul>
         </Section>
 
+        <Section title="11. Partner leads stay on the Platform">
+          <p>
+            Directory, logistics, equipment, courier and coach introductions exist so that, when a licensed
+            PSP is live, FORTIS can collect the published commission. You must not:
+          </p>
+          <ul>
+            <li>Publish or request WhatsApp, phone, or personal Wave/QMoney numbers in a FORTIS thread</li>
+            <li>Take a client introduced on FORTIS and invoice them off-platform to avoid commission</li>
+            <li>Treat a DSK- thread as a booking or escrow — pay is refused until commerce gates pass</li>
+          </ul>
+          <p>
+            We filter obvious contact leaks. Filters are not perfect. Repeated circumvention is grounds to
+            suspend KYB. Ombudsman / platform disputes for this conduct use the DIS- desk, not the public
+            authority Ombudsman.
+          </p>
+        </Section>
+
         <Section title="9. Changes to Terms">
           <p>We may update these Terms. We will notify registered users 30 days before material changes take effect. Continued use constitutes acceptance of revised Terms.</p>
         </Section>
