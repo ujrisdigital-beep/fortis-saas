@@ -12,6 +12,7 @@ const NAV_ITEMS = [
       { href: "/modules", label: "All modules" },
       { href: "/grow/workspace", label: "GROW" },
       { href: "/academy", label: "Academy" },
+      { href: "/academy/campuses", label: "Free tech campuses" },
       { href: "/discover", label: "Discover" },
       { href: "/ombudsman", label: "Ombudsman" },
       { href: "/partner", label: "Partner" },

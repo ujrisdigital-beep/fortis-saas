@@ -12,9 +12,11 @@ export default function AcademyPage() {
       <p>
         Foundation digital literacy plus photography, media, marketing, web, data, customer work, agri and solar
         intros. Learning is free. A signed credential still needs a GMD 150 transfer assessment. We cite OER — we
-        do not copy Google Digital Garage.
+        We cite OER — we do not copy Google Digital Garage or Claude Academy into this repo.
       </p>
       <p>
+        <Link href="/academy/campuses">Official free campuses (Anthropic, Google, Microsoft, AWS, HF…)</Link>
+        {" · "}
         <Link href="/training/hub">Browse hub</Link>
         {" · "}
         <Link href="/pay/transfer?priceId=price_academy_assessment_gmd_v1&module=academy">Pay assessment</Link>
