@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ServiceEnquiryForm } from "../../../components/service-enquiry-form";
+import { DeskThreadForm } from "../../../components/desk-thread-form";
 import { publicLiveListings } from "@/lib/services/enquiries";
 
 const CATEGORIES = [
@@ -23,12 +23,12 @@ export default function ProfessionalsPage() {
       <h1>Professionals directory</h1>
       <p>
         Live verified roster: <strong>{live.length}</strong>. We do not invent lawyers, doctors or ratings. A request is
-        an enquiry, not a booked hour. WhatsApp to a listed number is not a FORTIS-verified identity.
+        an enquiry on this platform, not a booked hour. WhatsApp is not a FORTIS rail.
       </p>
       <h2>Categories we will list after KYB</h2>
       <ul>{CATEGORIES.map((c) => <li key={c}>{c}</li>)}</ul>
       <h2>Request an introduction</h2>
-      <ServiceEnquiryForm kind="professionals" />
+      <DeskThreadForm kind="professionals" defaultSubject="Professional introduction" />
       <p>
         Professionals: <Link href="/partner">apply via Partner KYB</Link>. Learning paths:{" "}
         <Link href="/academy">Academy</Link>.

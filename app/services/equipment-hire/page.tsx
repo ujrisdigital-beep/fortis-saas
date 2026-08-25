@@ -1,28 +1,30 @@
 import Link from "next/link";
-import { ServiceEnquiryForm } from "../../../components/service-enquiry-form";
+import { DeskThreadForm } from "../../../components/desk-thread-form";
+import { EQUIPMENT_CLASSES, PLATFORM_COMMISSION_BPS } from "@/lib/services/desk";
 import { publicLiveListings } from "@/lib/services/enquiries";
-
-const CATS = ["Construction", "Transport", "Power", "Agricultural", "Events"];
 
 export default function EquipmentHirePage() {
   const live = publicLiveListings();
   return (
-    <main style={{ maxWidth: 720, margin: "2rem auto", padding: "0 1rem 3rem", fontFamily: "DM Sans, system-ui" }}>
-      <p style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "#1B4D3E" }}>
-        FORTIS PARTNER · equipment · preview
-      </p>
+    <main style={{ maxWidth: 760, margin: "2rem auto", padding: "0 1rem 4rem", fontFamily: "DM Sans, system-ui" }}>
+      <p style={{ fontSize: 12, letterSpacing: "0.12em", color: "#1B4D3E" }}>PARTNER · EQUIPMENT DESK</p>
       <h1>Equipment hire</h1>
       <p>
-        Live insured fleet: <strong>{live.length}</strong> machines. Demo excavators and “24/7 support” were removed.
-        FORTIS does not hold deposits or escrow. Transfer pay is only for catalogue SKUs.
+        Live machines on FORTIS: <strong>{live.length}</strong>. Euro day-rates, “available now”, waitlists and
+        WhatsApp quotes were demo inventory. We will take deposit + {PLATFORM_COMMISSION_BPS / 100}% commission{" "}
+        <em>on this platform</em> only after owner KYB, insurance evidence, and a licensed PSP.
       </p>
-      <h2>Classes we will list after owner KYB + insurance evidence</h2>
-      <ul>{CATS.map((c) => <li key={c}>{c}</li>)}</ul>
-      <h2>Ask for a real owner introduction</h2>
-      <ServiceEnquiryForm kind="equipment" />
+      <h2>Classes (empty until KYB)</h2>
+      <ul>
+        {EQUIPMENT_CLASSES.map((c) => (
+          <li key={c}>{c}</li>
+        ))}
+      </ul>
+      <h2>On-platform thread</h2>
+      <DeskThreadForm kind="equipment" defaultSubject="Equipment hire request" />
       <p>
-        Owners: <Link href="/partner">Partner KYB</Link>. Site literacy:{" "}
-        <Link href="/training/learn?program=construction-literacy">Academy construction literacy</Link>.
+        Owners list via <Link href="/partner">Partner KYB</Link>. Site literacy:{" "}
+        <Link href="/academy">Academy</Link>. Logistics: <Link href="/services/logistics">desk</Link>.
       </p>
     </main>
   );
