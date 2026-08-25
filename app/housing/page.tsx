@@ -64,10 +64,10 @@ export default function HousingPage() {
       <main style={pageStyle}>
         <div style={headerBandStyle}>
           <div style={headerInnerStyle}>
-            <span style={sectorTagStyle}>🏠 HOUSING SECTOR</span>
-            <h1 style={pageTitleStyle}>Mortgage Calculator</h1>
+            <span style={sectorTagStyle}>GROW · AMORTISATION</span>
+            <h1 style={pageTitleStyle}>Mortgage maths</h1>
             <p style={pageSubStyle}>
-              Calculate your monthly mortgage payments, total interest, and affordability for property purchases in The Gambia.
+              Standard amortisation on numbers you type. Not a bank offer. Default 18% is a planning band, not a live CBG rate.
             </p>
           </div>
         </div>

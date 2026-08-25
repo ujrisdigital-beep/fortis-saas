@@ -93,10 +93,10 @@ export default function SaasPage() {
       <main style={pageStyle}>
         <div style={headerBandStyle}>
           <div style={headerInnerStyle}>
-            <span style={sectorTagStyle}>💻 SAAS SECTOR</span>
-            <h1 style={pageTitleStyle}>Business Digitisation Planner</h1>
+            <span style={sectorTagStyle}>GROW · PLANNER</span>
+            <h1 style={pageTitleStyle}>Digitisation planner</h1>
             <p style={pageSubStyle}>
-              Assess your current digitisation level and get a personalised technology roadmap for your Gambian business.
+              What to computerise next for a Gambian SME. Not a World Bank index. FORTIS website builder is optional; GRA filings stay yours.
             </p>
           </div>
         </div>

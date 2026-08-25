@@ -7,6 +7,19 @@ import { Lang, LANG_META, getStoredLang, storeLang } from "../lib/i18n";
 
 const NAV_ITEMS = [
   {
+    name: "Modules",
+    links: [
+      { href: "/modules", label: "All modules" },
+      { href: "/grow/workspace", label: "GROW" },
+      { href: "/academy", label: "Academy" },
+      { href: "/academy/campuses", label: "Free tech campuses" },
+      { href: "/discover", label: "Discover" },
+      { href: "/ombudsman", label: "Ombudsman" },
+      { href: "/partner", label: "Partner" },
+      { href: "/rides", label: "Rides" },
+    ]
+  },
+  {
     name: "AI Tools",
     links: [
       { href: "/uju-cycle", label: "UJU Cycle™" },
@@ -25,6 +38,20 @@ const NAV_ITEMS = [
       { href: "/seller/register", label: "➕ Become a Seller" },
       { href: "/website-builder", label: "🌐 Website Builder" },
     ]
+  },
+  {
+    name: "Resources",
+    links: [
+      { href: "/resources", label: "All briefings" },
+      { href: "/resources/gbos", label: "GBoS snapshot (CORE)" },
+      { href: "/resources/nawec", label: "Energy map (GROW)" },
+      { href: "/resources/waste", label: "Waste planner (GROW)" },
+      { href: "/resources/giepa", label: "GIEPA desk (GROW)" },
+      { href: "/resources/fintech", label: "Fintech briefing (GROW)" },
+      { href: "/resources/digital-skills", label: "Digital skills (ACADEMY)" },
+      { href: "/resources/airport", label: "Airport (DISCOVER)" },
+      { href: "/resources/cybersecurity", label: "Cyber notes (GOVERN)" },
+    ],
   },
   {
     name: "Sectors",
@@ -185,8 +212,8 @@ export function Navbar() {
                 </div>
               </div>
 
-              <Link href="/subscription" className="bg-[#D4AF37] text-[#0A1C2E] px-5 py-2 rounded-lg font-bold text-sm hover:bg-[#C49C2E] transition shadow-md">
-                Get Access
+              <Link href="/pay/transfer" className="bg-[#D4AF37] text-[#0A1C2E] px-5 py-2 rounded-lg font-bold text-sm hover:bg-[#C49C2E] transition shadow-md">
+                Pay by transfer
               </Link>
             </div>
 

@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+import { requireApiAccess } from '@/lib/core/api-guard';
 
 export async function GET() {
+  const access = await requireApiAccess('admin', 'admin');
+  if (!access.ok) return access.response;
   try {
     const mem = process.memoryUsage();
 

@@ -2,6 +2,7 @@
 // Public Digital Skills Hub — no login required
 "use client";
 import { useState, useEffect } from "react";
+import { ACADEMY_PROGRAMMES, sectors } from "@/lib/academy/programmes";
 
 const PRIMARY = "#1B4D3E";
 const GOLD    = "#C4943A";
@@ -9,88 +10,17 @@ const DARK    = "#0F3D21";
 const WHITE   = "#FFFFFF";
 
 const STATS = [
-  { value: "12+", label: "AI-Generated Courses", icon: "🎓" },
-  { value: "5", label: "Sectors Covered", icon: "🏭" },
-  { value: "100%", label: "Free to Enroll", icon: "✅" },
-  { value: "FORTIS", label: "Certified Credentials", icon: "🏅" },
-];
-
-const SECTORS = [
-  { icon: "💻", name: "Digital & Tech", courses: 4, color: "#3B82F6", desc: "Web development, data, cybersecurity, AI" },
-  { icon: "💳", name: "Fintech", courses: 3, color: "#10B981", desc: "Mobile money, digital payments, compliance" },
-  { icon: "🌾", name: "Agriculture", courses: 2, color: "#F59E0B", desc: "AgriTech, smart farming, market access" },
-  { icon: "🏥", name: "Health", courses: 2, color: "#EF4444", desc: "Health informatics, telemedicine, data" },
-  { icon: "⚡", name: "Energy", courses: 1, color: "#8B5CF6", desc: "Solar, smart grids, energy management" },
-];
-
-const FEATURED_COURSES = [
-  {
-    id: "1",
-    title: "Web Development Fundamentals",
-    sector: "Digital & Tech",
-    level: "Beginner",
-    duration: "4 weeks",
-    modules: 6,
-    enrolled: 248,
-    desc: "Build your first website using HTML, CSS, and JavaScript. Gambia-context projects included.",
-  },
-  {
-    id: "2",
-    title: "Mobile Money & Digital Payments",
-    sector: "Fintech",
-    level: "Beginner",
-    duration: "3 weeks",
-    modules: 5,
-    enrolled: 312,
-    desc: "Master the digital financial ecosystem — from Wave to international transfers. For entrepreneurs and agents.",
-  },
-  {
-    id: "3",
-    title: "Data Analysis for Business",
-    sector: "Digital & Tech",
-    level: "Intermediate",
-    duration: "6 weeks",
-    modules: 8,
-    enrolled: 187,
-    desc: "Turn raw data into decisions using Excel, Google Sheets, and basic Python. Real Gambian business datasets.",
-  },
-  {
-    id: "4",
-    title: "Digital Marketing Mastery",
-    sector: "Digital & Tech",
-    level: "Beginner",
-    duration: "4 weeks",
-    modules: 6,
-    enrolled: 421,
-    desc: "Social media strategy, content creation, SEO, and paid advertising for Gambian SMEs.",
-  },
-  {
-    id: "5",
-    title: "Cybersecurity Essentials",
-    sector: "Digital & Tech",
-    level: "Intermediate",
-    duration: "5 weeks",
-    modules: 7,
-    enrolled: 94,
-    desc: "Protect yourself and your business online. Understand threats, compliance, and incident response.",
-  },
-  {
-    id: "6",
-    title: "Smart Agriculture & AgriTech",
-    sector: "Agriculture",
-    level: "Beginner",
-    duration: "3 weeks",
-    modules: 4,
-    enrolled: 156,
-    desc: "IoT sensors, drone mapping, digital market access, and precision farming for Gambian farmers.",
-  },
+  { value: String(ACADEMY_PROGRAMMES.filter((p) => p.status === "approved_outline").length), label: "Approved outlines", icon: "🎓" },
+  { value: String(sectors().length), label: "Vocational areas", icon: "🏭" },
+  { value: "Free", label: "To study", icon: "✅" },
+  { value: "HMAC", label: "Signed credentials", icon: "🏅" },
 ];
 
 const HOW_IT_WORKS = [
-  { step: "1", title: "Browse & Enroll", desc: "Choose from AI-generated courses across 5 sectors. Free. No prerequisites for beginner courses.", icon: "🔍" },
-  { step: "2", title: "Learn with AI", desc: "Interactive modules, quizzes, and AI-assisted explanations. Learn at your pace — mobile-friendly.", icon: "📱" },
-  { step: "3", title: "Pass Assessment", desc: "AI-proctored assessment. Score 70%+ to qualify. Flagged attempts are human-reviewed within 24h.", icon: "📝" },
-  { step: "4", title: "Get Certified", desc: "Instant FORTIS digital certificate with unique ID. Verifiable by any employer via QR code.", icon: "🏅" },
+  { step: "1", title: "Pick a trade", desc: "Photography, media, marketing, web, data, customer work, agri, solar — plus digital literacy.", icon: "🔍" },
+  { step: "2", title: "Study the outline", desc: "FORTIS briefs plus cited OER. Low-data first. No fake enrolment counts.", icon: "📱" },
+  { step: "3", title: "Server paper", desc: "Practice questions have no client answer key. 70% to pass.", icon: "📝" },
+  { step: "4", title: "Signed credential", desc: "HMAC registry after transfer-paid assessment. Not blockchain.", icon: "🏅" },
 ];
 
 const LEVEL_COLOR: Record<string, string> = {
@@ -132,8 +62,8 @@ export default function TrainingHubPage() {
             <span style={{ color: GOLD }}>Digital Training Platform</span>
           </h1>
           <p style={{ margin: "0 0 2rem", color: "rgba(255,255,255,0.75)", fontSize: "clamp(1rem, 2vw, 1.15rem)", maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-            AI-generated courses. AI-proctored assessments. Blockchain-verifiable certificates.
-            Free for every Gambian.
+            Browse free. Paid assessment attempts use bank/wallet transfer evidence.
+            Certificates are HMAC-signed registry records, not blockchain.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a href="#courses" style={{ padding: "0.75rem 2rem", background: `linear-gradient(135deg, ${GOLD}, #D4A855)`, color: DARK, borderRadius: 10, fontSize: 15, fontWeight: 800, textDecoration: "none", display: "inline-block" }}>
@@ -141,6 +71,9 @@ export default function TrainingHubPage() {
             </a>
             <a href="/training/verify" style={{ padding: "0.75rem 1.5rem", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: WHITE, borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-block" }}>
               🏅 Verify a Certificate
+            </a>
+            <a href="/pay/transfer" style={{ padding: "0.75rem 1.5rem", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: WHITE, borderRadius: 10, fontSize: 15, fontWeight: 600, textDecoration: "none", display: "inline-block" }}>
+              Pay assessment (transfer)
             </a>
           </div>
         </div>
@@ -178,14 +111,13 @@ export default function TrainingHubPage() {
 
         {/* Sectors */}
         <section style={{ marginBottom: "2.5rem" }}>
-          <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: DARK, margin: "0 0 1.25rem" }}>Browse by Sector</h2>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: 800, color: DARK, margin: "0 0 1.25rem" }}>Vocational areas</h2>
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            {SECTORS.map((s) => (
-              <div key={s.name} style={{ background: WHITE, border: "1.5px solid #E2E8F0", borderRadius: 10, padding: "0.85rem 1.1rem", display: "flex", alignItems: "center", gap: 10, cursor: "pointer", flex: "1 1 180px" }}>
-                <span style={{ fontSize: 24 }}>{s.icon}</span>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: "0.85rem", color: DARK }}>{s.name}</div>
-                  <div style={{ fontSize: "0.72rem", color: "#6B7280" }}>{s.courses} courses · {s.desc}</div>
+            {sectors().map((s) => (
+              <div key={s} style={{ background: WHITE, border: "1.5px solid #E2E8F0", borderRadius: 10, padding: "0.85rem 1.1rem", flex: "1 1 160px" }}>
+                <div style={{ fontWeight: 700, fontSize: "0.85rem", color: DARK }}>{s}</div>
+                <div style={{ fontSize: "0.72rem", color: "#6B7280" }}>
+                  {ACADEMY_PROGRAMMES.filter((p) => p.sector === s).length} programmes
                 </div>
               </div>
             ))}
@@ -224,8 +156,8 @@ export default function TrainingHubPage() {
                         </div>
                       </div>
                     )}
-                    <a href={`/training/learn?course=${c.id}`} style={{ display: "block", textAlign: "center", padding: "0.55rem", background: `linear-gradient(135deg, ${PRIMARY}, #2A6B52)`, color: WHITE, borderRadius: 8, fontSize: "0.82rem", fontWeight: 700, textDecoration: "none" }}>
-                      {pct > 0 ? "Continue →" : "Start Free →"}
+                    <a href={`/training/learn?program=${c.id}`} style={{ display: "block", textAlign: "center", padding: "0.55rem", background: `linear-gradient(135deg, ${PRIMARY}, #2A6B52)`, color: WHITE, borderRadius: 8, fontSize: "0.82rem", fontWeight: 700, textDecoration: "none" }}>
+                      {c.status === "external_link_only" ? "Open provider →" : "Start outline →"}
                     </a>
                   </div>
                 </div>

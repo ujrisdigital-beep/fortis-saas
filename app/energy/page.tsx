@@ -40,10 +40,10 @@ export default function EnergyPage() {
       <main style={pageStyle}>
         <div style={headerBandStyle}>
           <div style={headerInnerStyle}>
-            <span style={sectorTagStyle}>⚡ ENERGY SECTOR</span>
-            <h1 style={pageTitleStyle}>Solar Savings Calculator</h1>
+            <span style={sectorTagStyle}>GROW · ILLUSTRATIVE MODEL</span>
+            <h1 style={pageTitleStyle}>Solar bill estimator</h1>
             <p style={pageSubStyle}>
-              Estimate your solar savings, system size, and payback period for properties in The Gambia.
+              Planning maths for a Gambian roof. Not a NAWEC bill, not live irradiance, not an installer quote.
             </p>
           </div>
         </div>

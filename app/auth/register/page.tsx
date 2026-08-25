@@ -17,6 +17,9 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [organisationName, setOrganisationName] = useState("");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,8 +34,12 @@ export default function RegisterPage() {
       return;
     }
 
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
+    if (password.length < 12) {
+      setError("Password must be at least 12 characters with upper, lower, number and symbol.");
+      return;
+    }
+    if (!acceptedTerms || !acceptedPrivacy) {
+      setError("You must accept the Terms and Privacy Policy.");
       return;
     }
 
@@ -41,7 +48,7 @@ export default function RegisterPage() {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, organisationName, acceptedTerms, acceptedPrivacy }),
       });
       const data = (await res.json()) as { error?: string; message?: string };
       if (!res.ok) {
@@ -71,7 +78,7 @@ export default function RegisterPage() {
             <span style={{ fontWeight: 800, fontSize: 16, color: DARK, letterSpacing: "0.05em" }}>FORTIS OS</span>
           </div>
           <h1 style={{ margin: 0, fontSize: "1.65rem", fontWeight: 900, color: DARK }}>Create your account</h1>
-          <p style={{ margin: "6px 0 0", fontSize: 13, color: "#6b7280" }}>Free access to all AI tools</p>
+          <p style={{ margin: "6px 0 0", fontSize: 13, color: "#6b7280" }}>Pilot onboarding — public data and GROW preview. Paid capture is off.</p>
         </div>
 
         <form onSubmit={onSubmit} style={{ background: "#fff", borderRadius: 16, border: "1.5px solid #e5e7eb", padding: "2rem", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
@@ -100,17 +107,38 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label style={labelStyle}>Password</label>
+              <label style={labelStyle} htmlFor="org">Organisation</label>
               <input
+                id="org"
+                value={organisationName}
+                onChange={(e) => setOrganisationName(e.target.value)}
+                required
+                placeholder="Your business or team name"
+                style={inputStyle}
+                autoComplete="organization"
+              />
+            </div>
+            <div>
+              <label style={labelStyle} htmlFor="password">Password</label>
+              <input
+                id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="At least 8 characters"
+                placeholder="12+ chars, mixed case, number, symbol"
                 style={inputStyle}
                 autoComplete="new-password"
               />
             </div>
+            <label style={{ display: "flex", gap: 8, fontSize: 13, color: "#374151" }}>
+              <input type="checkbox" checked={acceptedTerms} onChange={(e) => setAcceptedTerms(e.target.checked)} required />
+              I accept the <Link href="/terms">Terms of Service</Link>
+            </label>
+            <label style={{ display: "flex", gap: 8, fontSize: 13, color: "#374151" }}>
+              <input type="checkbox" checked={acceptedPrivacy} onChange={(e) => setAcceptedPrivacy(e.target.checked)} required />
+              I accept the <Link href="/privacy">Privacy Policy</Link>
+            </label>
           </div>
 
           {error && (

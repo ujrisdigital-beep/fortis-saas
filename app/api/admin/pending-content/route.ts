@@ -1,10 +1,13 @@
 // app/api/admin/pending-content/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
+  const access = await requireApiAccess("admin", "read");
+  if (!access.ok) return access.response;
   try {
     const items = await prisma.dataContent.findMany({
       where: { status: "pending" },

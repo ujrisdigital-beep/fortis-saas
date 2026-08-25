@@ -35,7 +35,7 @@ const TIERS = [
   {
     name: 'Standard',
     price: 'D2,500',
-    priceNote: 'per month · or D22,500/yr (save 25%)',
+    priceNote: 'per month · catalogue price_grow_diagnostic_gmd_v1 (GMD 250.00 one-off diagnostic) · or D22,500/yr',
     description: 'Full AI tool suite for entrepreneurs, SMEs, and professionals.',
     cta: 'Get Started',
     ctaHref: '/payment',

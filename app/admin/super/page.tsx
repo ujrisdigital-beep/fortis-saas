@@ -20,14 +20,13 @@ interface LearningMetrics {
   qualityDistribution: Record<string, number>;
 }
 
-// Anonymized aggregate stats — NO PII
-const MOCK_AGGREGATES = {
-  users: { total: 2847, activeThisMonth: 1203, newThisWeek: 87 },
-  marketplace: { activeListings: 1842, ordersThisMonth: 437, escrowHolding: 182400 },
-  documents: { composedThisMonth: 312, sentThisMonth: 298, avgAiScore: 4.3 },
-  apiCalls: { today: 14820, thisMonth: 312400, topEndpoint: "/api/ask-ujris" },
-  revenue: { subscriptionMRR_GMD: 842000, marketplaceCommissionMTD_GMD: 129500 },
-};
+interface StatusPayload {
+  status?: string;
+  dependencies?: Record<string, string>;
+  flags?: Record<string, boolean>;
+  slos?: Record<string, number>;
+  timestamp?: string;
+}
 
 const COMPONENT_ROUTES = [
   { name: "Marketplace", path: "/marketplace", icon: "🛒" },
@@ -66,6 +65,7 @@ export default function SuperAdminPage() {
   const [learning, setLearning] = useState<LearningMetrics | null>(null);
   const [apiStatuses, setApiStatuses] = useState<Record<string, "ok" | "error" | "checking">>({});
   const [checking, setChecking] = useState(false);
+  const [coreStatus, setCoreStatus] = useState<StatusPayload | null>(null);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
   const fetchHealth = useCallback(async () => {
@@ -76,7 +76,13 @@ export default function SuperAdminPage() {
     } catch {}
   }, []);
 
-  const fetchLearning = useCallback(async () => {
+  const fetchCore = useCallback(async () => {
+    try {
+      const r = await fetch("/api/v2/status");
+      const d = await r.json();
+      setCoreStatus(d);
+    } catch {}
+  }, []);
     try {
       const r = await fetch("/api/learning/metrics");
       const d = await r.json();
@@ -106,8 +112,9 @@ export default function SuperAdminPage() {
   useEffect(() => {
     fetchHealth();
     fetchLearning();
+    fetchCore();
     setLastRefresh(new Date());
-  }, []);
+  }, [fetchHealth, fetchLearning, fetchCore]);
 
   const page: React.CSSProperties = { background: "#F8FAFC", minHeight: "100vh", fontFamily: "Inter, sans-serif" };
   const container: React.CSSProperties = { maxWidth: 1200, margin: "0 auto", padding: "0 16px" };
@@ -140,7 +147,7 @@ export default function SuperAdminPage() {
             <div style={{ display: "flex", gap: 10 }}>
               <button
                 style={{ padding: "10px 20px", background: GOLD, color: NAVY, border: "none", borderRadius: 8, fontWeight: 700, cursor: "pointer", fontSize: 13 }}
-                onClick={() => { fetchHealth(); fetchLearning(); setLastRefresh(new Date()); }}
+                onClick={() => { fetchHealth(); fetchLearning(); fetchCore(); setLastRefresh(new Date()); }}
               >
                 🔄 Refresh
               </button>
@@ -167,16 +174,19 @@ export default function SuperAdminPage() {
         {tab === "overview" && (
           <div style={{ padding: "28px 0" }}>
             {/* KPI Grid */}
+            <p style={{ color: MUT, fontSize: 14, marginBottom: 16 }}>
+              Invented user/GMV/escrow widgets were removed. Commerce is not live.
+            </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 14, marginBottom: 28 }}>
               {[
-                { label: "Total Users", value: MOCK_AGGREGATES.users.total.toLocaleString(), sub: `+${MOCK_AGGREGATES.users.newThisWeek} this week`, color: G },
-                { label: "Active Users (MTD)", value: MOCK_AGGREGATES.users.activeThisMonth.toLocaleString(), sub: `${Math.round(MOCK_AGGREGATES.users.activeThisMonth / MOCK_AGGREGATES.users.total * 100)}% activation`, color: G },
-                { label: "Active Listings", value: MOCK_AGGREGATES.marketplace.activeListings.toLocaleString(), sub: "marketplace products", color: NAVY },
-                { label: "Orders (MTD)", value: MOCK_AGGREGATES.marketplace.ordersThisMonth.toLocaleString(), sub: "marketplace orders", color: NAVY },
-                { label: "Escrow Held", value: `D${(MOCK_AGGREGATES.marketplace.escrowHolding / 1000).toFixed(0)}K`, sub: "pending release", color: GOLD },
-                { label: "Docs Composed", value: MOCK_AGGREGATES.documents.composedThisMonth.toLocaleString(), sub: "this month", color: G },
-                { label: "Subscription MRR", value: `D${(MOCK_AGGREGATES.revenue.subscriptionMRR_GMD / 1000).toFixed(0)}K`, sub: "monthly recurring", color: G },
-                { label: "API Calls Today", value: MOCK_AGGREGATES.apiCalls.today.toLocaleString(), sub: MOCK_AGGREGATES.apiCalls.topEndpoint, color: NAVY },
+                { label: "Core status", value: coreStatus?.status ?? "unknown", sub: coreStatus?.timestamp ?? "fetch /api/v2/status", color: G },
+                { label: "Live payments", value: String(coreStatus?.flags?.["module.core.payments.live"] ?? false), sub: "must stay false", color: NAVY },
+                { label: "Partner commerce", value: String(coreStatus?.flags?.["module.partner.commerce"] ?? false), sub: "must stay false", color: NAVY },
+                { label: "Database", value: coreStatus?.dependencies?.database ?? "unknown", sub: "DATABASE_URL", color: G },
+                { label: "Auth", value: coreStatus?.dependencies?.auth ?? "unknown", sub: "NEXTAUTH_SECRET", color: G },
+                { label: "Gemini", value: coreStatus?.dependencies?.gemini ?? "unknown", sub: "optional BYOK", color: G },
+                { label: "Availability SLO", value: String(coreStatus?.slos?.apiAvailabilityTarget ?? "—"), sub: "target not a guarantee", color: NAVY },
+                { label: "Public listings", value: "0", sub: "honest empty inventory", color: GOLD },
               ].map(m => (
                 <div key={m.label} style={card}>
                   <div style={{ fontSize: 11, color: MUT, marginBottom: 4 }}>{m.label}</div>

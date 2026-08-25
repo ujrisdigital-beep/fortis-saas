@@ -4,7 +4,7 @@ export const metadata = { title: 'Privacy Policy — FORTIS OS', description: 'F
 
 const G = '#1B4D3E'
 const GOLD = '#C4943A'
-const LAST_UPDATED = '3 May 2026'
+const LAST_UPDATED = '24 August 2026'
 
 export default function PrivacyPage() {
   return (
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
             ['Usage data','Pages visited, tools used, session duration','Analytics & improvement'],
             ['Business data','Business name, sector, employee count, revenue inputs','AI tool functionality'],
             ['Document data','Text of uploaded/pasted documents (UJRIS)','Forensic analysis — not stored permanently'],
-            ['Payment data','Subscription status only — card data never stored (Stripe-hosted)','Billing'],
+            ['Payment data','Transfer reference, declared amount, payer name, proof note — no card PAN','Bank/wallet transfer rail'],
             ['Technical data','IP address, browser type, device type, referring URL','Security & analytics'],
             ['Communications','Emails sent via legal@fortisos.gm','Legal response tracking'],
           ]} headers={['Category', 'What we collect', 'Why']} />
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
 
         <Section title="4. How We Use Your Data">
           <ul>
-            <li>Deliver AI-powered analysis (UJU Cycle™, IKENGA™, ASK UJRIS™)</li>
+            <li>Deliver diagnostics (GROW / UJU Cycle™) and optional Gemini narrative</li>
             <li>Generate business transformation reports and brand intelligence assessments</li>
             <li>Maintain platform security and prevent fraudulent use</li>
             <li>Improve AI model accuracy (anonymised, aggregated only)</li>
@@ -141,7 +141,7 @@ export default function PrivacyPage() {
 
         <Section title="10. Third-Party Services">
           <Table rows={[
-            ['OpenAI','AI analysis engine (GPT-4 / Claude)','Your inputs are processed under OpenAI\'s data processing agreement. Not used for training without consent.'],
+            ['Gemini (optional BYOK)','Optional GROW narrative if GEMINI_API_KEY is set','Off by default; deterministic report otherwise'],
             ['Vercel','Hosting & CDN','Your data transits Vercel infrastructure'],
             ['Prisma / PostgreSQL','Database ORM','On-infrastructure database'],
             ['Resend','Transactional email','Your email address is passed to Resend for delivery'],

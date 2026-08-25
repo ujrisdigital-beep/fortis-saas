@@ -4,7 +4,7 @@ export const metadata = { title: 'Terms of Service — FORTIS OS', description: 
 
 const G = '#1B4D3E'
 const GOLD = '#C4943A'
-const LAST_UPDATED = '3 May 2026'
+const LAST_UPDATED = '24 August 2026'
 
 export default function TermsPage() {
   return (
@@ -45,7 +45,7 @@ export default function TermsPage() {
           </div>
           <p>The following modules are in <strong>Beta / Pilot</strong> status as of {LAST_UPDATED}:</p>
           <ul>
-            <li>Credit Scoring Engine — advisory outputs only, not for final lending decisions</li>
+            <li>Credit scoring — refused (HTTP 503). Not a lending product.</li>
             <li>Carbon Credit Origination — specification phase</li>
             <li>Master Dashboard — internal operations use</li>
             <li>ISO 27001 certification — currently being pursued (target Q4 2026)</li>
@@ -102,7 +102,7 @@ export default function TermsPage() {
             <li>Free tier: unlimited access to public resources, knowledge hub, and training</li>
             <li>Standard tier: AI tool access with monthly/annual billing</li>
             <li>Enterprise/API tier: institutional access with custom SLA — contact <a href="mailto:enterprise@fortisos.gm" style={{ color: G }}>enterprise@fortisos.gm</a></li>
-            <li>Payments processed by Stripe. Card data is never stored on our servers.</li>
+            <li>Paid SKUs use bank/wallet transfer (GMD catalogue). Live card capture is off. FORTIS is not a licensed PSP.</li>
             <li>Refunds: within 14 days of first payment if AI tools produce no usable output</li>
           </ul>
         </Section>
@@ -125,6 +125,23 @@ export default function TermsPage() {
             <li>UK users: English courts have jurisdiction</li>
             <li>International users: Arbitration under ICC rules, seat in London</li>
           </ul>
+        </Section>
+
+        <Section title="11. Partner leads stay on the Platform">
+          <p>
+            Directory, logistics, equipment, courier and coach introductions exist so that, when a licensed
+            PSP is live, FORTIS can collect the published commission. You must not:
+          </p>
+          <ul>
+            <li>Publish or request WhatsApp, phone, or personal Wave/QMoney numbers in a FORTIS thread</li>
+            <li>Take a client introduced on FORTIS and invoice them off-platform to avoid commission</li>
+            <li>Treat a DSK- thread as a booking or escrow — pay is refused until commerce gates pass</li>
+          </ul>
+          <p>
+            We filter obvious contact leaks. Filters are not perfect. Repeated circumvention is grounds to
+            suspend KYB. Ombudsman / platform disputes for this conduct use the DIS- desk, not the public
+            authority Ombudsman.
+          </p>
         </Section>
 
         <Section title="9. Changes to Terms">

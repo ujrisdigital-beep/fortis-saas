@@ -35,6 +35,7 @@ export async function GET() {
     },
     configuration: checks,
     fullyConfigured: allConfigured,
+    coreStatus: "/api/v2/status",
   });
 }
 

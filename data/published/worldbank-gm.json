@@ -1,0 +1,17 @@
+{
+  "publisher": "World Bank World Development Indicators",
+  "licence": "CC-BY-4.0",
+  "sourceUrl": "https://api.worldbank.org/v2/country/GM/indicator",
+  "googlePublicData": "https://www.google.com/publicdata/explore?ds=d5bncppjof8f9_",
+  "retrievedAt": "2026-08-23T00:00:00.000Z",
+  "classification": "open",
+  "series": [
+    { "indicator": "NY.GDP.MKTP.CD", "label": "GDP (current US$)", "country": "GM", "date": "2023", "value": 2400000000 },
+    { "indicator": "NY.GDP.PCAP.CD", "label": "GDP per capita (current US$)", "country": "GM", "date": "2023", "value": 888 },
+    { "indicator": "NY.GDP.MKTP.KD.ZG", "label": "GDP growth (annual %)", "country": "GM", "date": "2023", "value": 5.3 },
+    { "indicator": "SP.POP.TOTL", "label": "Population, total", "country": "GM", "date": "2023", "value": 2773168 },
+    { "indicator": "SP.URB.TOTL.IN.ZS", "label": "Urban population (%)", "country": "GM", "date": "2023", "value": 63.9 },
+    { "indicator": "FP.CPI.TOTL.ZG", "label": "Inflation, consumer prices (annual %)", "country": "GM", "date": "2023", "value": 16.97 },
+    { "indicator": "SP.DYN.LE00.IN", "label": "Life expectancy at birth", "country": "GM", "date": "2022", "value": 62.6 }
+  ]
+}

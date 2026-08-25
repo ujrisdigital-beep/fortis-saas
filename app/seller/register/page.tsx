@@ -84,7 +84,7 @@ export default function SellerRegisterPage() {
               and activate your account within <strong>24–48 hours</strong>.
             </p>
             <div style={escrowNoticeStyle}>
-              <strong>Deposit: 500 GMD held in escrow</strong><br />
+              <strong>No FORTIS escrow.</strong> Seller onboarding does not take a 500 GMD deposit here.<br />
               Released after 10 successful sales + 4.5★ rating + 30 days active
             </div>
             <a href="/marketplace" style={ctaLinkStyle}>Browse Marketplace →</a>
@@ -229,7 +229,7 @@ export default function SellerRegisterPage() {
                   </div>
                   <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     {[
-                      "✅ Held in escrow — not charged to your balance",
+                      "KYB required before any listing — Partner commerce is closed",
                       "✅ Released after 10 sales + 4.5★ + 30 days",
                       "⚠️ Forfeited on valid buyer complaints or fraud",
                     ].map((t) => (

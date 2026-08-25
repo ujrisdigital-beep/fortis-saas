@@ -16,12 +16,13 @@ export default function HomePage() {
               <span style={heroAccentStyle}>African Business Leaders</span>
             </h1>
             <p style={heroCopyStyle}>
-              Three AI-powered tools — business transformation analysis, brand intelligence assessment, and forensic document review — built for founders, operators, and strategists across Africa.
+              Core, GROW, Academy, Discover, Govern and Partner are on for the pilot. Pay by bank or wallet
+              transfer only — live cards stay off.
             </p>
             <div style={heroButtonRowStyle}>
-              <Link href="/uju-cycle" style={primaryLinkStyle}>Launch UJU Cycle™</Link>
-              <Link href="/ikenga" style={secondaryLinkStyle}>Run Ikenga™</Link>
-              <Link href="/ask-ujris" style={tertiaryLinkStyle}>Ask UJRIS™</Link>
+              <Link href="/onboarding" style={primaryLinkStyle}>Create account</Link>
+              <Link href="/demo" style={secondaryLinkStyle}>Honest walkthrough</Link>
+              <Link href="/pay/transfer" style={tertiaryLinkStyle}>Pay by transfer</Link>
             </div>
           </div>
           <div style={heroGraphicStyle}>
@@ -48,8 +49,8 @@ export default function HomePage() {
           <div style={sectionInnerStyle}>
             <div style={sectionHeaderStyle}>
               <p style={sectionKickerStyle}>Core Tools</p>
-              <h2 style={sectionTitleStyle}>Three tools. One operating system.</h2>
-              <p style={sectionSubStyle}>Click any tool to open the full interactive interface.</p>
+              <h2 style={sectionTitleStyle}>Six SBN modules. Honest status on each.</h2>
+              <p style={sectionSubStyle}>Pilot and preview surfaces — no fake money, no unpublished inventory.</p>
             </div>
             <div style={cardGridStyle}>
               {tools.map((tool) => (
@@ -75,9 +76,9 @@ export default function HomePage() {
         {/* Get Started Banner */}
         <section style={ctaBannerStyle}>
           <div style={ctaInnerStyle}>
-            <h2 style={ctaTitleStyle}>Ready to activate FORTIS OS?</h2>
-            <p style={ctaSubStyle}>Start with one tool. Transform your entire operation.</p>
-            <Link href="/payment" style={ctaButtonStyle}>Get Full Access →</Link>
+            <h2 style={ctaTitleStyle}>Buy the GROW full blueprint</h2>
+            <p style={ctaSubStyle}>Catalogue price ID only. Transfer evidence unlocks the report. Not a bank credit product.</p>
+            <Link href="/pay/transfer" style={ctaButtonStyle}>Pay GMD 250 by transfer →</Link>
           </div>
         </section>
       </main>
@@ -87,41 +88,81 @@ export default function HomePage() {
 }
 
 const stats = [
-  { value: "GPT-4", label: "AI Engine" },
-  { value: "3", label: "Active Tools" },
-  { value: "∞", label: "Analyses" },
+  { value: "6", label: "Modules" },
+  { value: "3", label: "Paid SKUs" },
+  { value: "Off", label: "Live cards" },
 ];
 
 const tools = [
   {
-    tag: "UJU CYCLE™",
-    title: "Business Transformation Analyzer",
-    description: "Diagnose your operational readiness across Digitise, Optimise, Scale, and Dominate phases. Get a personalised transformation roadmap in under 60 seconds.",
-    href: "/uju-cycle",
-    cta: "Launch UJU Cycle",
-    icon: "⚙️",
+    tag: "GROW",
+    title: "Business diagnostic",
+    description: "Free preview scores. Full blueprint after GMD 250 transfer. Not a credit product.",
+    href: "/grow/workspace",
+    cta: "Open GROW",
+    icon: "📈",
     iconBg: "rgba(27, 77, 62, 0.1)",
-    features: ["Digitise Score", "Scale Channels", "Dominate Strategy"],
+    features: ["Preview free", "GMD 250 full", "Cited public data"],
   },
   {
-    tag: "IKENGA™",
-    title: "Brand Intelligence Assessor",
-    description: "Score your brand strength, message clarity, and market distinctiveness. Identify growth opportunities across your channels and positioning.",
-    href: "/ikenga",
-    cta: "Run Ikenga",
-    icon: "🎯",
+    tag: "GROW TOOLS",
+    title: "Gambia planners",
+    description: "Grant watchlist, solar, yield, recycling, mortgage maths. Labelled models — no live NAWEC or credit scores.",
+    href: "/grow/tools",
+    cta: "Open planners",
+    icon: "🧮",
     iconBg: "rgba(212, 175, 55, 0.1)",
-    features: ["Brand Strength 0–100", "Content Strategy", "Opportunities"],
+    features: ["Illustrative", "Gambia-fit", "No fake GMV"],
   },
   {
-    tag: "ASK UJRIS™",
-    title: "Forensic Document Analyzer",
-    description: "Upload contracts, agreements, and policy documents for an integrity score, red-flag detection, and actionable recommendations before you sign.",
-    href: "/ask-ujris",
-    cta: "Ask UJRIS",
-    icon: "🔍",
+    tag: "ACADEMY",
+    title: "Skills and credentials",
+    description: "Learn without paying. HMAC-signed certificates after a GMD 150 assessment transfer.",
+    href: "/academy",
+    cta: "Open Academy",
+    icon: "🎓",
+    iconBg: "rgba(212, 175, 55, 0.1)",
+    features: ["Server banks", "Fail-closed verify", "No client keys"],
+  },
+  {
+    tag: "DISCOVER",
+    title: "Gambia listings",
+    description: "Verified public listings. Ticket checkout stays closed until organiser KYB and a PSP.",
+    href: "/discover",
+    cta: "Open Discover",
+    icon: "🗺️",
     iconBg: "rgba(27, 77, 62, 0.1)",
-    features: ["Integrity Score", "Red Flag Detection", "Recommendations"],
+    features: ["Verified only", "Tickets closed", "Free browse"],
+  },
+  {
+    tag: "GOVERN",
+    title: "Complaint intake",
+    description: "Consenting case intake and pdf.js extract. No automated judgment.",
+    href: "/ombudsman",
+    cta: "Open Ombudsman",
+    icon: "⚖️",
+    iconBg: "rgba(27, 77, 62, 0.1)",
+    features: ["Consent required", "Human review", "Dual-control orders"],
+  },
+  {
+    tag: "PARTNER",
+    title: "Directory + KYB",
+    description: "Development-partner directory is live. Merchant commerce inventory stays empty.",
+    href: "/partner",
+    cta: "Open Partner",
+    icon: "🤝",
+    iconBg: "rgba(212, 175, 55, 0.1)",
+    features: ["Directory", "KYB machine", "No fake SKUs"],
+  },
+  {
+    tag: "RIDES",
+    title: "Hire by transfer",
+    description: "Owner-listed trips paid by bank or wallet transfer. Not licensed escrow.",
+    href: "/rides",
+    cta: "Open Rides",
+    icon: "🚗",
+    iconBg: "rgba(27, 77, 62, 0.1)",
+    features: ["Provisional unlock", "Unique FTS ref", "No card capture"],
   },
 ];
 

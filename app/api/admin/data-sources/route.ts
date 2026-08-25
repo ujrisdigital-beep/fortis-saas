@@ -1,10 +1,13 @@
 // app/api/admin/data-sources/route.ts
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 const prisma = new PrismaClient();
 
 export async function GET() {
+  const access = await requireApiAccess("admin", "read");
+  if (!access.ok) return access.response;
   try {
     const sources = await prisma.dataSource.findMany({
       orderBy: { createdAt: "desc" },
@@ -19,6 +22,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const access = await requireApiAccess("admin", "write");
+  if (!access.ok) return access.response;
   try {
     const body = await req.json() as {
       name: string;

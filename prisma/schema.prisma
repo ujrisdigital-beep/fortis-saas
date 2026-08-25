@@ -35,6 +35,9 @@ model User {
   projects     Project[]
   ideas        Idea[]
   notifications Notification[]
+  memberships  OrganisationMembership[]
+  sessionRevocations SessionRevocation[]
+  consentRecords ConsentRecord[]
 }
 
 model Organisation {
@@ -401,6 +404,15 @@ model AccessLog {
 // ─── PASSWORD RESET ────────────────────────────────────────────────────────
 
 model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model EmailVerificationToken {
   id        String   @id @default(cuid())
   email     String
   token     String   @unique
@@ -1017,6 +1029,709 @@ model DamageClaim {
   status          ClaimStatus @default(PENDING)
   resolutionNotes String?
   resolvedAt      DateTime?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+// ─── FORTIS CORE (Phase 1) ─────────────────────────────────────────────────
+
+enum MembershipStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+  REVOKED
+}
+
+enum CatalogueStatus {
+  DRAFT
+  PUBLISHED
+  RETIRED
+}
+
+enum PriceStatus {
+  ACTIVE
+  SUPERSEDED
+  RETIRED
+}
+
+enum SubscriptionStatus {
+  INCOMPLETE
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+}
+
+enum EntitlementState {
+  PENDING
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+enum UsageReservationState {
+  OPEN
+  COMMITTED
+  RELEASED
+  EXPIRED
+}
+
+enum PaymentIntentStatus {
+  CREATED
+  REQUIRES_ACTION
+  AUTHORISED
+  CAPTURED
+  FAILED
+  CANCELLED
+}
+
+enum ProviderEventStatus {
+  RECEIVED
+  REJECTED
+  PROCESSED
+}
+
+enum LedgerEntrySide {
+  DEBIT
+  CREDIT
+}
+
+model RoleDefinition {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  description String
+  isSystem    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  grants PermissionGrant[]
+}
+
+model PermissionGrant {
+  id         String   @id @default(cuid())
+  roleKey    String
+  applet     String
+  action     String
+  resource   String   @default("*")
+  createdAt  DateTime @default(now())
+
+  role RoleDefinition @relation(fields: [roleKey], references: [key], onDelete: Cascade)
+
+  @@unique([roleKey, applet, action, resource])
+}
+
+model OrganisationMembership {
+  id             String           @id @default(cuid())
+  organisationId String
+  userId         String
+  roleKey        String
+  status         MembershipStatus @default(INVITED)
+  invitedAt      DateTime         @default(now())
+  activatedAt    DateTime?
+  revokedAt      DateTime?
+
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organisationId, userId])
+  @@index([userId, status])
+}
+
+model ConsentRecord {
+  id        String   @id @default(cuid())
+  userId    String
+  purpose   String
+  granted   Boolean
+  version   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SessionRevocation {
+  id        String   @id @default(cuid())
+  userId    String
+  jti       String   @unique
+  reason    String
+  revokedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Applet {
+  id          String          @id @default(cuid())
+  key         String          @unique
+  name        String
+  description String
+  status      CatalogueStatus @default(DRAFT)
+  createdAt   DateTime        @default(now())
+
+  products Product[]
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  appletId    String
+  key         String
+  name        String
+  description String
+  status      CatalogueStatus @default(DRAFT)
+  version     Int             @default(1)
+  createdAt   DateTime        @default(now())
+
+  applet Applet @relation(fields: [appletId], references: [id], onDelete: Cascade)
+  plans  Plan[]
+
+  @@unique([appletId, key, version])
+}
+
+model Plan {
+  id          String          @id @default(cuid())
+  productId   String
+  key         String
+  name        String
+  status      CatalogueStatus @default(DRAFT)
+  version     Int             @default(1)
+  createdAt   DateTime        @default(now())
+
+  product      Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  prices       Price[]
+  entitlements PlanEntitlement[]
+  items        SubscriptionItem[]
+
+  @@unique([productId, key, version])
+}
+
+model Price {
+  id           String      @id @default(cuid())
+  planId       String
+  currency     String
+  amountMinor  Int
+  interval     String
+  status       PriceStatus @default(ACTIVE)
+  version      Int         @default(1)
+  usedAt       DateTime?
+  createdAt    DateTime    @default(now())
+
+  plan            Plan              @relation(fields: [planId], references: [id], onDelete: Cascade)
+  items           SubscriptionItem[]
+  oneOffPurchases OneOffPurchase[]
+  paymentIntents  PaymentIntent[]
+
+  @@unique([planId, currency, interval, version])
+}
+
+model PlanEntitlement {
+  id           String @id @default(cuid())
+  planId       String
+  featureKey   String
+  limitAmount  Int?
+  unit         String?
+
+  plan Plan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  @@unique([planId, featureKey])
+}
+
+model CoreSubscription {
+  id             String             @id @default(cuid())
+  organisationId String
+  status         SubscriptionStatus @default(INCOMPLETE)
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt      DateTime           @default(now())
+  cancelledAt    DateTime?
+
+  organisation Organisation       @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  items        SubscriptionItem[]
+  grants       EntitlementGrant[]
+}
+
+model SubscriptionItem {
+  id             String @id @default(cuid())
+  subscriptionId String
+  planId         String
+  priceId        String
+  quantity       Int    @default(1)
+
+  subscription CoreSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  plan         Plan             @relation(fields: [planId], references: [id])
+  price        Price            @relation(fields: [priceId], references: [id])
+}
+
+model SeatAssignment {
+  id             String @id @default(cuid())
+  subscriptionId String
+  userId         String
+  createdAt      DateTime @default(now())
+
+  @@unique([subscriptionId, userId])
+}
+
+model OneOffPurchase {
+  id             String           @id @default(cuid())
+  organisationId String
+  priceId        String
+  status         String
+  createdAt      DateTime         @default(now())
+
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  price        Price        @relation(fields: [priceId], references: [id])
+}
+
+model EntitlementGrant {
+  id             String           @id @default(cuid())
+  organisationId String
+  subscriptionId String?
+  featureKey     String
+  state          EntitlementState @default(PENDING)
+  source         String
+  grantedAt      DateTime?
+  revokedAt      DateTime?
+
+  organisation Organisation      @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  subscription CoreSubscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@index([organisationId, featureKey, state])
+}
+
+model UsageLimit {
+  id             String @id @default(cuid())
+  organisationId String
+  featureKey     String
+  hardLimit      Int
+  periodKey      String
+  alertThreshold Int?
+
+  @@unique([organisationId, featureKey, periodKey])
+}
+
+model UsageReservation {
+  id             String                 @id @default(cuid())
+  organisationId String
+  featureKey     String
+  units          Int
+  state          UsageReservationState  @default(OPEN)
+  idempotencyKey String                 @unique
+  expiresAt      DateTime
+  createdAt      DateTime               @default(now())
+
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+
+  @@index([organisationId, featureKey, state])
+}
+
+model UsageEvent {
+  id             String   @id @default(cuid())
+  organisationId String
+  featureKey     String
+  units          Int
+  kind           String
+  reservationId  String?
+  idempotencyKey String   @unique
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+
+  @@index([organisationId, featureKey, createdAt])
+}
+
+model UsageAggregate {
+  id             String @id @default(cuid())
+  organisationId String
+  featureKey     String
+  periodKey      String
+  consumed       Int    @default(0)
+  reserved       Int    @default(0)
+
+  @@unique([organisationId, featureKey, periodKey])
+}
+
+model InvoiceUsageLine {
+  id             String @id @default(cuid())
+  organisationId String
+  featureKey     String
+  periodKey      String
+  units          Int
+  amountMinor    Int
+  currency       String
+}
+
+model PaymentCustomer {
+  id             String @id @default(cuid())
+  organisationId String
+  provider       String
+  externalId     String
+  createdAt      DateTime @default(now())
+
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, externalId])
+}
+
+model ProviderAccount {
+  id         String @id @default(cuid())
+  provider   String
+  externalId String
+  mode       String
+  createdAt  DateTime @default(now())
+
+  @@unique([provider, externalId])
+}
+
+model PaymentIntent {
+  id             String              @id @default(cuid())
+  organisationId String
+  priceId        String
+  amountMinor    Int
+  currency       String
+  status         PaymentIntentStatus @default(CREATED)
+  idempotencyKey String              @unique
+  providerRef    String?
+  createdAt      DateTime            @default(now())
+
+  organisation Organisation     @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  price        Price            @relation(fields: [priceId], references: [id])
+  attempts     PaymentAttempt[]
+}
+
+model PaymentAttempt {
+  id               String   @id @default(cuid())
+  paymentIntentId  String
+  status           String
+  providerRef      String?
+  createdAt        DateTime @default(now())
+
+  paymentIntent PaymentIntent @relation(fields: [paymentIntentId], references: [id], onDelete: Cascade)
+}
+
+model ProviderEvent {
+  id            String              @id @default(cuid())
+  provider      String
+  externalId    String
+  eventType     String
+  signatureOk   Boolean
+  status        ProviderEventStatus @default(RECEIVED)
+  payloadHash   String
+  receivedAt    DateTime            @default(now())
+  processedAt   DateTime?
+  rejectReason  String?
+
+  @@unique([provider, externalId])
+}
+
+model Refund {
+  id              String   @id @default(cuid())
+  paymentIntentId String
+  amountMinor     Int
+  currency        String
+  status          String
+  createdAt       DateTime @default(now())
+}
+
+model Dispute {
+  id              String   @id @default(cuid())
+  paymentIntentId String
+  status          String
+  amountMinor     Int
+  createdAt       DateTime @default(now())
+}
+
+model Payout {
+  id          String   @id @default(cuid())
+  amountMinor Int
+  currency    String
+  status      String
+  scheduledAt DateTime
+  confirmedAt DateTime?
+}
+
+model Settlement {
+  id          String   @id @default(cuid())
+  provider    String
+  periodKey   String
+  amountMinor Int
+  currency    String
+  createdAt   DateTime @default(now())
+}
+
+model LedgerAccount {
+  id             String @id @default(cuid())
+  organisationId String?
+  code           String
+  name           String
+  currency       String
+
+  organisation Organisation? @relation(fields: [organisationId], references: [id])
+  entries      LedgerEntry[]
+
+  @@unique([organisationId, code, currency])
+}
+
+model LedgerTransaction {
+  id            String   @id @default(cuid())
+  idempotencyKey String  @unique
+  description   String
+  postedAt      DateTime @default(now())
+  reversedById  String?
+  reversesId    String?
+
+  entries LedgerEntry[]
+}
+
+model LedgerEntry {
+  id            String          @id @default(cuid())
+  transactionId String
+  accountId     String
+  side          LedgerEntrySide
+  amountMinor   Int
+  currency      String
+
+  transaction LedgerTransaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  account     LedgerAccount     @relation(fields: [accountId], references: [id])
+
+  @@index([transactionId])
+}
+
+model ReconciliationRun {
+  id        String   @id @default(cuid())
+  provider  String
+  periodKey String
+  status    String
+  createdAt DateTime @default(now())
+
+  exceptions ReconciliationException[]
+}
+
+model ReconciliationException {
+  id      String @id @default(cuid())
+  runId   String
+  kind    String
+  detail  String
+  status  String @default("OPEN")
+
+  run ReconciliationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+}
+
+model AuditEvent {
+  id            String   @id @default(cuid())
+  type          String
+  organisationId String?
+  actorId       String?
+  correlationId String
+  payload       Json
+  createdAt     DateTime @default(now())
+
+  @@index([type, createdAt])
+}
+
+enum FreshnessState {
+  REAL_TIME
+  CURRENT
+  PERIODIC_OFFICIAL
+  VERIFIED_SNAPSHOT
+  STALE
+  UNAVAILABLE
+}
+
+model SourceDefinition {
+  id             String   @id @default(cuid())
+  sourceKey      String   @unique
+  name           String
+  authority      String
+  method         String
+  licence        String
+  attribution    String
+  cadence        String
+  adapterVersion String
+  createdAt      DateTime @default(now())
+
+  runs SourceAdapterRun[]
+}
+
+model SourceAdapterRun {
+  id              String   @id @default(cuid())
+  sourceKey       String
+  status          String
+  startedAt       DateTime @default(now())
+  finishedAt      DateTime?
+  error           String?
+  recordsIngested Int      @default(0)
+
+  source SourceDefinition @relation(fields: [sourceKey], references: [sourceKey], onDelete: Cascade)
+}
+
+model RawSourceObject {
+  id           String   @id @default(cuid())
+  sourceKey    String
+  sourceRecordId String
+  checksum     String   @unique
+  payload      Json
+  retrievedAt  DateTime @default(now())
+}
+
+model CanonicalDataset {
+  id          String @id @default(cuid())
+  key         String @unique
+  title       String
+  description String
+}
+
+model CanonicalRecordVersion {
+  id              String         @id @default(cuid())
+  datasetKey      String
+  indicatorKey    String
+  value           String
+  unit            String
+  period          String
+  freshness       FreshnessState
+  publishedAt     DateTime?
+  retrievedAt     DateTime
+  adapterVersion  String
+  checksum        String
+  sourceKey       String
+  sourceRecordId  String
+  sourceUrl       String
+  supersededById  String?
+
+  @@index([datasetKey, indicatorKey])
+}
+
+model ProvenanceRecord {
+  id             String   @id @default(cuid())
+  recordVersionId String
+  sourceKey      String
+  publisher      String
+  classification String
+  licence        String
+  attribution    String
+  createdAt      DateTime @default(now())
+}
+
+model DataQualityIssue {
+  id        String   @id @default(cuid())
+  sourceKey String
+  kind      String
+  detail    String
+  status    String   @default("OPEN")
+  createdAt DateTime @default(now())
+}
+
+model EditorialReview {
+  id        String   @id @default(cuid())
+  recordId  String
+  reviewer  String
+  decision  String
+  notes     String?
+  reviewedAt DateTime @default(now())
+}
+
+model FeatureFlag {
+  id        String  @id @default(cuid())
+  key       String  @unique
+  enabled   Boolean @default(false)
+  note      String?
+}
+
+model GrowAssessment {
+  id               String   @id @default(cuid())
+  organisationId   String
+  actorId          String
+  engineVersion    String
+  inputHash        String
+  preview          Json
+  fullReport       Json?
+  sourceChecksums  String[]
+  createdAt        DateTime @default(now())
+
+  @@index([organisationId, createdAt])
+}
+
+model SignedCredential {
+  id            String    @id @default(cuid())
+  serial        String    @unique
+  learnerId     String
+  programId     String
+  programTitle  String
+  issuedAt      DateTime  @default(now())
+  signature     String
+  revokedAt     DateTime?
+  revokeReason  String?
+
+  @@index([learnerId])
+}
+
+model DiscoverListing {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  status      String   @default("DRAFT")
+  sourceNote  String?
+  createdAt   DateTime @default(now())
+  verifiedAt  DateTime?
+}
+
+model GovernComplaint {
+  id           String   @id @default(cuid())
+  reference    String   @unique
+  organisationId String?
+  subject      String
+  body         String
+  status       String   @default("RECEIVED")
+  consent      Boolean
+  createdAt    DateTime @default(now())
+}
+
+model TransferInstructionRecord {
+  id                 String   @id @default(cuid())
+  reference          String   @unique
+  module             String
+  serviceId          String
+  amountMinor        Int
+  currency           String
+  status             String
+  organisationHint   String?
+  payload            Json
+  createdAt          DateTime @default(now())
+}
+
+model RideOwnerRecord {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  displayName String
+  phone       String
+  createdAt   DateTime @default(now())
+}
+
+model RideVehicleRecord {
+  id              String   @id @default(cuid())
+  ownerUserId     String
+  make            String
+  model           String
+  year            Int
+  category        String
+  licensePlate    String   @unique
+  seats           Int
+  dailyRateMinor  Int
+  currency        String
+  location        String
+  withDriver      Boolean
+  status          String
+}
+
+model RideBookingRecord {
+  id                 String   @id @default(cuid())
+  renterId           String
+  vehicleId          String
+  days               Int
+  amountMinor        Int
+  currency           String
+  transferReference  String
+  status             String
+  pickup             String
+  startDate          String
+  createdAt          DateTime @default(now())
 }

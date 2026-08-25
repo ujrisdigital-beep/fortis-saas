@@ -1,0 +1,82 @@
+name: Quality and security gates
+
+on:
+  pull_request:
+  push:
+    branches: [main, "arena/01a02ef3-fortis-saas"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: fortis
+          POSTGRES_PASSWORD: fortis_test
+          POSTGRES_DB: fortis_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fortis -d fortis_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://fortis:fortis_test@localhost:5432/fortis_test
+      NEXTAUTH_SECRET: ci-only-secret-at-least-32-characters
+      NEXTAUTH_URL: http://localhost:3000
+      FORTIS_ALLOW_NON_PRODUCTION_MODULES: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Secret scan (tracked files)
+        run: |
+          if git grep -nE 'BEGIN (RSA |OPENSSH )?PRIVATE KEY|vercel_oidc_token\s*[:=]\s*["'\''][^"'\'']+' -- ':!.github' ':!docs'; then
+            echo "Potential secret material found" >&2
+            exit 1
+          fi
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Validate Core schema on in-process Postgres
+        run: npm run db:validate-core-local
+
+      - name: Apply Core migrations on staging Postgres
+        run: npx prisma migrate deploy
+
+      - name: Validate Core schema
+        run: npm run db:validate-core
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+      - name: Production dependency audit
+        run: npm run security:audit
+        continue-on-error: false

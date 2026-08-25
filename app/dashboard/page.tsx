@@ -10,6 +10,13 @@ const GOLD = "#C4943A";
 const DARK = "#0A2E1A";
 
 const QUICK_ACTIONS = [
+  { icon: "🚀", label: "Onboarding", desc: "Pilot checklist", href: "/onboarding", color: "#1B4D3E" },
+  { icon: "▦", label: "All modules", desc: "SBN launch board", href: "/modules", color: "#1B4D3E" },
+  { icon: "📈", label: "GROW workspace", desc: "Advisory diagnostic", href: "/grow/workspace", color: "#0F766E" },
+  { icon: "🎓", label: "Academy", desc: "Learn + signed assessment", href: "/academy", color: "#8B5CF6" },
+  { icon: "⚖️", label: "Ombudsman", desc: "Free public complaint desk", href: "/ombudsman", color: "#1E3A5F" },
+  { icon: "🤝", label: "Partner", desc: "Directory, commerce closed", href: "/partner", color: "#0F766E" },
+  { icon: "🚗", label: "Rides", desc: "Hire + bank/wallet transfer", href: "/rides", color: "#0F766E" },
   { icon: "⚖️", label: "Ask UJRIS™", desc: "Document & legal analysis", href: "/ask-ujris", color: "#3B82F6" },
   { icon: "🎨", label: "IKENGA™", desc: "Generate social content", href: "/ikenga", color: "#8B5CF6" },
   { icon: "🗺️", label: "Tourism Map", desc: "Explore The Gambia", href: "/tourism/discover", color: "#10B981" },

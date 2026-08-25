@@ -46,6 +46,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             role: user.role,
             orgId: user.orgId,
+            emailVerified: Boolean(user.emailVerified),
           } as never;
         } catch (error) {
           console.error("Auth error:", error);
@@ -60,6 +61,7 @@ export const authOptions: NextAuthOptions = {
         token.sub = user.id;
         token.role = (user as { role?: AppRole }).role ?? "PUBLIC";
         token.orgId = (user as { orgId?: string }).orgId ?? "";
+        token.emailVerified = Boolean((user as { emailVerified?: boolean }).emailVerified);
       }
       return token;
     },
@@ -68,6 +70,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.sub ?? "";
         session.user.role = (token.role as AppRole) ?? "PUBLIC";
         session.user.orgId = (token.orgId as string) ?? "";
+        session.user.emailVerified = Boolean(token.emailVerified);
       }
       return session;
     },

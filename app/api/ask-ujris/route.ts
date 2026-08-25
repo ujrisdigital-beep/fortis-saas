@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { runCompletion } from "../../../lib/openai-client";
 import { analyzeAskUjris } from "../../../lib/fortis-tools";
 import { evaluateLegalCompliance } from "../../../lib/legal-engine";
+import { requireApiAccess } from "@/lib/core/api-guard";
 
 const DEFAULT_SYSTEM_PROMPT = `You are ASK UJRIS, an AI forensic document analyst specialising in business and legal documents.
 Analyze the document text provided and return a JSON object with these exact keys:
@@ -24,6 +24,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const access = await requireApiAccess("govern", "write");
+  if (!access.ok) return access.response;
   try {
     const body = await req.json() as {
       documentText?: string;
@@ -38,7 +40,7 @@ export async function POST(req: Request) {
     // Run Gambian legal compliance check (non-blocking — warnings added to response)
     const legalVerdict = await evaluateLegalCompliance({
       toolName: "ask-ujris",
-      userId: "anonymous",
+      userId: access.session.userId,
       content: body.documentText,
       contentType: "document",
     }).catch(() => null);
@@ -59,21 +61,8 @@ export async function POST(req: Request) {
       `\nDocument Text:\n${body.documentText}`,
     ].filter(Boolean).join("\n");
 
-    const systemPrompt = process.env.UJRIS_PROMPT || DEFAULT_SYSTEM_PROMPT;
-    const openaiKey = process.env.OPENAI_API_KEY;
-
-    let analysis: unknown;
-
-    if (openaiKey) {
-      try {
-        analysis = await runCompletion(systemPrompt, userMessage);
-      } catch (aiErr) {
-        console.error("OpenAI error, falling back to rule-based:", aiErr);
-        analysis = analyzeAskUjris(body);
-      }
-    } else {
-      analysis = analyzeAskUjris(body);
-    }
+    void userMessage;
+    const analysis = analyzeAskUjris(body);
 
     return NextResponse.json({
       ok: true,

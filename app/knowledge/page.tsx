@@ -408,7 +408,7 @@ const ARTICLES: Article[] = [
       },
       {
         heading: "FORTIS OS Fintech Calculator",
-        body: "Use the Fintech Credit Score calculator at /fintech to assess creditworthiness for lending products. The UJU Cycle at /uju-cycle guides fintech startups through the full business transformation from MVP to scale.",
+        body: "Use the finance readiness checklist at /fintech (not a credit score). GROW at /grow/workspace remains the paid diagnostic SKU.",
       },
     ],
   },

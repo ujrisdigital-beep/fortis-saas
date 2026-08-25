@@ -41,6 +41,7 @@ export const PRODUCTION_BLOCKS: readonly ProductionBlock[] = [
   },
   {
     path: "/api/marketplace/currency-rates",
+    methods: ["POST", "PUT", "PATCH", "DELETE"],
     reason: "mock-data",
     replacement: "Timestamped CBG or approved open-data rate adapter",
   },
@@ -166,6 +167,12 @@ export const PRODUCTION_BLOCKS: readonly ProductionBlock[] = [
     path: "/api/v2/credit-score",
     reason: "mock-data",
     replacement: "Validated, explainable and consented score model",
+  },
+  {
+    path: "/api/marketplace/products",
+    methods: ["POST"],
+    reason: "mock-data",
+    replacement: "Persistent merchant catalogue with KYB and server prices",
   },
 ] as const;
 
