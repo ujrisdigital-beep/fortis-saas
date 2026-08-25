@@ -32,12 +32,12 @@ const RESOURCE_CONFIG: Record<ResourceType, { label: string; icon: string; dataK
 };
 
 const NATIONAL_STATS = [
-  { label: "National Grid Coverage", value: "76.7%", icon: "⚡", trend: "+2.3% YoY" },
-  { label: "Installed Capacity", value: "220 MW", icon: "🏭", trend: "+15MW 2025" },
-  { label: "Renewable Share", value: "28%", icon: "☀️", trend: "+6% YoY" },
-  { label: "Water Access Rate", icon: "💧", value: "71%", trend: "+1.8% YoY" },
-  { label: "Borehole Sites", value: "1,847", icon: "🕳️", trend: "+34 2025" },
-  { label: "NAWEC Subscribers", value: "94,203", icon: "🔌", trend: "+4,200 YoY" },
+  { label: "Data class", value: "Model", icon: "⚡", trend: "Not live NAWEC" },
+  { label: "Ask NAWEC for", value: "MW extract", icon: "🏭", trend: "Dated PDF/CSV" },
+  { label: "Solar planner", value: "/energy", icon: "☀️", trend: "Your bill only" },
+  { label: "Water", icon: "💧", value: "NAWEC / DWR", trend: "No borehole census here" },
+  { label: "Map use", value: "Compare", icon: "🗺️", trend: "Relative only" },
+  { label: "Carbon / IRR", value: "Off", icon: "🔌", trend: "No registry product" },
 ];
 
 export default function NAWECPage() {
@@ -73,7 +73,7 @@ export default function NAWECPage() {
           </span>
           <h1 style={{ fontSize: 34, fontWeight: 800, marginBottom: 8, letterSpacing: -1 }}>Energy & Water Resources Map</h1>
           <p style={{ fontSize: 16, opacity: 0.85, maxWidth: 600, marginBottom: 28 }}>
-            Real-time electricity access, water availability and solar potential data across all regions of The Gambia
+            Illustrative regional comparison — not a live NAWEC SCADA or subscriber feed. Figures are a planning model until NAWEC publishes a dated extract.
           </p>
           {/* National stats strip */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
@@ -275,10 +275,10 @@ export default function NAWECPage() {
               <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 16 }}>💡 Investment Opportunities</h3>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
                 {[
-                  { label: "Solar Mini-Grids Needed", value: "23", desc: "For rural upcountry coverage" },
-                  { label: "Estimated Investment", value: "$85M", desc: "To reach 95% national coverage" },
-                  { label: "Carbon Credits (Est.)", value: "42,000 tCO₂", desc: "Annual avoided emissions" },
-                  { label: "IRR (Solar Projects)", value: "14–18%", desc: "Based on ECOWAS benchmarks" },
+                  { label: "What this map is", value: "Model", desc: "Relative regional comparison only" },
+                  { label: "What it is not", value: "SCADA", desc: "No live MW, subscribers, or IRR" },
+                  { label: "Next step", value: "NAWEC", desc: "Request a dated regional extract" },
+                  { label: "GROW tool", value: "/energy", desc: "Bill maths you typed yourself" },
                 ].map(inv => (
                   <div key={inv.label} style={{ background: "rgba(255,255,255,0.1)", borderRadius: 10, padding: 14 }}>
                     <div style={{ fontSize: 22, fontWeight: 800, color: GOLD }}>{inv.value}</div>

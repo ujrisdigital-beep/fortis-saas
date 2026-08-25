@@ -17,14 +17,14 @@ const WASTE_INFO: Record<string, WasteData> = {
     revenuePerKg: 8,
     co2PerKg: 2.5,
     equipment: "Baler / Shredder (GMD 45,000–80,000). Manual sorting tables for separation.",
-    buyer: "Gambia Plastics Recycling Co., Kanifing Industrial Area",
+    buyer: "Confirm a Kanifing buyer yourself — FORTIS does not list a contracted offtaker.",
     note: "PET bottles and HDPE containers command the highest prices. Clean, sorted plastic earns more.",
   },
   paper: {
     revenuePerKg: 5,
     co2PerKg: 1.8,
     equipment: "Baler (GMD 30,000–55,000). Storage shelter required to keep paper dry.",
-    buyer: "West Africa Paper Recyclers, Banjul Port area",
+    buyer: "Confirm a paper buyer at the port; this is not a live contract.",
     note: "Cardboard boxes earn the most. Keep paper dry — wet paper reduces value by 70%.",
   },
   organic: {
@@ -83,10 +83,10 @@ export default function WastePage() {
       <main style={pageStyle}>
         <div style={headerBandStyle}>
           <div style={headerInnerStyle}>
-            <span style={sectorTagStyle}>♻️ WASTE SECTOR</span>
-            <h1 style={pageTitleStyle}>Recycling ROI Calculator</h1>
+            <span style={sectorTagStyle}>GROW · PLANNING BANDS</span>
+            <h1 style={pageTitleStyle}>Recycling planner</h1>
             <p style={pageSubStyle}>
-              Calculate the revenue potential, environmental impact, and payback period for recycling your waste in The Gambia.
+              GMD/kg bands you can edit with a buyer. Not NEA live tonnes, not issued carbon credits, not a named offtake contract.
             </p>
           </div>
         </div>

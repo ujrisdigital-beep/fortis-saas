@@ -79,10 +79,10 @@ export default function TourismPage() {
       <main style={pageStyle}>
         <div style={headerBandStyle}>
           <div style={headerInnerStyle}>
-            <span style={sectorTagStyle}>✈️ TOURISM SECTOR</span>
-            <h1 style={pageTitleStyle}>Visitor & Revenue Predictor</h1>
+            <span style={sectorTagStyle}>DISCOVER · SKETCH</span>
+            <h1 style={pageTitleStyle}>Occupancy sketch</h1>
             <p style={pageSubStyle}>
-              Forecast visitor numbers, peak season revenue, and optimal pricing for your Gambian hospitality property.
+              Rooms × your occupancy × a planning rate. Not GTA arrivals, not live OTA bookings.
             </p>
           </div>
         </div>

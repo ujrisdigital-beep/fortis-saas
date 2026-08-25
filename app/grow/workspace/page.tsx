@@ -34,6 +34,10 @@ export default function GrowWorkspacePage() {
         Free preview is deterministic and sourced. The full blueprint is a catalogue SKU
         (`price_grow_diagnostic_gmd_v1`). Advisory only — not a credit score.
       </p>
+      <p>
+        Sector planners (solar, yield, recycling, grants watchlist) live in{" "}
+        <Link href="/grow/tools">GROW tools</Link>.
+      </p>
       <form onSubmit={onSubmit} style={{ display: "grid", gap: 8 }}>
         <textarea name="overview" required rows={5} placeholder="Describe the business" />
         <button type="submit">Run free preview</button>

@@ -10,5 +10,5 @@ export async function GET() {
     sectors: ["agriculture", "energy", "saas"],
     asOf: new Date().toISOString(),
   });
-  return NextResponse.json({ matches, scoreKind: "editorial_hypothesis" });
+  return NextResponse.json({ matches, scoreKind: "theme_overlap_only", filing: false });
 }

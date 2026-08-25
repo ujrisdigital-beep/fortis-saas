@@ -105,6 +105,16 @@ const tools = [
     features: ["Preview free", "GMD 250 full", "Cited public data"],
   },
   {
+    tag: "GROW TOOLS",
+    title: "Gambia planners",
+    description: "Grant watchlist, solar, yield, recycling, mortgage maths. Labelled models — no live NAWEC or credit scores.",
+    href: "/grow/tools",
+    cta: "Open planners",
+    icon: "🧮",
+    iconBg: "rgba(212, 175, 55, 0.1)",
+    features: ["Illustrative", "Gambia-fit", "No fake GMV"],
+  },
+  {
     tag: "ACADEMY",
     title: "Skills and credentials",
     description: "Learn without paying. HMAC-signed certificates after a GMD 150 assessment transfer.",

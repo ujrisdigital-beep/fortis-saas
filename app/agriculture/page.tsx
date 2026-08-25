@@ -82,10 +82,10 @@ export default function AgriculturePage() {
       <main style={pageStyle}>
         <div style={headerBandStyle}>
           <div style={headerInnerStyle}>
-            <span style={sectorTagStyle}>🌾 AGRICULTURE SECTOR</span>
-            <h1 style={pageTitleStyle}>Crop Yield Predictor</h1>
+            <span style={sectorTagStyle}>GROW · RAIN-FED PLANNER</span>
+            <h1 style={pageTitleStyle}>Crop yield planner</h1>
             <p style={pageSubStyle}>
-              Estimate expected crop yields, optimal planting times, and fertilizer recommendations for Gambian farms.
+              Rain-fed maize, rice and groundnuts. Not a MoA forecast or live weather feed.
             </p>
           </div>
         </div>

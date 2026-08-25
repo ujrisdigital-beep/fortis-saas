@@ -23,10 +23,11 @@ describe("GROW diagnostic and export", () => {
 });
 
 describe("GROW grants", () => {
-  it("labels catalogue scores as editorial and dates them", () => {
+  it("returns a dated watchlist without invented match scores", () => {
     const matches = matchGrants({ country: "Gambia", sectors: ["agriculture"], asOf: "2026-08-23" });
     expect(matches.length).toBeGreaterThan(0);
-    expect(matches.every((m) => m.scoreKind === "editorial_hypothesis")).toBe(true);
+    expect(matches.every((m) => m.scoreKind === "theme_overlap_only")).toBe(true);
+    expect(matches.every((m) => m.listedScore === null)).toBe(true);
     expect(matches.every((m) => m.retrievedAsOf === "2026-08-23")).toBe(true);
     expect(matches.every((m) => m.url.startsWith("http"))).toBe(true);
   });
